@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>意见反馈 - 汉唐医生基层版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- 顶部导航 -->
+    <div class="bg-white p-4 shadow-sm sticky top-0 z-10">
+        <div class="flex items-center">
+            <a href="profile.html" class="text-blue-500 mr-4">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <h1 class="text-lg font-semibold">意见反馈</h1>
+        </div>
+    </div>
+
+    <!-- 内容区域 -->
+    <div class="p-4">
+        <!-- 问题类型选择 -->
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">问题类型</label>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="relative">
+                    <input type="radio" name="feedback-type" id="bug-report" class="peer hidden" checked>
+                    <label for="bug-report" class="bg-white border border-gray-200 rounded-lg p-3 text-center block w-full cursor-pointer peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-500">
+                        <i class="fas fa-bug mr-2"></i>
+                        功能异常
+                    </label>
+                </div>
+                
+                <div class="relative">
+                    <input type="radio" name="feedback-type" id="feature-request" class="peer hidden">
+                    <label for="feature-request" class="bg-white border border-gray-200 rounded-lg p-3 text-center block w-full cursor-pointer peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-500">
+                        <i class="fas fa-lightbulb mr-2"></i>
+                        功能建议
+                    </label>
+                </div>
+                
+                <div class="relative">
+                    <input type="radio" name="feedback-type" id="experience" class="peer hidden">
+                    <label for="experience" class="bg-white border border-gray-200 rounded-lg p-3 text-center block w-full cursor-pointer peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-500">
+                        <i class="fas fa-smile mr-2"></i>
+                        体验问题
+                    </label>
+                </div>
+                
+                <div class="relative">
+                    <input type="radio" name="feedback-type" id="other" class="peer hidden">
+                    <label for="other" class="bg-white border border-gray-200 rounded-lg p-3 text-center block w-full cursor-pointer peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-500">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        其他问题
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 问题描述 -->
+        <div class="mb-4">
+            <label for="description" class="block text-sm font-medium text-gray-700 mb-2">问题描述</label>
+            <textarea id="description" rows="5" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3" placeholder="请详细描述您遇到的问题或建议..."></textarea>
+            <div class="text-right text-xs text-gray-500 mt-1">0/500</div>
+        </div>
+        
+        <!-- 上传图片 -->
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">上传截图 (选填)</label>
+            <div class="flex flex-wrap gap-3">
+                <div class="w-20 h-20 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center cursor-pointer hover:border-blue-500">
+                    <i class="fas fa-plus text-gray-400"></i>
+                </div>
+                
+                <div class="w-20 h-20 bg-gray-100 rounded-lg relative overflow-hidden">
+                    <img src="../assets/images/lab-report-sample.jpg" alt="上传截图" class="w-full h-full object-contain">
+                    <button class="absolute top-0 right-0 bg-red-500 text-white rounded-tr-lg rounded-bl-lg w-6 h-6 flex items-center justify-center">
+                        <i class="fas fa-times text-xs"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="text-xs text-gray-500 mt-1">最多上传5张图片，每张不超过5MB</div>
+        </div>
+        
+        <!-- 联系方式 -->
+        <div class="mb-6">
+            <label for="contact" class="block text-sm font-medium text-gray-700 mb-2">联系方式 (选填)</label>
+            <input type="text" id="contact" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3" placeholder="请留下您的手机号或邮箱，方便我们联系您">
+            <div class="text-xs text-gray-500 mt-1">我们会对您的联系方式严格保密</div>
+        </div>
+        
+        <!-- 提交按钮 -->
+        <button class="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg flex items-center justify-center mb-4">
+            提交反馈
+        </button>
+        
+        <!-- 我的反馈记录 -->
+        <div class="bg-white rounded-lg shadow-sm mb-4">
+            <div class="p-3 border-b flex justify-between items-center">
+                <h2 class="text-sm font-medium text-gray-900">我的反馈记录</h2>
+                <a href="#" class="text-blue-500 text-sm">查看全部</a>
+            </div>
+            <div class="divide-y">
+                <div class="p-4">
+                    <div class="flex justify-between mb-1">
+                        <span class="text-gray-700 font-medium">功能异常：无法查看患者健康数据</span>
+                        <span class="bg-green-100 text-green-800 text-xs py-0.5 px-2 rounded">已解决</span>
+                    </div>
+                    <div class="text-gray-500 text-sm mb-1">点击患者健康数据时页面显示空白，无法查看任何数据...</div>
+                    <div class="text-gray-400 text-xs">2023-11-20 14:30</div>
+                </div>
+                
+                <div class="p-4">
+                    <div class="flex justify-between mb-1">
+                        <span class="text-gray-700 font-medium">功能建议：增加数据导出功能</span>
+                        <span class="bg-yellow-100 text-yellow-800 text-xs py-0.5 px-2 rounded">审核中</span>
+                    </div>
+                    <div class="text-gray-500 text-sm mb-1">建议增加将患者健康数据导出为Excel的功能，方便...</div>
+                    <div class="text-gray-400 text-xs">2023-11-15 10:25</div>
+                </div>
+                
+                <div class="p-4">
+                    <div class="flex justify-between mb-1">
+                        <span class="text-gray-700 font-medium">体验问题：界面字体太小</span>
+                        <span class="bg-blue-100 text-blue-800 text-xs py-0.5 px-2 rounded">已回复</span>
+                    </div>
+                    <div class="text-gray-500 text-sm mb-1">系统界面的字体普遍偏小，阅读起来比较费力，建议...</div>
+                    <div class="text-gray-400 text-xs">2023-11-08 16:15</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

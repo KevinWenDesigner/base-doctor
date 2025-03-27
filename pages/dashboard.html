@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汉唐医生基层版 - 原型展示</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* iPhone 15尺寸模拟 */
+        .iphone15-frame {
+            width: 390px;
+            height: 844px;
+            border: 10px solid #000;
+            border-radius: 40px;
+            margin: 30px auto;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .iphone15-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 30px;
+            background-color: #000;
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+            z-index: 10;
+        }
+        
+        .iphone15-screen {
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .iphone15-screen::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .prototype-section {
+            margin-bottom: 60px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- 顶部导航栏 -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img class="h-8 w-8" src="../assets/images/logo.png" alt="汉唐医生基层版">
+                        <span class="ml-2 text-xl font-bold text-gray-900">汉唐医生基层版</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- 内容区域 -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- 应用说明 -->
+        <div class="bg-white shadow rounded-lg mb-8 p-6">
+            <h1 class="text-3xl font-bold text-gray-900 mb-4">汉唐医生基层版 - 原型展示</h1>
+            <p class="text-gray-600 mb-4">本页面展示了"汉唐医生基层版"应用的各个功能模块原型，每个原型按照iPhone 15的实际尺寸（390px × 844px）进行展示。</p>
+            <div class="bg-blue-50 p-4 rounded-lg">
+                <h2 class="text-lg font-semibold text-blue-700 mb-2">应用功能</h2>
+                <ul class="list-disc list-inside text-blue-700 space-y-2">
+                    <li><span class="font-medium">患者管理系统</span> - 提供患者档案管理、分类筛选查询和标记管理功能。支持对患者进行分类筛选（如时间范围、患者状态），实时标记异常指标（如血压异常、血糖异常等），记录患者基本信息、就诊信息和监测信息，查看患者详情，提高患者管理效率。</li>
+                    <li><span class="font-medium">健康监测平台</span> - 实时监测患者生理指标并进行异常预警。支持血压、血糖、心率、体温、血氧和呼吸率等多项生理指标的实时监测，自动标记异常数据，并以列表形式展示历史监测记录，帮助医生及时发现潜在健康风险。</li>
+                    <li><span class="font-medium">远程会诊系统</span> - 提供远程视频会诊和专家协作功能。支持发起远程会诊，与上级医院专家进行视频沟通，共享患者信息和监测数据，协助基层医生解决疑难病例，提高诊疗水平。</li>
+                    <li><span class="font-medium">智能随访管理</span> - 提供随访计划创建、患者分类和随访记录功能。支持根据不同类型（术后随访、慢病管理、复诊提醒、用药指导等）和时间（今日、三日内、七日内）安排随访计划，记录随访结果，提高随访效率。</li>
+                    <li><span class="font-medium">医生工作站</span> - 集成医生个人信息管理、专业技能展示和系统设置功能。支持医生编辑个人资料、专业背景和擅长领域，提供数据同步、通知设置和安全中心等系统功能，帮助医生更好地管理个人工作空间。</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 原型图展示区域 -->
+        <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-8">
+            <!-- 患者 -->
+            <div class="prototype-section">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 text-center">患者</h2>
+                <div class="iphone15-frame">
+                    <div class="iphone15-notch"></div>
+                    <div class="iphone15-screen">
+                        <iframe src="patients.html" width="100%" height="100%" frameborder="0"></iframe>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <a href="patients.html" target="_blank" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+                        在新窗口打开
+                    </a>
+                </div>
+            </div>
+
+            <!-- 监测 -->
+            <div class="prototype-section">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 text-center">监测</h2>
+                <div class="iphone15-frame">
+                    <div class="iphone15-notch"></div>
+                    <div class="iphone15-screen">
+                        <iframe src="monitoring.html" width="100%" height="100%" frameborder="0"></iframe>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <a href="monitoring.html" target="_blank" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+                        在新窗口打开
+                    </a>
+                </div>
+            </div>
+
+            <!-- 会诊 -->
+            <div class="prototype-section">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 text-center">会诊</h2>
+                <div class="iphone15-frame">
+                    <div class="iphone15-notch"></div>
+                    <div class="iphone15-screen">
+                        <iframe src="consultation.html" width="100%" height="100%" frameborder="0"></iframe>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <a href="consultation.html" target="_blank" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+                        在新窗口打开
+                    </a>
+                </div>
+            </div>
+
+            <!-- 随访 -->
+            <div class="prototype-section">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 text-center">随访</h2>
+                <div class="iphone15-frame">
+                    <div class="iphone15-notch"></div>
+                    <div class="iphone15-screen">
+                        <iframe src="schedule.html" width="100%" height="100%" frameborder="0"></iframe>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <a href="schedule.html" target="_blank" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+                        在新窗口打开
+                    </a>
+                </div>
+            </div>
+
+            <!-- 个人中心 -->
+            <div class="prototype-section">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 text-center">我的</h2>
+                <div class="iphone15-frame">
+                    <div class="iphone15-notch"></div>
+                    <div class="iphone15-screen">
+                        <iframe src="profile.html" width="100%" height="100%" frameborder="0"></iframe>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <a href="profile.html" target="_blank" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+                        在新窗口打开
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="bg-white mt-12 py-8 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center">
+                <h2 class="text-lg font-semibold text-gray-900">汉唐医生基层版</h2>
+                <p class="text-sm text-gray-600 mt-2">基层医疗机构专用智慧医疗平台，集成患者管理、健康监测、远程会诊、随访管理和医生工作站五大核心功能模块，助力基层医疗机构提升诊疗水平、优化医患体验、强化慢病管理，打造基层智慧医疗新模式</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 

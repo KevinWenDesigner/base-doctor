@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>处方详情 - 汉唐医生基层版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- 顶部导航栏 -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="patient-detail.html" class="text-gray-500 hover:text-gray-700">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </a>
+                    <h1 class="ml-4 text-lg font-medium text-gray-900">处方详情</h1>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <main class="max-w-4xl mx-auto py-4 px-4 sm:px-6 lg:px-8 mt-16">
+        <!-- 患者基本信息卡片 -->
+        <div class="bg-white shadow rounded-lg p-4 mb-4">
+            <div class="flex items-center">
+                <img class="h-12 w-12 rounded-full" src="../assets/images/placeholder-patient.jpg" alt="患者头像">
+                <div class="ml-4">
+                    <h2 class="text-lg font-medium text-gray-900">张三</h2>
+                    <p class="text-sm text-gray-500">45岁 · 男 · 开具时间：2024-03-15</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 处方详情卡片 -->
+        <div class="bg-white shadow rounded-lg overflow-hidden">
+            <!-- 处方基本信息 -->
+            <div class="p-4 border-b border-gray-200">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-sm text-gray-500">处方类型</p>
+                        <p class="mt-1 text-sm font-medium text-gray-900">西药处方</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">开具科室</p>
+                        <p class="mt-1 text-sm font-medium text-gray-900">内科</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">开具医生</p>
+                        <p class="mt-1 text-sm font-medium text-gray-900">李医生</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">处方状态</p>
+                        <span class="mt-1 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            已发药
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 诊断信息 -->
+            <div class="p-4 border-b border-gray-200">
+                <h3 class="text-base font-medium text-gray-900 mb-2">诊断信息</h3>
+                <div class="space-y-2">
+                    <div class="flex items-center">
+                        <span class="text-sm text-gray-500 w-20">主要诊断：</span>
+                        <span class="text-sm text-gray-900">原发性高血压(1级)</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="text-sm text-gray-500 w-20">其他诊断：</span>
+                        <span class="text-sm text-gray-900">高脂血症</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 药品清单 -->
+            <div class="p-4 border-b border-gray-200">
+                <h3 class="text-base font-medium text-gray-900 mb-4">药品清单</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">药品名称</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">规格</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">用法用量</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">数量</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-4 py-3 text-sm text-gray-900">
+                                    <div>苯磺酸氨氯地平片</div>
+                                    <div class="text-xs text-gray-500">用于高血压</div>
+                                </td>
+                                <td class="px-4 py-3 text-sm text-gray-900">5mg/片</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">
+                                    <div>口服</div>
+                                    <div class="text-xs text-gray-500">每日一次，每次1片</div>
+                                </td>
+                                <td class="px-4 py-3 text-sm text-gray-900">28片</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 text-sm text-gray-900">
+                                    <div>阿托伐他汀钙片</div>
+                                    <div class="text-xs text-gray-500">用于高脂血症</div>
+                                </td>
+                                <td class="px-4 py-3 text-sm text-gray-900">10mg/片</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">
+                                    <div>口服</div>
+                                    <div class="text-xs text-gray-500">每晚一次，每次1片</div>
+                                </td>
+                                <td class="px-4 py-3 text-sm text-gray-900">28片</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 用药说明 -->
+            <div class="p-4">
+                <h3 class="text-base font-medium text-gray-900 mb-2">用药说明</h3>
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-900">注意事项</h4>
+                        <ul class="mt-1 text-sm text-gray-700 list-disc list-inside space-y-1">
+                            <li>按时服药，不要随意停药或改变剂量</li>
+                            <li>服药期间需要定期监测血压</li>
+                            <li>如出现不适症状及时就医</li>
+                            <li>保持规律作息，注意饮食控制</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-900">随访安排</h4>
+                        <p class="mt-1 text-sm text-gray-700">两周后复诊，根据血压情况调整用药</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 历史处方记录 -->
+        <div class="mt-4 bg-white shadow rounded-lg overflow-hidden">
+            <div class="p-4 border-b border-gray-200">
+                <h3 class="text-base font-medium text-gray-900">历史处方记录</h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">开具时间</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">处方类型</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">诊断</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">状态</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">2024-03-15</td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">西药处方</td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">高血压、高脂血症</td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    已发药
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-blue-600">
+                                <a href="#" class="hover:text-blue-800">查看</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">2024-02-15</td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">西药处方</td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">高血压</td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                    已完成
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-blue-600">
+                                <a href="#" class="hover:text-blue-800">查看</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html> 

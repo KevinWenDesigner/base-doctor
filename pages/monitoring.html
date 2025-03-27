@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>健康监测 - 汉唐医生基层版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../assets/js/monitoring.js"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- 顶部导航栏 -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img class="h-8 w-8" src="../assets/images/logo.png" alt="汉唐医生基层版">
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="patients.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            患者
+                        </a>
+                        <a href="monitoring.html" class="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            监测
+                        </a>
+                        <a href="consultation.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            会诊
+                        </a>
+                        <a href="schedule.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            随访
+                        </a>
+                        <a href="profile.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            我的
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 mt-16">
+        <!-- 设备连接状态 -->
+        <div class="bg-white shadow rounded-lg mb-4">
+            <div class="px-4 py-3 sm:px-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <div class="connection-status flex items-center">
+                            <div class="h-2 w-2 rounded-full bg-red-500 mr-2"></div>
+                            <span class="text-xs text-gray-500">设备未连接</span>
+                        </div>
+                    </div>
+                    <button class="connection-button px-3 py-1 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        连接设备
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 异常指标概览 -->
+        <div class="bg-white shadow rounded-lg mb-4">
+            <div class="px-4 py-3 sm:px-6">
+                <h3 class="text-base font-medium text-gray-900">异常指标概览</h3>
+                <div class="mt-2 flex flex-wrap gap-2">
+                    <div class="flex-1 min-w-[160px] bg-red-50 rounded-lg p-2 cursor-pointer hover:bg-red-100 transition-colors" onclick="window.location.href='abnormal-patients.html?type=blood-pressure'">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xs font-medium text-red-800">血压异常</h4>
+                            <span class="text-xs text-red-600">3人</span>
+                        </div>
+                        <div class="mt-1">
+                            <p class="text-xs text-red-700">收缩压 > 140mmHg</p>
+                            <p class="text-xs text-red-700">舒张压 > 90mmHg</p>
+                        </div>
+                    </div>
+                    <div class="flex-1 min-w-[160px] bg-yellow-50 rounded-lg p-2 cursor-pointer hover:bg-yellow-100 transition-colors" onclick="window.location.href='abnormal-patients.html?type=blood-sugar'">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xs font-medium text-yellow-800">血糖异常</h4>
+                            <span class="text-xs text-yellow-600">2人</span>
+                        </div>
+                        <div class="mt-1">
+                            <p class="text-xs text-yellow-700">空腹血糖 > 6.1mmol/L</p>
+                            <p class="text-xs text-yellow-700">餐后血糖 > 7.8mmol/L</p>
+                        </div>
+                    </div>
+                    <div class="flex-1 min-w-[160px] bg-orange-50 rounded-lg p-2 cursor-pointer hover:bg-orange-100 transition-colors" onclick="window.location.href='abnormal-patients.html?type=heart-rate'">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xs font-medium text-orange-800">心率异常</h4>
+                            <span class="text-xs text-orange-600">1人</span>
+                        </div>
+                        <div class="mt-1">
+                            <p class="text-xs text-orange-700">心率 > 100次/分</p>
+                            <p class="text-xs text-orange-700">或 < 60次/分</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 实时监测数据 -->
+        <div class="bg-white shadow rounded-lg mb-4">
+            <div class="px-4 py-3 sm:px-6">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-base font-medium text-gray-900">实时监测数据</h3>
+                    <div class="flex items-center space-x-2">
+                        <button id="saveDataBtn" class="px-3 py-1 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                            保存数据
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 px-4 py-4 sm:px-6">
+                <div class="border border-red-500 rounded-lg">
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-0">
+                        <!-- 血压监测 -->
+                        <div class="bg-gray-50 p-4 border-b md:border-r border-gray-200">
+                            <div class="flex flex-col">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm font-medium text-gray-900">血压</span>
+                                    <span class="text-xs text-gray-500">mmHg</span>
+                                </div>
+                                <div class="text-xl font-bold text-gray-900 blood-pressure-value h-8 flex items-center">--/--</div>
+                            </div>
+                        </div>
+
+                        <!-- 血糖监测 -->
+                        <div class="bg-gray-50 p-4 border-b md:border-r border-gray-200">
+                            <div class="flex flex-col">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm font-medium text-gray-900">血糖</span>
+                                    <span class="text-xs text-gray-500">mmol/L</span>
+                                </div>
+                                <div class="text-xl font-bold text-gray-900 blood-sugar-value h-8 flex items-center">--</div>
+                            </div>
+                        </div>
+
+                        <!-- 心率监测 -->
+                        <div class="bg-gray-50 p-4 border-b border-gray-200">
+                            <div class="flex flex-col">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm font-medium text-gray-900">心率</span>
+                                    <span class="text-xs text-gray-500">次/分</span>
+                                </div>
+                                <div class="text-xl font-bold text-gray-900 heart-rate-value h-8 flex items-center">--</div>
+                            </div>
+                        </div>
+
+                        <!-- 体温监测 -->
+                        <div class="bg-gray-50 p-4 md:border-r border-gray-200">
+                            <div class="flex flex-col">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm font-medium text-gray-900">体温</span>
+                                    <span class="text-xs text-gray-500">°C</span>
+                                </div>
+                                <div class="text-xl font-bold text-gray-900 temperature-value h-8 flex items-center">--</div>
+                            </div>
+                        </div>
+
+                        <!-- 血氧监测 -->
+                        <div class="bg-gray-50 p-4 md:border-r border-gray-200">
+                            <div class="flex flex-col">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm font-medium text-gray-900">血氧</span>
+                                    <span class="text-xs text-gray-500">%</span>
+                                </div>
+                                <div class="text-xl font-bold text-gray-900 oxygen-value h-8 flex items-center">--</div>
+                            </div>
+                        </div>
+
+                        <!-- 呼吸率监测 -->
+                        <div class="bg-gray-50 p-4 border-gray-200">
+                            <div class="flex flex-col">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm font-medium text-gray-900">呼吸率</span>
+                                    <span class="text-xs text-gray-500">次/分</span>
+                                </div>
+                                <div class="text-xl font-bold text-gray-900 respiration-value h-8 flex items-center">--</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 历史记录 -->
+        <div class="bg-white shadow rounded-lg">
+            <div class="px-4 py-3 sm:px-6">
+                <h3 class="text-base font-medium text-gray-900">历史记录</h3>
+            </div>
+            <div class="border-t border-gray-200">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">时间</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">患者</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">血压</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">血糖</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">心率</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">体温</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">血氧</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">呼吸率</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">状态</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-500">2024-03-26 14:30</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">张三</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-xs text-red-600">145/95</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">5.6</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">75</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">36.5</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">98</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">16</td>
+                                <td class="px-3 py-2 whitespace-nowrap">
+                                    <span class="px-1.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                        异常
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-500">2024-03-26 14:25</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">李四</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">120/80</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-xs text-yellow-600">7.2</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">82</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">36.8</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">97</td>
+                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">18</td>
+                                <td class="px-3 py-2 whitespace-nowrap">
+                                    <span class="px-1.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                        异常
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 底部导航栏 -->
+    <nav class="bg-white shadow-lg fixed bottom-0 w-full z-50 sm:hidden">
+        <div class="flex justify-around">
+            <a href="patients.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+                <span class="text-xs mt-1">患者</span>
+            </a>
+            <a href="monitoring.html" class="flex flex-col items-center p-2 text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                <span class="text-xs mt-1">监测</span>
+            </a>
+            <a href="consultation.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                </svg>
+                <span class="text-xs mt-1">会诊</span>
+            </a>
+            <a href="schedule.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <span class="text-xs mt-1">随访</span>
+            </a>
+            <a href="profile.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                <span class="text-xs mt-1">我的</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- 异常患者列表弹窗 -->
+    <div id="abnormalPatientsModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg max-w-lg w-full mx-4">
+            <div class="px-4 py-3 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-base font-medium text-gray-900" id="abnormalModalTitle">异常患者列表</h3>
+                    <button class="text-gray-400 hover:text-gray-500" onclick="closeAbnormalModal()">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="px-4 py-3 max-h-96 overflow-y-auto">
+                <ul class="divide-y divide-gray-200" id="abnormalPatientsList">
+                    <!-- 动态填充异常患者列表 -->
+                </ul>
+            </div>
+            <div class="px-4 py-3 bg-gray-50 text-right">
+                <button class="px-3 py-1 bg-gray-500 text-white text-sm rounded-lg hover:bg-gray-600" onclick="closeAbnormalModal()">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 选择患者弹窗 -->
+    <div id="selectPatientModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg max-w-lg w-full mx-4">
+            <div class="px-4 py-3 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-base font-medium text-gray-900">选择患者</h3>
+                    <button class="text-gray-400 hover:text-gray-500" onclick="closeSelectPatientModal()">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="px-4 py-3">
+                <div class="mb-3">
+                    <div class="relative">
+                        <input type="text" id="patientSearchInput" placeholder="输入姓名或身份证号搜索" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <svg class="h-5 w-5 absolute right-3 top-2.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="max-h-72 overflow-y-auto">
+                    <ul class="divide-y divide-gray-200" id="patientSearchResults">
+                        <!-- 动态填充患者搜索结果 -->
+                        <li class="py-2 px-1 hover:bg-gray-50 cursor-pointer" onclick="selectPatient('张三', '110101199001011234')">
+                            <div class="flex items-center">
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900">张三</p>
+                                    <p class="text-xs text-gray-500">身份证: 1101**********1234</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="py-2 px-1 hover:bg-gray-50 cursor-pointer" onclick="selectPatient('李四', '110101199201024321')">
+                            <div class="flex items-center">
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900">李四</p>
+                                    <p class="text-xs text-gray-500">身份证: 1101**********4321</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="py-2 px-1 hover:bg-gray-50 cursor-pointer" onclick="selectPatient('王五', '110101199505055678')">
+                            <div class="flex items-center">
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900">王五</p>
+                                    <p class="text-xs text-gray-500">身份证: 1101**********5678</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="px-4 py-3 bg-gray-50 text-right">
+                <button class="px-3 py-1 bg-gray-500 text-white text-sm rounded-lg hover:bg-gray-600 mr-2" onclick="closeSelectPatientModal()">
+                    取消
+                </button>
+                <button id="confirmPatientBtn" class="px-3 py-1 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 disabled:bg-gray-400" disabled>
+                    确认
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 添加到现有的monitoring.js文件或直接在页面中添加
+        document.addEventListener('DOMContentLoaded', function() {
+            // 异常患者列表弹窗
+            window.showAbnormalPatients = function(type) {
+                const modal = document.getElementById('abnormalPatientsModal');
+                const title = document.getElementById('abnormalModalTitle');
+                const list = document.getElementById('abnormalPatientsList');
+                
+                // 根据类型设置标题
+                switch(type) {
+                    case 'blood-pressure':
+                        title.textContent = '血压异常患者';
+                        break;
+                    case 'blood-sugar':
+                        title.textContent = '血糖异常患者';
+                        break;
+                    case 'heart-rate':
+                        title.textContent = '心率异常患者';
+                        break;
+                }
+                
+                // 清空列表
+                list.innerHTML = '';
+                
+                // 填充示例数据
+                let patients = [];
+                if (type === 'blood-pressure') {
+                    patients = [
+                        { name: '张三', id: '110101199001011234', value: '145/95 mmHg', date: '2024-03-26 14:30' },
+                        { name: '刘备', id: '110101196202023456', value: '150/92 mmHg', date: '2024-03-26 10:15' },
+                        { name: '关羽', id: '110101196805057890', value: '148/96 mmHg', date: '2024-03-25 16:45' }
+                    ];
+                } else if (type === 'blood-sugar') {
+                    patients = [
+                        { name: '李四', id: '110101199201024321', value: '7.2 mmol/L', date: '2024-03-26 14:25' },
+                        { name: '诸葛亮', id: '110101198107079012', value: '7.5 mmol/L', date: '2024-03-26 09:30' }
+                    ];
+                } else if (type === 'heart-rate') {
+                    patients = [
+                        { name: '周瑜', id: '110101198505053344', value: '110 次/分', date: '2024-03-25 11:20' }
+                    ];
+                }
+                
+                // 生成列表项
+                patients.forEach(patient => {
+                    const li = document.createElement('li');
+                    li.className = 'py-2 hover:bg-gray-50 cursor-pointer';
+                    li.onclick = function() { window.location.href = `patients-detail.html?id=${patient.id}`; };
+                    
+                    li.innerHTML = `
+                        <div class="flex justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">${patient.name}</p>
+                                <p class="text-xs text-gray-500">身份证: ${patient.id.substring(0, 4)}**********${patient.id.substring(14)}</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-medium text-red-600">${patient.value}</p>
+                                <p class="text-xs text-gray-500">${patient.date}</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    list.appendChild(li);
+                });
+                
+                // 显示弹窗
+                modal.classList.remove('hidden');
+            };
+            
+            window.closeAbnormalModal = function() {
+                document.getElementById('abnormalPatientsModal').classList.add('hidden');
+            };
+            
+            // 保存数据弹窗
+            document.getElementById('saveDataBtn').addEventListener('click', function() {
+                document.getElementById('selectPatientModal').classList.remove('hidden');
+            });
+            
+            window.closeSelectPatientModal = function() {
+                document.getElementById('selectPatientModal').classList.add('hidden');
+            };
+            
+            // 搜索患者
+            document.getElementById('patientSearchInput').addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const results = document.getElementById('patientSearchResults');
+                const items = results.getElementsByTagName('li');
+                
+                for (let i = 0; i < items.length; i++) {
+                    const name = items[i].querySelector('.text-gray-900').textContent.toLowerCase();
+                    const id = items[i].querySelector('.text-gray-500').textContent.toLowerCase();
+                    
+                    if (name.includes(searchTerm) || id.includes(searchTerm)) {
+                        items[i].style.display = '';
+                    } else {
+                        items[i].style.display = 'none';
+                    }
+                }
+            });
+            
+            // 选择患者
+            window.selectPatient = function(name, id) {
+                const confirmBtn = document.getElementById('confirmPatientBtn');
+                confirmBtn.dataset.name = name;
+                confirmBtn.dataset.id = id;
+                confirmBtn.disabled = false;
+                
+                // 高亮选中的患者
+                const items = document.getElementById('patientSearchResults').getElementsByTagName('li');
+                for (let i = 0; i < items.length; i++) {
+                    const itemName = items[i].querySelector('.text-gray-900').textContent;
+                    if (itemName === name) {
+                        items[i].classList.add('bg-blue-50');
+                    } else {
+                        items[i].classList.remove('bg-blue-50');
+                    }
+                }
+            };
+            
+            // 确认保存患者数据
+            document.getElementById('confirmPatientBtn').addEventListener('click', function() {
+                const name = this.dataset.name;
+                const id = this.dataset.id;
+                
+                // 这里添加保存数据的逻辑
+                alert(`已保存 ${name} 的监测数据`);
+                
+                // 关闭弹窗
+                closeSelectPatientModal();
+            });
+        });
+    </script>
+</body>
+</html> 

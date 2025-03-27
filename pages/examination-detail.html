@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>检查报告详情 - 汉唐医生基层版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- 顶部导航栏 -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="patient-detail.html" class="text-gray-500 hover:text-gray-700">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </a>
+                    <h1 class="ml-4 text-lg font-medium text-gray-900">检查报告详情</h1>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <main class="max-w-4xl mx-auto py-4 px-4 sm:px-6 lg:px-8 mt-16">
+        <!-- 患者基本信息卡片 -->
+        <div class="bg-white shadow rounded-lg p-4 mb-4">
+            <div class="flex items-center">
+                <img class="h-12 w-12 rounded-full" src="../assets/images/placeholder-patient.jpg" alt="患者头像">
+                <div class="ml-4">
+                    <h2 class="text-lg font-medium text-gray-900">张三</h2>
+                    <p class="text-sm text-gray-500">45岁 · 男 · 检查时间：2024-03-15</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 检查报告详情卡片 -->
+        <div class="bg-white shadow rounded-lg overflow-hidden">
+            <!-- 检查基本信息 -->
+            <div class="p-4 border-b border-gray-200">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-sm text-gray-500">检查项目</p>
+                        <p class="mt-1 text-sm font-medium text-gray-900">心电图检查</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">检查科室</p>
+                        <p class="mt-1 text-sm font-medium text-gray-900">心内科</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">检查医生</p>
+                        <p class="mt-1 text-sm font-medium text-gray-900">王医生</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">检查时间</p>
+                        <p class="mt-1 text-sm font-medium text-gray-900">2024-03-15 10:30</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 检查图像 -->
+            <div class="p-4 border-b border-gray-200">
+                <h3 class="text-base font-medium text-gray-900 mb-2">检查图像</h3>
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="aspect-w-16 aspect-h-9">
+                        <img src="../assets/images/placeholder-ecg.jpg" alt="心电图" class="w-full h-full object-contain">
+                    </div>
+                    <div class="mt-2 text-sm text-gray-500 text-center">
+                        心电图记录图像
+                    </div>
+                </div>
+            </div>
+
+            <!-- 检查结果 -->
+            <div class="p-4 border-b border-gray-200">
+                <h3 class="text-base font-medium text-gray-900 mb-2">检查结果</h3>
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-900">心率</h4>
+                        <p class="mt-1 text-sm text-gray-700">78次/分钟</p>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-900">心律</h4>
+                        <p class="mt-1 text-sm text-gray-700">窦性心律</p>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-900">电轴</h4>
+                        <p class="mt-1 text-sm text-gray-700">正常</p>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-900">ST-T改变</h4>
+                        <p class="mt-1 text-sm text-gray-700">ST段无明显改变</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 结论与建议 -->
+            <div class="p-4">
+                <h3 class="text-base font-medium text-gray-900 mb-2">结论与建议</h3>
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-900">检查结论</h4>
+                        <p class="mt-1 text-sm text-gray-700">基本正常心电图</p>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-900">医生建议</h4>
+                        <ul class="mt-1 text-sm text-gray-700 list-disc list-inside space-y-1">
+                            <li>建议定期复查心电图</li>
+                            <li>注意监测血压变化</li>
+                            <li>保持良好的生活习惯</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 历史检查记录 -->
+        <div class="mt-4 bg-white shadow rounded-lg overflow-hidden">
+            <div class="p-4 border-b border-gray-200">
+                <h3 class="text-base font-medium text-gray-900">历史检查记录</h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">检查时间</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">检查项目</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">检查结果</th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">2024-03-15</td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">心电图检查</td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">基本正常心电图</td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-blue-600">
+                                <a href="#" class="hover:text-blue-800">查看</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">2024-02-15</td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">心电图检查</td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">基本正常心电图</td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-blue-600">
+                                <a href="#" class="hover:text-blue-800">查看</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html> 

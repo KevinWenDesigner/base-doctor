@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>帮助中心 - 汉唐医生基层版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- 顶部导航 -->
+    <div class="bg-white p-4 shadow-sm sticky top-0 z-10">
+        <div class="flex items-center">
+            <a href="profile.html" class="text-blue-500 mr-4">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <h1 class="text-lg font-semibold">帮助中心</h1>
+        </div>
+    </div>
+
+    <!-- 内容区域 -->
+    <div class="p-4">
+        <!-- 搜索框 -->
+        <div class="mb-4 relative">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <i class="fas fa-search text-gray-400"></i>
+                </div>
+                <input type="text" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-3" placeholder="搜索问题">
+            </div>
+        </div>
+        
+        <!-- 常见问题分类 -->
+        <div class="grid grid-cols-2 gap-3 mb-4">
+            <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-2">
+                    <i class="fas fa-user-md text-blue-500"></i>
+                </div>
+                <span class="text-gray-800 font-medium">账号问题</span>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center">
+                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-2">
+                    <i class="fas fa-stethoscope text-green-500"></i>
+                </div>
+                <span class="text-gray-800 font-medium">诊疗相关</span>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center">
+                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-2">
+                    <i class="fas fa-clipboard-list text-purple-500"></i>
+                </div>
+                <span class="text-gray-800 font-medium">随访管理</span>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center">
+                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-2">
+                    <i class="fas fa-mobile-alt text-orange-500"></i>
+                </div>
+                <span class="text-gray-800 font-medium">设备使用</span>
+            </div>
+        </div>
+        
+        <!-- 常见问题列表 -->
+        <div class="bg-white rounded-lg shadow-sm mb-4">
+            <div class="p-3 border-b">
+                <h2 class="text-sm font-medium text-gray-900">热门问题</h2>
+            </div>
+            <div class="divide-y">
+                <a href="#" class="block p-4 hover:bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-start">
+                            <i class="fas fa-question-circle text-blue-500 mt-0.5 mr-3"></i>
+                            <div class="flex-1">
+                                <div class="text-gray-800">如何进行远程会诊?</div>
+                                <div class="text-gray-500 text-xs mt-1">如何发起、加入远程会诊，以及会诊中的操作说明</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                </a>
+                
+                <a href="#" class="block p-4 hover:bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-start">
+                            <i class="fas fa-question-circle text-blue-500 mt-0.5 mr-3"></i>
+                            <div class="flex-1">
+                                <div class="text-gray-800">如何设置随访计划?</div>
+                                <div class="text-gray-500 text-xs mt-1">创建、编辑和管理患者随访计划的详细说明</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                </a>
+                
+                <a href="#" class="block p-4 hover:bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-start">
+                            <i class="fas fa-question-circle text-blue-500 mt-0.5 mr-3"></i>
+                            <div class="flex-1">
+                                <div class="text-gray-800">忘记密码怎么办?</div>
+                                <div class="text-gray-500 text-xs mt-1">账号密码找回与重置的操作流程</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                </a>
+                
+                <a href="#" class="block p-4 hover:bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-start">
+                            <i class="fas fa-question-circle text-blue-500 mt-0.5 mr-3"></i>
+                            <div class="flex-1">
+                                <div class="text-gray-800">如何查看患者健康数据?</div>
+                                <div class="text-gray-500 text-xs mt-1">患者健康数据的查看和分析方法</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                </a>
+                
+                <a href="#" class="block p-4 hover:bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-start">
+                            <i class="fas fa-question-circle text-blue-500 mt-0.5 mr-3"></i>
+                            <div class="flex-1">
+                                <div class="text-gray-800">数据同步失败怎么解决?</div>
+                                <div class="text-gray-500 text-xs mt-1">常见同步问题和解决方案</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- 使用指南 -->
+        <div class="bg-white rounded-lg shadow-sm mb-4">
+            <div class="p-3 border-b flex justify-between items-center">
+                <h2 class="text-sm font-medium text-gray-900">使用指南</h2>
+                <a href="#" class="text-blue-500 text-sm">查看全部</a>
+            </div>
+            <div class="divide-y">
+                <a href="#" class="block p-4 hover:bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-start">
+                            <i class="fas fa-file-alt text-blue-500 mt-0.5 mr-3"></i>
+                            <div class="flex-1">
+                                <div class="text-gray-800">新用户入门指南</div>
+                                <div class="text-gray-500 text-xs mt-1">全面了解系统功能及基本操作</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                </a>
+                
+                <a href="#" class="block p-4 hover:bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-start">
+                            <i class="fas fa-file-alt text-blue-500 mt-0.5 mr-3"></i>
+                            <div class="flex-1">
+                                <div class="text-gray-800">远程会诊完全手册</div>
+                                <div class="text-gray-500 text-xs mt-1">远程会诊功能详解与最佳实践</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                </a>
+                
+                <a href="#" class="block p-4 hover:bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-start">
+                            <i class="fas fa-file-alt text-blue-500 mt-0.5 mr-3"></i>
+                            <div class="flex-1">
+                                <div class="text-gray-800">随访管理使用指南</div>
+                                <div class="text-gray-500 text-xs mt-1">如何有效管理患者随访，提高依从性</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- 联系客服 -->
+        <div class="bg-white rounded-lg shadow-sm p-4 mb-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-headset text-blue-500 mr-3"></i>
+                    <span class="text-gray-800 font-medium">联系客服</span>
+                </div>
+                <button class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg text-sm">
+                    立即咨询
+                </button>
+            </div>
+            <div class="text-gray-500 text-sm mt-2">
+                工作时间：周一至周五 9:00-18:00
+            </div>
+        </div>
+        
+        <!-- 视频教程 -->
+        <div class="bg-white rounded-lg shadow-sm mb-4">
+            <div class="p-3 border-b flex justify-between items-center">
+                <h2 class="text-sm font-medium text-gray-900">视频教程</h2>
+                <a href="#" class="text-blue-500 text-sm">查看全部</a>
+            </div>
+            <div class="p-4 grid grid-cols-2 gap-3">
+                <div>
+                    <div class="aspect-video bg-gray-100 rounded-lg mb-2 relative">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-play-circle text-blue-500 text-3xl"></i>
+                        </div>
+                    </div>
+                    <div class="text-sm text-gray-800">远程会诊操作流程</div>
+                </div>
+                
+                <div>
+                    <div class="aspect-video bg-gray-100 rounded-lg mb-2 relative">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-play-circle text-blue-500 text-3xl"></i>
+                        </div>
+                    </div>
+                    <div class="text-sm text-gray-800">健康数据分析指南</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

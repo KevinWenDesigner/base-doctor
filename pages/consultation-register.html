@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发起会诊 - 汉唐医生基层版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- 顶部导航栏 -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img class="h-8 w-8" src="../assets/images/logo.png" alt="汉唐医生基层版">
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="patients.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            患者
+                        </a>
+                        <a href="monitoring.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            监测
+                        </a>
+                        <a href="consultation.html" class="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            会诊
+                        </a>
+                        <a href="schedule.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            随访
+                        </a>
+                        <a href="profile.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            我的
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <main class="max-w-7xl mx-auto py-4 px-3 sm:px-4 mt-14">
+        <div class="px-2 py-3 sm:px-0">
+            <div class="bg-white shadow rounded-lg overflow-hidden">
+                <div class="px-3 py-3 sm:px-4 bg-blue-50">
+                    <h3 class="text-base font-medium leading-6 text-gray-900">发起视频会诊</h3>
+                    <p class="mt-1 max-w-2xl text-sm text-gray-500">请填写患者信息和会诊需求</p>
+                </div>
+                
+                <div class="border-t border-gray-200">
+                    <form action="consultation.html" method="get" class="p-3 space-y-4">
+                        <!-- 患者选择部分 -->
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-900 mb-3">选择患者</h4>
+                            
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="relative flex-1 max-w-md">
+                                    <input type="text" class="w-full pl-10 pr-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="搜索患者...">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <a href="add-patient.html" class="ml-3 inline-flex items-center px-3 py-1.5 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                    <svg class="-ml-0.5 mr-1.5 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                    </svg>
+                                    添加新患者
+                                </a>
+                            </div>
+                            
+                            <!-- 患者列表 -->
+                            <div class="bg-white border border-gray-300 rounded-lg max-h-60 overflow-y-auto">
+                                <ul class="divide-y divide-gray-200">
+                                    <!-- 患者项 1 -->
+                                    <li class="px-3 py-2.5 hover:bg-blue-50 transition-colors duration-150">
+                                        <div class="flex">
+                                            <input type="radio" id="patient1" name="patient" value="patient1" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 mt-1.5" checked>
+                                            <label for="patient1" class="flex ml-3 cursor-pointer w-full">
+                                                <div class="flex-shrink-0 mr-3">
+                                                    <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg">张</div>
+                                                </div>
+                                                
+                                                <div class="flex-1 min-w-0">
+                                                    <div class="flex items-center justify-between">
+                                                        <h4 class="text-sm font-medium text-gray-900">张三</h4>
+                                                        <span class="px-2 py-0.5 rounded-full bg-red-100 text-red-800 text-xs font-medium inline-flex items-center">
+                                                            <span class="w-1.5 h-1.5 bg-red-600 rounded-full mr-1"></span>
+                                                            血压异常
+                                                        </span>
+                                                    </div>
+                                                    
+                                                    <div class="mt-1 flex items-center text-xs text-gray-500">
+                                                        <span>45岁</span>
+                                                        <span class="mx-2 text-gray-300">•</span>
+                                                        <span>男</span>
+                                                        <span class="mx-2 text-gray-300">•</span>
+                                                        <span>最近就诊：2024-03-26</span>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    
+                                    <!-- 患者项 2 -->
+                                    <li class="px-3 py-2.5 hover:bg-blue-50 transition-colors duration-150">
+                                        <div class="flex">
+                                            <input type="radio" id="patient2" name="patient" value="patient2" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 mt-1.5">
+                                            <label for="patient2" class="flex ml-3 cursor-pointer w-full">
+                                                <div class="flex-shrink-0 mr-3">
+                                                    <div class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-lg">李</div>
+                                                </div>
+                                                
+                                                <div class="flex-1 min-w-0">
+                                                    <div class="flex items-center justify-between">
+                                                        <h4 class="text-sm font-medium text-gray-900">李四</h4>
+                                                        <span class="px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-800 text-xs font-medium inline-flex items-center">
+                                                            <span class="w-1.5 h-1.5 bg-yellow-600 rounded-full mr-1"></span>
+                                                            血糖异常
+                                                        </span>
+                                                    </div>
+                                                    
+                                                    <div class="mt-1 flex items-center text-xs text-gray-500">
+                                                        <span>32岁</span>
+                                                        <span class="mx-2 text-gray-300">•</span>
+                                                        <span>女</span>
+                                                        <span class="mx-2 text-gray-300">•</span>
+                                                        <span>最近就诊：2024-03-25</span>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    
+                                    <!-- 患者项 3 -->
+                                    <li class="px-3 py-2.5 hover:bg-blue-50 transition-colors duration-150">
+                                        <div class="flex">
+                                            <input type="radio" id="patient3" name="patient" value="patient3" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 mt-1.5">
+                                            <label for="patient3" class="flex ml-3 cursor-pointer w-full">
+                                                <div class="flex-shrink-0 mr-3">
+                                                    <div class="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold text-lg">王</div>
+                                                </div>
+                                                
+                                                <div class="flex-1 min-w-0">
+                                                    <div class="flex items-center justify-between">
+                                                        <h4 class="text-sm font-medium text-gray-900">王五</h4>
+                                                        <span class="px-2 py-0.5 rounded-full bg-green-100 text-green-800 text-xs font-medium inline-flex items-center">
+                                                            <span class="w-1.5 h-1.5 bg-green-600 rounded-full mr-1"></span>
+                                                            指标正常
+                                                        </span>
+                                                    </div>
+                                                    
+                                                    <div class="mt-1 flex items-center text-xs text-gray-500">
+                                                        <span>58岁</span>
+                                                        <span class="mx-2 text-gray-300">•</span>
+                                                        <span>男</span>
+                                                        <span class="mx-2 text-gray-300">•</span>
+                                                        <span>最近就诊：2024-03-24</span>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- 选中患者的信息摘要 -->
+                            <div class="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-3">
+                                <h5 class="text-sm font-medium text-gray-900 mb-2">当前选中患者信息</h5>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div>
+                                        <p class="text-xs text-gray-600">姓名：<span class="font-medium text-gray-900">张三</span></p>
+                                        <p class="text-xs text-gray-600 mt-1">性别：<span class="font-medium text-gray-900">男</span></p>
+                                        <p class="text-xs text-gray-600 mt-1">年龄：<span class="font-medium text-gray-900">45岁</span></p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-600">身份证号：<span class="font-medium text-gray-900">310************123</span></p>
+                                        <p class="text-xs text-gray-600 mt-1">联系电话：<span class="font-medium text-gray-900">138****6789</span></p>
+                                        <p class="text-xs text-gray-600 mt-1">家庭住址：<span class="font-medium text-gray-900">宝鸡市高新区创业大道</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 病情描述部分 -->
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-900 mb-3">病情描述与会诊原因</h4>
+                            <div class="space-y-3">
+                                <div>
+                                    <label for="symptoms" class="block text-sm font-medium text-gray-700">主要症状</label>
+                                    <textarea id="symptoms" name="symptoms" rows="2" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-1.5 border" placeholder="请详细描述患者当前症状" required></textarea>
+                                </div>
+                                <div>
+                                    <label for="history" class="block text-sm font-medium text-gray-700">病史</label>
+                                    <textarea id="history" name="history" rows="2" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-1.5 border" placeholder="请描述相关病史"></textarea>
+                                </div>
+                                <div>
+                                    <label for="medications" class="block text-sm font-medium text-gray-700">当前用药</label>
+                                    <textarea id="medications" name="medications" rows="2" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-1.5 border" placeholder="请列出患者正在使用的药物"></textarea>
+                                </div>
+                                <div>
+                                    <label for="consultation_reason" class="block text-sm font-medium text-gray-700">会诊原因</label>
+                                    <textarea id="consultation_reason" name="consultation_reason" rows="2" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-1.5 border" placeholder="请说明需要会诊的具体原因，如诊断困难、治疗方案确认等"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 会诊方式选择 -->
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-900 mb-3">选择会诊方式</h4>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="relative">
+                                    <input type="radio" id="quick-consultation" name="consultation-type" value="quick" class="sr-only peer" checked>
+                                    <label for="quick-consultation" class="flex flex-col items-center p-3 border rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:border-blue-300">
+                                        <svg class="h-6 w-6 text-blue-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <span class="text-sm font-medium text-gray-900">快速会诊</span>
+                                        <span class="text-xs text-gray-500 mt-1">立即开始视频会诊</span>
+                                    </label>
+                                </div>
+                                <div class="relative">
+                                    <input type="radio" id="scheduled-consultation" name="consultation-type" value="scheduled" class="sr-only peer">
+                                    <label for="scheduled-consultation" class="flex flex-col items-center p-3 border rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:border-blue-300">
+                                        <svg class="h-6 w-6 text-blue-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        </svg>
+                                        <span class="text-sm font-medium text-gray-900">预约会诊</span>
+                                        <span class="text-xs text-gray-500 mt-1">选择时间进行会诊</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 选择科室部分 -->
+                        <div id="department-section" class="hidden">
+                            <h4 class="text-sm font-medium text-gray-900 mb-3">选择会诊科室</h4>
+                            <div class="bg-gray-50 p-3 rounded-lg mb-3 text-sm text-gray-600" id="loading-departments">
+                                <div class="flex items-center justify-center">
+                                    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-blue-500" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    <span>正在加载可用科室...</span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2" id="departments-container" style="display: none;">
+                                <div class="relative">
+                                    <input type="radio" id="dept1" name="department" value="内科" class="sr-only peer" checked>
+                                    <label for="dept1" class="flex flex-col items-center py-2 px-3 border rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:border-blue-300">
+                                        <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                        </svg>
+                                        <span class="mt-1 text-sm font-medium text-gray-900">内科</span>
+                                    </label>
+                                </div>
+                                <div class="relative">
+                                    <input type="radio" id="dept2" name="department" value="外科" class="sr-only peer">
+                                    <label for="dept2" class="flex flex-col items-center py-2 px-3 border rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:border-blue-300">
+                                        <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                                        </svg>
+                                        <span class="mt-1 text-sm font-medium text-gray-900">外科</span>
+                                    </label>
+                                </div>
+                                <div class="relative">
+                                    <input type="radio" id="dept3" name="department" value="儿科" class="sr-only peer">
+                                    <label for="dept3" class="flex flex-col items-center py-2 px-3 border rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:border-blue-300">
+                                        <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                        </svg>
+                                        <span class="mt-1 text-sm font-medium text-gray-900">儿科</span>
+                                    </label>
+                                </div>
+                                <div class="relative">
+                                    <input type="radio" id="dept4" name="department" value="妇产科" class="sr-only peer">
+                                    <label for="dept4" class="flex flex-col items-center py-2 px-3 border rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:border-blue-300">
+                                        <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                        </svg>
+                                        <span class="mt-1 text-sm font-medium text-gray-900">妇产科</span>
+                                    </label>
+                                </div>
+                                <div class="relative">
+                                    <input type="radio" id="dept5" name="department" value="神经科" class="sr-only peer">
+                                    <label for="dept5" class="flex flex-col items-center py-2 px-3 border rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:border-blue-300">
+                                        <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path>
+                                        </svg>
+                                        <span class="mt-1 text-sm font-medium text-gray-900">神经科</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 选择专家医生部分 -->
+                        <div id="doctor-section" class="hidden">
+                            <h4 class="text-sm font-medium text-gray-900 mb-3">选择会诊专家</h4>
+                            <div class="bg-gray-50 p-3 rounded-lg mb-3 text-sm text-gray-600" id="loading-doctors">
+                                <div class="flex items-center justify-center">
+                                    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-blue-500" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    <span>正在加载可用专家...</span>
+                                </div>
+                            </div>
+                            <div class="space-y-3" id="doctors-container" style="display: none;">
+                                <div class="relative border rounded-lg p-3 hover:border-blue-300 hover:bg-blue-50 transition-colors duration-200">
+                                    <input type="radio" id="doctor1" name="doctor" value="王医生" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 absolute top-4 left-3" checked>
+                                    <div class="pl-7 grid grid-cols-1 md:grid-cols-7 gap-3 items-center">
+                                        <div class="md:col-span-1 flex justify-center">
+                                            <div class="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg">王</div>
+                                        </div>
+                                        <div class="md:col-span-3">
+                                            <p class="text-sm font-medium text-gray-900">王医生 | 心内科主任</p>
+                                            <p class="text-xs text-gray-500">宝鸡高新医院</p>
+                                            <div class="flex items-center mt-1">
+                                                <div class="flex text-yellow-400">
+                                                    <svg class="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                                    </svg>
+                                                    <svg class="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                                    </svg>
+                                                    <svg class="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                                    </svg>
+                                                    <svg class="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                                    </svg>
+                                                    <svg class="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                                    </svg>
+                                                </div>
+                                                <span class="text-xs text-gray-500 ml-1">已完成208次会诊</span>
+                                            </div>
+                                        </div>
+                                        <div class="md:col-span-3 mt-2 md:mt-0">
+                                            <div class="text-xs font-medium text-blue-600 mb-1">擅长领域：</div>
+                                            <div class="flex flex-wrap gap-1">
+                                                <span class="border border-blue-600 rounded-full px-2 py-0.5 text-xs bg-blue-50 text-blue-600">高血压</span>
+                                                <span class="border border-blue-600 rounded-full px-2 py-0.5 text-xs bg-blue-50 text-blue-600">心脏病</span>
+                                                <span class="border border-blue-600 rounded-full px-2 py-0.5 text-xs bg-blue-50 text-blue-600">冠心病</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="relative border rounded-lg p-3 hover:border-green-300 hover:bg-green-50 transition-colors duration-200">
+                                    <input type="radio" id="doctor2" name="doctor" value="李医生" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 absolute top-4 left-3">
+                                    <div class="pl-7 grid grid-cols-1 md:grid-cols-7 gap-3 items-center">
+                                        <div class="md:col-span-1 flex justify-center">
+                                            <div class="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-lg">李</div>
+                                        </div>
+                                        <div class="md:col-span-3">
+                                            <p class="text-sm font-medium text-gray-900">李医生 | 副主任医师</p>
+                                            <p class="text-xs text-gray-500">宝鸡高新医院</p>
+                                            <div class="flex items-center mt-1">
+                                                <div class="flex text-yellow-400">
+                                                    <svg class="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                                    </svg>
+                                                    <!-- 其他星星 SVG, 保持简洁 -->
+                                                </div>
+                                                <span class="text-xs text-gray-500 ml-1">已完成175次会诊</span>
+                                            </div>
+                                        </div>
+                                        <div class="md:col-span-3 mt-2 md:mt-0">
+                                            <div class="text-xs font-medium text-green-600 mb-1">擅长领域：</div>
+                                            <div class="flex flex-wrap gap-1">
+                                                <span class="border border-green-600 rounded-full px-2 py-0.5 text-xs bg-green-50 text-green-600">糖尿病</span>
+                                                <span class="border border-green-600 rounded-full px-2 py-0.5 text-xs bg-green-50 text-green-600">内分泌疾病</span>
+                                                <span class="border border-green-600 rounded-full px-2 py-0.5 text-xs bg-green-50 text-green-600">甲状腺疾病</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 预约时间部分 -->
+                        <div id="scheduled-time-section" class="hidden">
+                            <h4 class="text-sm font-medium text-gray-900 mb-3">预约会诊时间</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="consultation-date" class="block text-sm font-medium text-gray-700">日期</label>
+                                    <input type="date" name="consultation-date" id="consultation-date" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-1.5 border">
+                                </div>
+                                <div>
+                                    <label for="consultation-time" class="block text-sm font-medium text-gray-700">时间</label>
+                                    <input type="time" name="consultation-time" id="consultation-time" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-1.5 border">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 提交按钮 -->
+                        <div class="pt-4 border-t border-gray-200">
+                            <div class="flex justify-end">
+                                <button type="button" onclick="window.location.href='consultation.html'" class="bg-white py-1.5 px-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mr-2">
+                                    取消
+                                </button>
+                                <button type="submit" class="ml-2 inline-flex justify-center py-1.5 px-3 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                    开始会诊
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 底部导航栏 -->
+    <nav class="bg-white shadow-lg fixed bottom-0 w-full z-50 sm:hidden">
+        <div class="flex justify-around">
+            <a href="patients.html" class="flex flex-col items-center p-1.5 text-gray-500 hover:text-blue-500">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+                <span class="text-xs">患者</span>
+            </a>
+            <a href="monitoring.html" class="flex flex-col items-center p-1.5 text-gray-500 hover:text-blue-500">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                <span class="text-xs">监测</span>
+            </a>
+            <a href="consultation.html" class="flex flex-col items-center p-1.5 text-blue-500">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                </svg>
+                <span class="text-xs">会诊</span>
+            </a>
+            <a href="schedule.html" class="flex flex-col items-center p-1.5 text-gray-500 hover:text-blue-500">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <span class="text-xs">预约</span>
+            </a>
+            <a href="profile.html" class="flex flex-col items-center p-1.5 text-gray-500 hover:text-blue-500">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                <span class="text-xs">我的</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        // 控制预约时间部分的显示/隐藏以及科室和医生的获取逻辑
+        document.addEventListener('DOMContentLoaded', function() {
+            const consultationTypeInputs = document.querySelectorAll('input[name="consultation-type"]');
+            const scheduledSection = document.getElementById('scheduled-time-section');
+            const departmentSection = document.getElementById('department-section');
+            const loadingDepartments = document.getElementById('loading-departments');
+            const departmentsContainer = document.getElementById('departments-container');
+            const doctorSection = document.getElementById('doctor-section');
+            const loadingDoctors = document.getElementById('loading-doctors');
+            const doctorsContainer = document.getElementById('doctors-container');
+            const dateInput = document.getElementById('consultation-date');
+            const timeInput = document.getElementById('consultation-time');
+            
+            // 初始化时隐藏科室和医生选择部分
+            departmentSection.classList.add('hidden');
+            doctorSection.classList.add('hidden');
+            
+            // 根据会诊方式决定是否显示预约时间
+            consultationTypeInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    // 隐藏科室和医生选择部分（每次改变会诊方式时重置）
+                    departmentSection.classList.add('hidden');
+                    doctorSection.classList.add('hidden');
+                    
+                    if (this.value === 'scheduled') {
+                        // 预约会诊：显示时间选择，时间填写后再加载科室
+                        scheduledSection.classList.remove('hidden');
+                        
+                        // 监听日期和时间的变化
+                        const checkTimeAndLoadDepartments = function() {
+                            if (dateInput.value && timeInput.value) {
+                                // 日期和时间都已填写，加载科室
+                                loadDepartments('scheduled', dateInput.value, timeInput.value);
+                            }
+                        };
+                        
+                        // 添加日期和时间的变化监听
+                        dateInput.addEventListener('change', checkTimeAndLoadDepartments);
+                        timeInput.addEventListener('change', checkTimeAndLoadDepartments);
+                        
+                    } else {
+                        // 快速会诊：隐藏时间选择，直接加载科室
+                        scheduledSection.classList.add('hidden');
+                        
+                        // 立即加载快速会诊可用的科室
+                        loadDepartments('quick');
+                    }
+                });
+            });
+            
+            // 函数：根据会诊方式和时间加载科室
+            function loadDepartments(type, date, time) {
+                // 显示科室选择部分
+                departmentSection.classList.remove('hidden');
+                loadingDepartments.style.display = 'block';
+                departmentsContainer.style.display = 'none';
+                
+                // 隐藏医生选择部分
+                doctorSection.classList.add('hidden');
+                
+                console.log('加载科室，类型：', type, '日期：', date || '无', '时间：', time || '无');
+                
+                // 模拟从接口获取科室数据
+                setTimeout(function() {
+                    // 假设这里是API请求成功的回调
+                    loadingDepartments.style.display = 'none';
+                    departmentsContainer.style.display = 'grid';
+                    
+                    // 更新科室选项（这里可以根据接口返回的数据进行更新）
+                    // updateDepartmentsList(departmentData);
+                }, 1000);
+            }
+            
+            // 监听科室选择变化
+            const departmentInputs = document.querySelectorAll('input[name="department"]');
+            departmentInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    const consultationType = document.querySelector('input[name="consultation-type"]:checked').value;
+                    
+                    // 获取预约时间（如果是预约会诊）
+                    let date = null;
+                    let time = null;
+                    if (consultationType === 'scheduled') {
+                        date = dateInput.value;
+                        time = timeInput.value;
+                    }
+                    
+                    // 加载选中科室的医生
+                    loadDoctorsForDepartment(this.value, consultationType, date, time);
+                });
+            });
+            
+            // 函数：根据科室、会诊类型和时间加载医生数据
+            function loadDoctorsForDepartment(department, type, date, time) {
+                // 显示医生选择部分
+                doctorSection.classList.remove('hidden');
+                loadingDoctors.style.display = 'block';
+                doctorsContainer.style.display = 'none';
+                
+                console.log('加载医生，科室：', department, '类型：', type, '日期：', date || '无', '时间：', time || '无');
+                
+                // 模拟从接口获取专家数据
+                setTimeout(function() {
+                    // 假设这里是API请求成功的回调
+                    loadingDoctors.style.display = 'none';
+                    doctorsContainer.style.display = 'block';
+                    
+                    // 这里可以根据返回的数据更新医生列表
+                    // 例如：updateDoctorsList(doctorData);
+                }, 800);
+            }
+            
+            // 页面加载时，触发默认选中的会诊方式
+            const defaultConsultationType = document.querySelector('input[name="consultation-type"]:checked');
+            if (defaultConsultationType) {
+                const event = new Event('change');
+                defaultConsultationType.dispatchEvent(event);
+            }
+        });
+        
+        // 初始化时默认选择第一个患者
+        document.addEventListener('DOMContentLoaded', function() {
+            const patientRadios = document.querySelectorAll('input[name="patient"]');
+            if (patientRadios.length > 0) {
+                patientRadios[0].checked = true;
+                // 如果需要，这里可以显示选中患者的详细信息
+            }
+        });
+    </script>
+</body>
+</html> 

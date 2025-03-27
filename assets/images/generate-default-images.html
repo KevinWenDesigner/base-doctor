@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>生成默认图片</title>
+</head>
+<body>
+    <canvas id="logoCanvas" width="32" height="32"></canvas>
+    <canvas id="patientAvatarCanvas" width="120" height="120"></canvas>
+    <canvas id="doctorAvatarCanvas" width="120" height="120"></canvas>
+    <script>
+        // 生成logo
+        function generateLogo() {
+            const canvas = document.getElementById('logoCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 设置背景
+            ctx.fillStyle = '#3B82F6';
+            ctx.fillRect(0, 0, 32, 32);
+            
+            // 绘制文字
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('汉', 16, 16);
+            
+            // 下载图片
+            const link = document.createElement('a');
+            link.download = 'logo.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // 生成患者头像
+        function generatePatientAvatar() {
+            const canvas = document.getElementById('patientAvatarCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 设置背景
+            ctx.fillStyle = '#E5E7EB';
+            ctx.fillRect(0, 0, 120, 120);
+            
+            // 绘制头像背景
+            ctx.beginPath();
+            ctx.arc(60, 60, 50, 0, Math.PI * 2);
+            ctx.fillStyle = '#9CA3AF';
+            ctx.fill();
+            
+            // 绘制用户图标
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(60, 45, 15, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(60, 85, 25, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 下载图片
+            const link = document.createElement('a');
+            link.download = 'patient-avatar.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // 生成医生头像
+        function generateDoctorAvatar() {
+            const canvas = document.getElementById('doctorAvatarCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 设置背景
+            ctx.fillStyle = '#E5E7EB';
+            ctx.fillRect(0, 0, 120, 120);
+            
+            // 绘制头像背景
+            ctx.beginPath();
+            ctx.arc(60, 60, 50, 0, Math.PI * 2);
+            ctx.fillStyle = '#3B82F6';
+            ctx.fill();
+            
+            // 绘制医生图标
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(60, 45, 15, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(60, 85, 25, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 绘制听诊器
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(45, 60, 8, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(75, 60, 8, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // 下载图片
+            const link = document.createElement('a');
+            link.download = 'doctor-avatar.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // 自动生成所有图片
+        window.onload = function() {
+            generateLogo();
+            generatePatientAvatar();
+            generateDoctorAvatar();
+        };
+    </script>
+</body>
+</html> 

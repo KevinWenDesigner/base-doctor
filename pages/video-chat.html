@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频通话 - 汉唐医生基层版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            overflow: hidden;
+        }
+        
+        .self-video {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            width: 120px;
+            height: 160px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+        
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+        
+        .message {
+            margin-bottom: 0.75rem;
+            max-width: 80%;
+        }
+        
+        .message-self {
+            margin-left: auto;
+            background-color: #e9f5ff;
+            border-radius: 16px 16px 0 16px;
+        }
+        
+        .message-other {
+            margin-right: auto;
+            background-color: #f0f0f0;
+            border-radius: 16px 16px 16px 0;
+        }
+        
+        .call-timer {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .control-buttons {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 16px;
+            z-index: 20;
+        }
+        
+        .control-button {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        
+        .button-hangup {
+            background-color: #dc2626;
+        }
+        
+        .patient-info-bubble {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background-color: rgba(0,0,0,0.5);
+            border-radius: 16px;
+            padding: 0.5rem 1rem;
+            color: white;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-black h-screen flex flex-col">
+    <!-- 顶部导航栏 -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img class="h-8 w-8" src="../assets/images/logo.png" alt="宝鸡高新医院">
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="patients.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            患者
+                        </a>
+                        <a href="monitoring.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            监测
+                        </a>
+                        <a href="consultation.html" class="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            会诊
+                        </a>
+                        <a href="schedule.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            随访
+                        </a>
+                        <a href="profile.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            我的
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- 视频通话区域 -->
+    <main class="flex-1 flex flex-col md:flex-row overflow-hidden">
+        <!-- 主视频区域 -->
+        <div class="relative flex-1 bg-black">
+            <div class="video-container">
+                <!-- 医生/专家视频 -->
+                <img src="../assets/images/doctor-video.jpg" alt="专家视频" class="w-full h-full object-cover">
+                
+                <!-- 自己的视频小窗口 -->
+                <div class="self-video bg-gray-800">
+                    <img src="../assets/images/self-video.jpg" alt="我的视频" class="w-full h-full object-cover">
+                </div>
+                
+                <!-- 患者信息气泡 -->
+                <div class="patient-info-bubble">
+                    <div class="flex items-center">
+                        <div class="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center mr-2">
+                            <span class="text-white font-bold">王</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium">王医生 | 心内科主任</p>
+                            <p class="text-xs opacity-80">上海第三人民医院</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 通话时间 -->
+                <div class="absolute top-16 right-16 bg-black bg-opacity-50 rounded-full px-3 py-1">
+                    <span class="text-white call-timer">12:45</span>
+                </div>
+                
+                <!-- 控制按钮 -->
+                <div class="control-buttons">
+                    <button class="control-button bg-white">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                        </svg>
+                    </button>
+                    <button class="control-button bg-white">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                    </button>
+                    <button class="control-button bg-white">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.536a5 5 0 017.072 0m-9.9-2.828a9 9 0 0112.728 0"></path>
+                        </svg>
+                    </button>
+                    <button class="control-button bg-white">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                    </button>
+                    <button class="control-button button-hangup">
+                        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M5 3a2 2 0 00-2 2v1c0 8.284 6.716 15 15 15h1a2 2 0 002-2v-3.28a1 1 0 00-.684-.948l-4.493-1.498a1 1 0 00-1.21.502l-1.13 2.257a11.042 11.042 0 01-5.516-5.517l2.257-1.128a1 1 0 00.502-1.21L9.228 3.683A1 1 0 008.279 3H5z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 聊天区域 -->
+        <div class="w-full md:w-80 bg-white">
+            <div class="chat-container h-full">
+                <div class="p-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold">聊天消息</h3>
+                </div>
+                
+                <div class="chat-messages">
+                    <div class="message message-other p-3">
+                        <p class="text-sm">您好张先生，我是王医生。看了您的症状描述和检查报告，想了解一下您最近的血压波动情况。</p>
+                        <p class="text-xs text-gray-500 mt-1">10:30</p>
+                    </div>
+                    
+                    <div class="message message-self p-3">
+                        <p class="text-sm">医生您好，我最近血压一直不稳定，早上正常，晚上经常升高到140/90。</p>
+                        <p class="text-xs text-gray-500 mt-1">10:31</p>
+                    </div>
+                    
+                    <div class="message message-other p-3">
+                        <p class="text-sm">您目前服用的是哪种降压药物？一天服用几次？</p>
+                        <p class="text-xs text-gray-500 mt-1">10:32</p>
+                    </div>
+                    
+                    <div class="message message-self p-3">
+                        <p class="text-sm">我现在服用的是氨氯地平，每天一次，早上服用。</p>
+                        <p class="text-xs text-gray-500 mt-1">10:33</p>
+                    </div>
+                    
+                    <div class="message message-other p-3">
+                        <p class="text-sm">了解了。根据您的情况，我建议调整用药方案，在保持早上服用氨氯地平的同时，增加一种长效降压药物，以控制全天的血压。</p>
+                        <p class="text-xs text-gray-500 mt-1">10:35</p>
+                    </div>
+                </div>
+                
+                <div class="p-4 border-t border-gray-200">
+                    <div class="flex">
+                        <input type="text" class="flex-1 border border-gray-300 rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="输入消息...">
+                        <button class="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 底部提示 -->
+    <div class="bg-black text-white p-2 text-center text-xs">
+        <p>若通话质量不佳，请检查您的网络连接或尝试使用WiFi</p>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <nav class="bg-white shadow-lg fixed bottom-0 w-full z-50 sm:hidden">
+        <div class="flex justify-around">
+            <a href="patients.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+                <span class="text-xs mt-1">患者</span>
+            </a>
+            <a href="monitoring.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                <span class="text-xs mt-1">监测</span>
+            </a>
+            <a href="consultation.html" class="flex flex-col items-center p-2 text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                </svg>
+                <span class="text-xs mt-1">会诊</span>
+            </a>
+            <a href="schedule.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <span class="text-xs mt-1">随访</span>
+            </a>
+            <a href="profile.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                <span class="text-xs mt-1">我的</span>
+            </a>
+        </div>
+    </nav>
+    
+    <script>
+        // 视频通话计时器
+        let seconds = 0;
+        let minutes = 0;
+        const timerElement = document.querySelector('.call-timer');
+        
+        function updateTimer() {
+            seconds++;
+            if (seconds >= 60) {
+                seconds = 0;
+                minutes++;
+            }
+            
+            const formattedMinutes = String(minutes).padStart(2, '0');
+            const formattedSeconds = String(seconds).padStart(2, '0');
+            timerElement.textContent = `${formattedMinutes}:${formattedSeconds}`;
+        }
+        
+        // 开始计时
+        setInterval(updateTimer, 1000);
+        
+        // 按钮功能绑定
+        document.querySelectorAll('.control-button').forEach(button => {
+            button.addEventListener('click', function() {
+                // 静音按钮
+                if (this.querySelector('svg path').getAttribute('d').includes('M19 11a7')) {
+                    this.classList.toggle('bg-red-500');
+                    this.classList.toggle('bg-white');
+                    this.querySelector('svg').classList.toggle('text-white');
+                }
+                
+                // 视频按钮
+                if (this.querySelector('svg path').getAttribute('d').includes('M15 10l4')) {
+                    this.classList.toggle('bg-red-500');
+                    this.classList.toggle('bg-white');
+                    this.querySelector('svg').classList.toggle('text-white');
+                }
+                
+                // 扬声器按钮
+                if (this.querySelector('svg path').getAttribute('d').includes('M15.536 8.464')) {
+                    this.classList.toggle('bg-blue-500');
+                    this.classList.toggle('bg-white');
+                    this.querySelector('svg').classList.toggle('text-white');
+                }
+                
+                // 聊天按钮
+                if (this.querySelector('svg path').getAttribute('d').includes('M8 12h.01M12')) {
+                    const chatArea = document.querySelector('.chat-container').parentNode;
+                    chatArea.classList.toggle('hidden');
+                    chatArea.classList.toggle('md:block');
+                }
+                
+                // 挂断按钮
+                if (this.classList.contains('button-hangup')) {
+                    window.location.href = 'consultation.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

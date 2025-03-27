@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>通知设置 - 汉唐医生基层版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- 顶部导航 -->
+    <div class="bg-white p-4 shadow-sm sticky top-0 z-10">
+        <div class="flex items-center">
+            <a href="profile.html" class="text-blue-500 mr-4">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <h1 class="text-lg font-semibold">通知设置</h1>
+        </div>
+    </div>
+
+    <!-- 内容区域 -->
+    <div class="p-4">
+        <!-- 通知设置提示 -->
+        <div class="bg-blue-50 p-3 rounded-lg mb-4 text-sm text-blue-700">
+            <div class="flex">
+                <i class="fas fa-info-circle mt-0.5 mr-2"></i>
+                <div>设置需要接收的消息类型，关闭后将不会收到相应通知</div>
+            </div>
+        </div>
+        
+        <!-- 通知总开关 -->
+        <div class="bg-white rounded-lg shadow-sm mb-4">
+            <div class="flex justify-between items-center p-4">
+                <div class="flex items-center">
+                    <i class="fas fa-bell text-blue-500 mr-3"></i>
+                    <span class="text-gray-800 font-medium">全部通知</span>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" checked class="sr-only peer">
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                </label>
+            </div>
+        </div>
+        
+        <!-- 患者相关通知 -->
+        <div class="bg-white rounded-lg shadow-sm mb-4">
+            <div class="p-3 border-b">
+                <h2 class="text-sm font-medium text-gray-900">患者通知</h2>
+            </div>
+            <div class="divide-y">
+                <div class="flex justify-between items-center p-4">
+                    <div>
+                        <span class="text-gray-700">新患者提醒</span>
+                        <span class="text-gray-500 text-xs block mt-1">有新患者添加时通知您</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                    </label>
+                </div>
+                
+                <div class="flex justify-between items-center p-4">
+                    <div>
+                        <span class="text-gray-700">指标异常提醒</span>
+                        <span class="text-gray-500 text-xs block mt-1">患者生理指标异常时通知您</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                    </label>
+                </div>
+                
+                <div class="flex justify-between items-center p-4">
+                    <div>
+                        <span class="text-gray-700">健康数据上传</span>
+                        <span class="text-gray-500 text-xs block mt-1">患者上传新的健康数据时通知您</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 会诊通知 -->
+        <div class="bg-white rounded-lg shadow-sm mb-4">
+            <div class="p-3 border-b">
+                <h2 class="text-sm font-medium text-gray-900">会诊通知</h2>
+            </div>
+            <div class="divide-y">
+                <div class="flex justify-between items-center p-4">
+                    <div>
+                        <span class="text-gray-700">会诊申请</span>
+                        <span class="text-gray-500 text-xs block mt-1">收到会诊申请时通知您</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                    </label>
+                </div>
+                
+                <div class="flex justify-between items-center p-4">
+                    <div>
+                        <span class="text-gray-700">会诊提醒</span>
+                        <span class="text-gray-500 text-xs block mt-1">会诊即将开始时提前通知您</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 随访通知 -->
+        <div class="bg-white rounded-lg shadow-sm mb-4">
+            <div class="p-3 border-b">
+                <h2 class="text-sm font-medium text-gray-900">随访通知</h2>
+            </div>
+            <div class="divide-y">
+                <div class="flex justify-between items-center p-4">
+                    <div>
+                        <span class="text-gray-700">随访提醒</span>
+                        <span class="text-gray-500 text-xs block mt-1">患者随访即将到期时通知您</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                    </label>
+                </div>
+                
+                <div class="flex justify-between items-center p-4">
+                    <div>
+                        <span class="text-gray-700">随访反馈</span>
+                        <span class="text-gray-500 text-xs block mt-1">患者完成随访反馈时通知您</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 其他通知 -->
+        <div class="bg-white rounded-lg shadow-sm mb-4">
+            <div class="p-3 border-b">
+                <h2 class="text-sm font-medium text-gray-900">其他通知</h2>
+            </div>
+            <div class="divide-y">
+                <div class="flex justify-between items-center p-4">
+                    <div>
+                        <span class="text-gray-700">系统通知</span>
+                        <span class="text-gray-500 text-xs block mt-1">系统维护、更新等信息</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                    </label>
+                </div>
+                
+                <div class="flex justify-between items-center p-4">
+                    <div>
+                        <span class="text-gray-700">推送时段设置</span>
+                        <span class="text-gray-500 text-xs block mt-1">选择接收通知的时间段</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="text-gray-500 mr-2">全天</span>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

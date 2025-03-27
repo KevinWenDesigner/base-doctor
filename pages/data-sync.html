@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据同步 - 汉唐医生基层版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- 顶部导航 -->
+    <div class="bg-white p-4 shadow-sm sticky top-0 z-10">
+        <div class="flex items-center">
+            <a href="profile.html" class="text-blue-500 mr-4">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <h1 class="text-lg font-semibold">数据同步</h1>
+        </div>
+    </div>
+
+    <!-- 内容区域 -->
+    <div class="p-4">
+        <!-- 当前同步状态 -->
+        <div class="bg-white rounded-lg shadow-sm mb-4">
+            <div class="p-4 flex items-center justify-between border-b">
+                <div class="flex items-center">
+                    <i class="fas fa-sync-alt text-blue-500 mr-3"></i>
+                    <span class="text-gray-800 font-medium">同步状态</span>
+                </div>
+                <div class="text-green-500 flex items-center">
+                    <span class="text-sm mr-1">已同步</span>
+                    <i class="fas fa-check-circle"></i>
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="text-sm text-gray-500">上次同步时间：2023-12-15 08:30:45</div>
+            </div>
+        </div>
+        
+        <!-- 自动同步设置 -->
+        <div class="bg-white rounded-lg shadow-sm mb-4">
+            <div class="p-3 border-b">
+                <h2 class="text-sm font-medium text-gray-900">自动同步设置</h2>
+            </div>
+            <div class="divide-y">
+                <div class="flex justify-between items-center p-4">
+                    <div>
+                        <span class="text-gray-700">Wi-Fi 环境自动同步</span>
+                        <span class="text-gray-500 text-xs block mt-1">连接Wi-Fi时自动同步数据，节省流量</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                    </label>
+                </div>
+                
+                <div class="flex justify-between items-center p-4">
+                    <div>
+                        <span class="text-gray-700">移动网络下同步</span>
+                        <span class="text-gray-500 text-xs block mt-1">使用移动网络时同步数据，可能消耗流量</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                    </label>
+                </div>
+                
+                <div class="flex justify-between items-center p-4">
+                    <div>
+                        <span class="text-gray-700">定时同步</span>
+                        <span class="text-gray-500 text-xs block mt-1">按设定的时间间隔自动同步数据</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="text-gray-500 mr-2">每小时</span>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 同步内容设置 -->
+        <div class="bg-white rounded-lg shadow-sm mb-4">
+            <div class="p-3 border-b">
+                <h2 class="text-sm font-medium text-gray-900">同步内容设置</h2>
+            </div>
+            <div class="divide-y">
+                <div class="flex justify-between items-center p-4">
+                    <div>
+                        <span class="text-gray-700">患者信息</span>
+                        <span class="text-gray-500 text-xs block mt-1">同步患者基本资料和健康档案</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                    </label>
+                </div>
+                
+                <div class="flex justify-between items-center p-4">
+                    <div>
+                        <span class="text-gray-700">健康数据</span>
+                        <span class="text-gray-500 text-xs block mt-1">同步患者的生理指标等健康数据</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                    </label>
+                </div>
+                
+                <div class="flex justify-between items-center p-4">
+                    <div>
+                        <span class="text-gray-700">会诊记录</span>
+                        <span class="text-gray-500 text-xs block mt-1">同步远程会诊相关记录和诊断结果</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                    </label>
+                </div>
+                
+                <div class="flex justify-between items-center p-4">
+                    <div>
+                        <span class="text-gray-700">随访计划</span>
+                        <span class="text-gray-500 text-xs block mt-1">同步为患者设置的随访计划和执行情况</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                    </label>
+                </div>
+                
+                <div class="flex justify-between items-center p-4">
+                    <div>
+                        <span class="text-gray-700">图片和媒体文件</span>
+                        <span class="text-gray-500 text-xs block mt-1">同步病例中的影像资料等大文件</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 手动同步按钮 -->
+        <button class="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg flex items-center justify-center mb-4">
+            <i class="fas fa-sync-alt mr-2"></i>
+            立即同步
+        </button>
+        
+        <!-- 同步记录 -->
+        <div class="bg-white rounded-lg shadow-sm mb-4">
+            <div class="p-3 border-b flex justify-between items-center">
+                <h2 class="text-sm font-medium text-gray-900">同步记录</h2>
+                <a href="#" class="text-blue-500 text-sm">查看全部</a>
+            </div>
+            <div class="divide-y">
+                <div class="p-4">
+                    <div class="flex justify-between mb-1">
+                        <span class="text-gray-700 font-medium">自动同步完成</span>
+                        <span class="text-gray-500 text-sm">今天 08:30</span>
+                    </div>
+                    <div class="text-gray-500 text-sm">同步内容：患者信息、健康数据、随访计划</div>
+                </div>
+                
+                <div class="p-4">
+                    <div class="flex justify-between mb-1">
+                        <span class="text-gray-700 font-medium">手动同步完成</span>
+                        <span class="text-gray-500 text-sm">昨天 17:45</span>
+                    </div>
+                    <div class="text-gray-500 text-sm">同步内容：全部数据</div>
+                </div>
+                
+                <div class="p-4">
+                    <div class="flex justify-between mb-1">
+                        <span class="text-gray-700 font-medium">自动同步完成</span>
+                        <span class="text-gray-500 text-sm">昨天 08:30</span>
+                    </div>
+                    <div class="text-gray-500 text-sm">同步内容：患者信息、健康数据、随访计划</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

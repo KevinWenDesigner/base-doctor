@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>病历详情 - 汉唐医生基层版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- 顶部导航栏 -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="patient-detail.html" class="text-gray-500 hover:text-gray-700">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </a>
+                    <h1 class="ml-4 text-lg font-medium text-gray-900">病历详情</h1>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <main class="max-w-4xl mx-auto py-4 px-4 sm:px-6 lg:px-8 mt-16">
+        <!-- 患者基本信息卡片 -->
+        <div class="bg-white shadow rounded-lg p-4 mb-4">
+            <div class="flex items-center">
+                <img class="h-12 w-12 rounded-full" src="../assets/images/placeholder-patient.jpg" alt="患者头像">
+                <div class="ml-4">
+                    <h2 class="text-lg font-medium text-gray-900">张三</h2>
+                    <p class="text-sm text-gray-500">45岁 · 男 · 就诊时间：2024-03-26</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 病历详情卡片 -->
+        <div class="bg-white shadow rounded-lg overflow-hidden">
+            <!-- 就诊信息 -->
+            <div class="p-4 border-b border-gray-200">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-sm text-gray-500">就诊科室</p>
+                        <p class="mt-1 text-sm font-medium text-gray-900">内科</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">接诊医生</p>
+                        <p class="mt-1 text-sm font-medium text-gray-900">李医生</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">就诊类型</p>
+                        <p class="mt-1 text-sm font-medium text-gray-900">门诊</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">就诊时间</p>
+                        <p class="mt-1 text-sm font-medium text-gray-900">2024-03-26 09:30</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 主诉 -->
+            <div class="p-4 border-b border-gray-200">
+                <h3 class="text-base font-medium text-gray-900 mb-2">主诉</h3>
+                <p class="text-sm text-gray-700">头昏、头痛，近期睡眠质量差，持续1周。</p>
+            </div>
+
+            <!-- 现病史 -->
+            <div class="p-4 border-b border-gray-200">
+                <h3 class="text-base font-medium text-gray-900 mb-2">现病史</h3>
+                <p class="text-sm text-gray-700">
+                    患者1周前无明显诱因出现头昏、头痛，以枕部胀痛为主，伴有轻度恶心，无呕吐。
+                    症状时轻时重，休息后可稍有缓解。同时感觉睡眠质量差，入睡困难，易醒。
+                    自测血压最高达160/95mmHg。未经特殊治疗。
+                </p>
+            </div>
+
+            <!-- 既往史 -->
+            <div class="p-4 border-b border-gray-200">
+                <h3 class="text-base font-medium text-gray-900 mb-2">既往史</h3>
+                <p class="text-sm text-gray-700">
+                    高血压病史2年，规律服用苯磺酸氨氯地平片控制。
+                    否认心脏病、糖尿病等其他慢性病史。
+                    否认手术外伤史。
+                    否认食物、药物过敏史。
+                </p>
+            </div>
+
+            <!-- 体格检查 -->
+            <div class="p-4 border-b border-gray-200">
+                <h3 class="text-base font-medium text-gray-900 mb-2">体格检查</h3>
+                <div class="space-y-2">
+                    <p class="text-sm text-gray-700">
+                        体温：36.5℃
+                        脉搏：78次/分
+                        呼吸：18次/分
+                        血压：150/90mmHg
+                    </p>
+                    <p class="text-sm text-gray-700">
+                        神志清楚，精神状态一般，发育正常，营养中等，自主体位。
+                    </p>
+                    <p class="text-sm text-gray-700">
+                        心肺听诊无异常。
+                        腹部检查无异常。
+                    </p>
+                </div>
+            </div>
+
+            <!-- 诊断结果 -->
+            <div class="p-4 border-b border-gray-200">
+                <h3 class="text-base font-medium text-gray-900 mb-2">诊断结果</h3>
+                <div class="space-y-1">
+                    <p class="text-sm font-medium text-gray-900">主要诊断：</p>
+                    <p class="text-sm text-gray-700">原发性高血压(1级)</p>
+                    <p class="text-sm font-medium text-gray-900 mt-2">其他诊断：</p>
+                    <p class="text-sm text-gray-700">失眠</p>
+                </div>
+            </div>
+
+            <!-- 处理意见 -->
+            <div class="p-4">
+                <h3 class="text-base font-medium text-gray-900 mb-2">处理意见</h3>
+                <div class="space-y-2 text-sm text-gray-700">
+                    <p>1. 控制饮食，避免高盐高脂食物</p>
+                    <p>2. 规律生活，保持心情舒畅</p>
+                    <p>3. 定期服药控制血压</p>
+                    <p>4. 建议每日监测血压，记录变化</p>
+                    <p>5. 两周后复诊</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html> 

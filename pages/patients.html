@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的患者 - 汉唐医生基层版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- 顶部导航栏 -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img class="h-8 w-8" src="../assets/images/logo.png" alt="宝鸡高新医院">
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="patients.html" class="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            患者
+                        </a>
+                        <a href="monitoring.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            监测
+                        </a>
+                        <a href="consultation.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            会诊
+                        </a>
+                        <a href="schedule.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            随访
+                        </a>
+                        <a href="profile.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            我的
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <main class="max-w-7xl mx-auto py-4 sm:px-4 lg:px-6 mt-16">
+        <!-- 搜索和筛选区域 -->
+        <div class="bg-white shadow rounded-lg mb-4">
+            <div class="px-3 py-3 sm:px-4">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                    <h3 class="text-lg font-medium text-gray-900 mb-3 sm:mb-0">我的患者</h3>
+                    <div class="flex items-center space-x-4">
+                        <a href="add-patient.html" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                            <svg class="-ml-1 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            添加患者
+                        </a>
+                        <div class="flex-1 sm:ml-4">
+                            <div class="relative">
+                                <input type="text" class="w-full pl-10 pr-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="搜索患者...">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 px-3 py-3 sm:px-4">
+                <div class="flex flex-col space-y-3">
+                    <!-- 时间范围筛选 -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">时间范围</label>
+                        <div class="flex flex-wrap gap-1.5">
+                            <button class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 text-sm font-medium">
+                                全部时间
+                            </button>
+                            <button class="px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-800 text-sm font-medium">
+                                最近一天
+                            </button>
+                            <button class="px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-800 text-sm font-medium">
+                                最近一周
+                            </button>
+                            <button class="px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-800 text-sm font-medium">
+                                最近一月
+                            </button>
+                        </div>
+                    </div>
+                    <!-- 患者状态筛选 -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">患者状态</label>
+                        <div class="flex flex-wrap gap-1.5">
+                            <button class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 text-sm font-medium">
+                                全部患者
+                            </button>
+                            <button class="px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-800 text-sm font-medium">
+                                指标异常
+                            </button>
+                            <button class="px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-800 text-sm font-medium">
+                                待随访
+                            </button>
+                            <button class="px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-800 text-sm font-medium">
+                                已康复
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 患者列表 -->
+        <div class="bg-white shadow rounded-lg">
+            <div class="border-t border-gray-200">
+                <ul class="divide-y divide-gray-200">
+                    <!-- 患者项 -->
+                    <li class="px-4 py-3 hover:bg-blue-50 transition-colors duration-150">
+                        <div class="flex">
+                            <!-- 左侧红点和头像 -->
+                            <div class="flex-shrink-0 relative mr-3">
+                                <span class="absolute -left-1 top-1/2 transform -translate-y-1/2 w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+                                <img class="h-12 w-12 rounded-full ml-2" src="../assets/images/placeholder-patient.jpg" alt="患者头像">
+                            </div>
+                            
+                            <!-- 患者信息区域 -->
+                            <div class="flex-1 min-w-0">
+                                <!-- 第一行：姓名和状态标签 -->
+                                <div class="flex items-center justify-between">
+                                    <h4 class="text-base font-medium text-gray-900">张三</h4>
+                                    <span class="px-2 py-0.5 rounded-full bg-red-100 text-red-800 text-xs font-medium inline-flex items-center">
+                                        <span class="w-1.5 h-1.5 bg-red-600 rounded-full mr-1"></span>
+                                        血压异常
+                                    </span>
+                                </div>
+                                
+                                <!-- 第二行：基本信息 -->
+                                <div class="mt-1 flex items-center text-sm text-gray-500">
+                                    <span>45岁</span>
+                                    <span class="mx-2 text-gray-300">•</span>
+                                    <span>男</span>
+                                    <span class="mx-2 text-gray-300">•</span>
+                                    <span>最近就诊：2024-03-26</span>
+                                </div>
+                                
+                                <!-- 第三行：监测信息和查看详情 -->
+                                <div class="mt-1 flex items-center justify-between">
+                                    <div class="text-xs text-gray-500">上次监测：2024-03-26 14:30</div>
+                                    <a href="patient-detail.html" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                        查看详情
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- 患者项 -->
+                    <li class="px-4 py-3 hover:bg-blue-50 transition-colors duration-150">
+                        <div class="flex">
+                            <!-- 左侧黄点和头像 -->
+                            <div class="flex-shrink-0 relative mr-3">
+                                <span class="absolute -left-1 top-1/2 transform -translate-y-1/2 w-2.5 h-2.5 bg-yellow-500 rounded-full"></span>
+                                <img class="h-12 w-12 rounded-full ml-2" src="../assets/images/placeholder-patient.jpg" alt="患者头像">
+                            </div>
+                            
+                            <!-- 患者信息区域 -->
+                            <div class="flex-1 min-w-0">
+                                <!-- 第一行：姓名和状态标签 -->
+                                <div class="flex items-center justify-between">
+                                    <h4 class="text-base font-medium text-gray-900">李四</h4>
+                                    <span class="px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-800 text-xs font-medium inline-flex items-center">
+                                        <span class="w-1.5 h-1.5 bg-yellow-600 rounded-full mr-1"></span>
+                                        血糖异常
+                                    </span>
+                                </div>
+                                
+                                <!-- 第二行：基本信息 -->
+                                <div class="mt-1 flex items-center text-sm text-gray-500">
+                                    <span>32岁</span>
+                                    <span class="mx-2 text-gray-300">•</span>
+                                    <span>女</span>
+                                    <span class="mx-2 text-gray-300">•</span>
+                                    <span>最近就诊：2024-03-25</span>
+                                </div>
+                                
+                                <!-- 第三行：监测信息和查看详情 -->
+                                <div class="mt-1 flex items-center justify-between">
+                                    <div class="text-xs text-gray-500">上次监测：2024-03-25 09:15</div>
+                                    <a href="patient-detail.html" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                        查看详情
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- 患者项 -->
+                    <li class="px-4 py-3 hover:bg-blue-50 transition-colors duration-150">
+                        <div class="flex">
+                            <!-- 左侧绿点和头像 -->
+                            <div class="flex-shrink-0 relative mr-3">
+                                <span class="absolute -left-1 top-1/2 transform -translate-y-1/2 w-2.5 h-2.5 bg-green-500 rounded-full"></span>
+                                <img class="h-12 w-12 rounded-full ml-2" src="../assets/images/placeholder-patient.jpg" alt="患者头像">
+                            </div>
+                            
+                            <!-- 患者信息区域 -->
+                            <div class="flex-1 min-w-0">
+                                <!-- 第一行：姓名和状态标签 -->
+                                <div class="flex items-center justify-between">
+                                    <h4 class="text-base font-medium text-gray-900">王五</h4>
+                                    <span class="px-2 py-0.5 rounded-full bg-green-100 text-green-800 text-xs font-medium inline-flex items-center">
+                                        <span class="w-1.5 h-1.5 bg-green-600 rounded-full mr-1"></span>
+                                        指标正常
+                                    </span>
+                                </div>
+                                
+                                <!-- 第二行：基本信息 -->
+                                <div class="mt-1 flex items-center text-sm text-gray-500">
+                                    <span>58岁</span>
+                                    <span class="mx-2 text-gray-300">•</span>
+                                    <span>男</span>
+                                    <span class="mx-2 text-gray-300">•</span>
+                                    <span>最近就诊：2024-03-24</span>
+                                </div>
+                                
+                                <!-- 第三行：监测信息和查看详情 -->
+                                <div class="mt-1 flex items-center justify-between">
+                                    <div class="text-xs text-gray-500">上次监测：2024-03-24 16:45</div>
+                                    <a href="patient-detail.html" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                        查看详情
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- 底部导航栏 -->
+    <nav class="bg-white shadow-lg fixed bottom-0 w-full z-50 sm:hidden">
+        <div class="flex justify-around">
+            <a href="patients.html" class="flex flex-col items-center p-2 text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+                <span class="text-xs mt-1">患者</span>
+            </a>
+            <a href="monitoring.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                <span class="text-xs mt-1">监测</span>
+            </a>
+            <a href="consultation.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                </svg>
+                <span class="text-xs mt-1">会诊</span>
+            </a>
+            <a href="schedule.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <span class="text-xs mt-1">随访</span>
+            </a>
+            <a href="profile.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                <span class="text-xs mt-1">我的</span>
+            </a>
+        </div>
+    </nav>
+</body>
+</html> 
