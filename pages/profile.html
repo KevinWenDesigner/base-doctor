@@ -46,86 +46,63 @@
                 <!-- 个人信息部分 -->
                 <div class="bg-white rounded-lg p-4 mb-4">
                     <div class="flex items-start space-x-4">
-                        <!-- 左侧头像 -->
-                        <div class="relative flex-shrink-0">
-                            <img src="https://i.pravatar.cc/120?img=58" class="w-16 h-16 rounded-full object-cover border-2 border-white shadow-lg">
-                            <button class="absolute -bottom-1 -right-1 bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center shadow-md hover:bg-blue-600">
-                                <i class="fas fa-camera text-xs"></i>
-                            </button>
+                        <!-- 左侧头像和基本信息 -->
+                        <div class="flex flex-col items-center">
+                            <div class="relative">
+                                <img src="https://i.pravatar.cc/120?img=58" class="w-16 h-16 rounded-full object-cover border-2 border-white shadow-lg">
+                                <button class="absolute -bottom-1 -right-1 bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center shadow-md hover:bg-blue-600">
+                                    <i class="fas fa-camera text-xs"></i>
+                                </button>
+                            </div>
+                            <h1 class="text-lg font-bold text-gray-800 mt-2">张医生</h1>
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200">
+                                <i class="fas fa-certificate mr-1 text-blue-500"></i>
+                                已认证医师
+                            </span>
                         </div>
                         
-                        <!-- 右侧信息 -->
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center justify-between mb-2">
-                                <div>
-                                    <h1 class="text-xl font-bold text-gray-800">张医生</h1>
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200 mt-1">
-                                        <i class="fas fa-certificate mr-1 text-blue-500"></i>
-                                        已认证医师
-                                    </span>
+                        <!-- 右侧信息列表 -->
+                        <div class="flex-1">
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="flex items-center space-x-2 text-sm">
+                                    <i class="fas fa-hospital text-blue-500"></i>
+                                    <span class="text-gray-600">宝鸡高新医院</span>
+                                </div>
+                                <div class="flex items-center space-x-2 text-sm">
+                                    <i class="fas fa-user-md text-blue-500"></i>
+                                    <span class="text-gray-600">内科 - 副主任医师</span>
+                                </div>
+                                <div class="flex items-center space-x-2 text-sm">
+                                    <i class="fas fa-clock text-blue-500"></i>
+                                    <span class="text-gray-600">执业15年</span>
+                                </div>
+                                <div class="flex items-center space-x-2 text-sm">
+                                    <i class="fas fa-id-card text-blue-500"></i>
+                                    <span class="text-gray-600">HT2024586</span>
                                 </div>
                             </div>
-                            
-                            <!-- 医生信息列表 -->
-                            <div class="space-y-2.5 mt-3">
-                                <div class="flex items-center bg-gray-50/50 hover:bg-gray-50 rounded-lg p-3 transition-colors">
-                                    <i class="fas fa-hospital text-blue-500 w-5 text-center"></i>
-                                    <div class="ml-3">
-                                        <div class="text-xs text-gray-500">所属医院</div>
-                                        <div class="text-sm font-medium text-gray-900">宝鸡高新医院</div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center bg-gray-50/50 hover:bg-gray-50 rounded-lg p-3 transition-colors">
-                                    <i class="fas fa-user-md text-blue-500 w-5 text-center"></i>
-                                    <div class="ml-3">
-                                        <div class="text-xs text-gray-500">职称科室</div>
-                                        <div class="text-sm font-medium text-gray-900">内科 - 副主任医师</div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center bg-gray-50/50 hover:bg-gray-50 rounded-lg p-3 transition-colors">
-                                    <i class="fas fa-clock text-blue-500 w-5 text-center"></i>
-                                    <div class="ml-3">
-                                        <div class="text-xs text-gray-500">执业年限</div>
-                                        <div class="text-sm font-medium text-gray-900">15年</div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center bg-gray-50/50 hover:bg-gray-50 rounded-lg p-3 transition-colors">
-                                    <i class="fas fa-id-card text-blue-500 w-5 text-center"></i>
-                                    <div class="ml-3">
-                                        <div class="text-xs text-gray-500">医师编号</div>
-                                        <div class="text-sm font-medium text-gray-900">HT2024586</div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center bg-gray-50/50 hover:bg-gray-50 rounded-lg p-3 transition-colors">
-                                    <i class="fas fa-star text-green-500 w-5 text-center"></i>
-                                    <div class="ml-3 flex-1">
-                                        <div class="text-xs text-gray-500">好评率</div>
-                                        <div class="flex items-center mt-0.5">
-                                            <div class="text-sm font-medium text-gray-900 mr-2">98%</div>
-                                            <div class="flex-1 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+
+                            <!-- 评分和会诊信息 -->
+                            <div class="mt-4 space-y-2">
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-green-500 w-5"></i>
+                                    <div class="ml-2 flex-1">
+                                        <div class="flex items-center">
+                                            <span class="text-sm font-medium text-gray-900 mr-2">好评率 98%</span>
+                                            <div class="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
                                                 <div class="h-full bg-green-500 rounded-full" style="width: 98%"></div>
                                             </div>
-                                            <div class="ml-2">
-                                                <i class="fas fa-thumbs-up text-green-500 text-xs"></i>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="flex items-center bg-gray-50/50 hover:bg-gray-50 rounded-lg p-3 transition-colors">
-                                    <i class="fas fa-heartbeat text-purple-500 w-5 text-center"></i>
-                                    <div class="ml-3 flex-1">
-                                        <div class="text-xs text-gray-500">已完成会诊</div>
-                                        <div class="flex items-center justify-between mt-0.5">
-                                            <div class="text-sm font-medium text-gray-900">156次</div>
-                                            <div class="flex items-center space-x-1.5">
-                                                <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-purple-50 text-xs font-medium text-purple-700">
-                                                    本月 <span class="font-bold ml-1">12</span>
-                                                </span>
-                                                <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-blue-50 text-xs font-medium text-blue-700">
-                                                    本周 <span class="font-bold ml-1">3</span>
-                                                </span>
-                                            </div>
-                                        </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-heartbeat text-purple-500 w-5"></i>
+                                        <span class="ml-2 text-sm text-gray-900">已完成会诊 156次</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="px-2 py-0.5 rounded bg-purple-50 text-xs font-medium text-purple-700">本月12</span>
+                                        <span class="px-2 py-0.5 rounded bg-blue-50 text-xs font-medium text-blue-700">本周3</span>
                                     </div>
                                 </div>
                             </div>
@@ -134,18 +111,24 @@
                 </div>
                 
                 <!-- 专业特长与擅长领域 -->
-                <div class="mt-6 pt-4 border-t border-gray-200">
-                    <h3 class="text-sm font-medium text-gray-900 mb-3">擅长领域</h3>
-                    <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">高血压</span>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">糖尿病</span>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">冠心病</span>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">心力衰竭</span>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">心律失常</span>
+                <div class="mt-4 pt-4 border-t border-gray-200">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-medium text-gray-900">擅长领域</h3>
+                        <button id="edit-profile-btn" class="inline-flex items-center px-3 py-1.5 border border-blue-500 text-blue-500 rounded-md text-xs font-medium hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200">
+                            <i class="fas fa-edit mr-1.5"></i>
+                            编辑资料
+                        </button>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700">高血压</span>
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700">糖尿病</span>
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700">冠心病</span>
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700">心力衰竭</span>
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700">心律失常</span>
                     </div>
                     
                     <h3 class="text-sm font-medium text-gray-900 mb-3">专业背景</h3>
-                    <div class="space-y-2 text-sm text-gray-600 mb-6">
+                    <div class="space-y-2 text-sm text-gray-600">
                         <div class="flex items-start">
                             <i class="fas fa-graduation-cap text-blue-500 mt-1 mr-2"></i>
                             <span>毕业于西安交通大学医学院</span>
@@ -166,13 +149,6 @@
                             <i class="fas fa-stethoscope text-blue-500 mt-1 mr-2"></i>
                             <span>擅长高血压、冠心病等慢性病的个体化治疗方案制定</span>
                         </div>
-                    </div>
-                    
-                    <div class="flex justify-end">
-                        <button id="edit-profile-btn" class="inline-flex items-center px-4 py-2 border border-blue-500 text-blue-500 rounded-md text-sm font-medium hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200">
-                            <i class="fas fa-edit mr-2"></i>
-                            编辑资料
-                        </button>
                     </div>
                 </div>
             </div>
@@ -655,5 +631,4 @@
         });
     </script>
 </body>
-</html> 
 </html> 
