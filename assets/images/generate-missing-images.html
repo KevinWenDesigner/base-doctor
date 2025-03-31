@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生成缺失图片</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .image-generator {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        h2 {
+            margin-top: 0;
+            color: #2563EB;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            margin: 10px 0;
+        }
+        button {
+            background-color: #2563EB;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #1E40AF;
+        }
+        .instructions {
+            background-color: #EFF6FF;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>生成缺失图片</h1>
+    
+    <div class="instructions">
+        <p><strong>使用说明：</strong> 本工具用于生成"汉唐医生基层版"应用中缺失的图片。生成后点击下载按钮保存图片，并将其放入正确的目录中。</p>
+    </div>
+    
+    <div class="container">
+        <!-- 医生头像生成器 -->
+        <div class="image-generator">
+            <h2>医生头像 (doctor-avatar.png)</h2>
+            <p>这将创建一个专业的医生头像图片，用于个人中心页面。</p>
+            
+            <canvas id="doctorCanvas" width="400" height="400"></canvas>
+            <div>
+                <button id="generateDoctorBtn">生成医生头像</button>
+                <button id="downloadDoctorBtn">下载图片</button>
+            </div>
+            <p><small>保存位置：assets/images/placeholders/doctor-avatar.png</small></p>
+        </div>
+        
+        <!-- 心电图生成器 -->
+        <div class="image-generator">
+            <h2>心电图 (placeholder-ecg.jpg)</h2>
+            <p>这将创建一个医疗心电图占位图片，用于检查详情页面。</p>
+            
+            <canvas id="ecgCanvas" width="600" height="300"></canvas>
+            <div>
+                <button id="generateEcgBtn">生成心电图</button>
+                <button id="downloadEcgBtn">下载图片</button>
+            </div>
+            <p><small>保存位置：assets/images/placeholder-ecg.jpg</small></p>
+        </div>
+    </div>
+
+    <script>
+        // 医生头像绘制函数
+        function drawDoctorAvatar() {
+            const canvas = document.getElementById('doctorCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 清空画布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 背景
+            ctx.fillStyle = '#EFF6FF';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 头像圆形背景
+            ctx.beginPath();
+            ctx.arc(canvas.width/2, canvas.height/2 - 20, 150, 0, Math.PI * 2);
+            ctx.fillStyle = '#2563EB';
+            ctx.fill();
+            
+            // 头部
+            ctx.beginPath();
+            ctx.arc(canvas.width/2, canvas.height/2 - 50, 70, 0, Math.PI * 2);
+            ctx.fillStyle = '#FFDBB9';
+            ctx.fill();
+            
+            // 医生白大褂/肩膀
+            ctx.beginPath();
+            ctx.moveTo(canvas.width/2 - 80, canvas.height/2 + 40);
+            ctx.lineTo(canvas.width/2 + 80, canvas.height/2 + 40);
+            ctx.lineTo(canvas.width/2 + 100, canvas.height/2 + 120);
+            ctx.lineTo(canvas.width/2 - 100, canvas.height/2 + 120);
+            ctx.closePath();
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            
+            // 医生领子
+            ctx.beginPath();
+            ctx.moveTo(canvas.width/2 - 40, canvas.height/2 + 40);
+            ctx.lineTo(canvas.width/2, canvas.height/2 + 90);
+            ctx.lineTo(canvas.width/2 + 40, canvas.height/2 + 40);
+            ctx.closePath();
+            ctx.fillStyle = '#D1FAE5';
+            ctx.fill();
+            
+            // 听诊器
+            ctx.beginPath();
+            ctx.moveTo(canvas.width/2 - 20, canvas.height/2 + 70);
+            ctx.bezierCurveTo(
+                canvas.width/2 - 10, canvas.height/2 + 90,
+                canvas.width/2 + 10, canvas.height/2 + 90,
+                canvas.width/2 + 20, canvas.height/2 + 70
+            );
+            ctx.lineWidth = 8;
+            ctx.strokeStyle = '#3B82F6';
+            ctx.stroke();
+            
+            // 听诊器头部
+            ctx.beginPath();
+            ctx.arc(canvas.width/2, canvas.height/2 + 100, 15, 0, Math.PI * 2);
+            ctx.fillStyle = '#3B82F6';
+            ctx.fill();
+            
+            // 添加文字标识
+            ctx.font = 'bold 40px Arial';
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center';
+            ctx.fillText('医生', canvas.width/2, canvas.height - 40);
+            
+            // 添加亮点
+            ctx.beginPath();
+            ctx.arc(canvas.width/2 - 35, canvas.height/2 - 70, 10, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            ctx.fill();
+        }
+        
+        // 心电图绘制函数
+        function drawEcg() {
+            const canvas = document.getElementById('ecgCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 清空画布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 背景
+            ctx.fillStyle = '#F9FAFB';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 网格 - 浅色
+            ctx.strokeStyle = '#E5E7EB';
+            ctx.lineWidth = 1;
+            
+            // 垂直网格线
+            for (let x = 0; x <= canvas.width; x += 20) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+            
+            // 水平网格线
+            for (let y = 0; y <= canvas.height; y += 20) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+            
+            // 主网格 - 深色
+            ctx.strokeStyle = '#D1D5DB';
+            ctx.lineWidth = 1;
+            
+            // 垂直主网格线
+            for (let x = 0; x <= canvas.width; x += 100) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+            
+            // 水平主网格线
+            for (let y = 0; y <= canvas.height; y += 100) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+            
+            // 心电图线
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#EF4444';
+            
+            let startY = canvas.height / 2;
+            ctx.moveTo(0, startY);
+            
+            // 绘制心电图波形
+            for (let x = 0; x < canvas.width; x += 150) {
+                // 基线
+                ctx.lineTo(x + 30, startY);
+                
+                // P波
+                ctx.bezierCurveTo(
+                    x + 40, startY - 10,
+                    x + 50, startY - 10,
+                    x + 60, startY
+                );
+                
+                // PR间期
+                ctx.lineTo(x + 70, startY);
+                
+                // QRS波群
+                ctx.lineTo(x + 80, startY - 5);
+                ctx.lineTo(x + 85, startY - 60);
+                ctx.lineTo(x + 90, startY + 30);
+                ctx.lineTo(x + 95, startY);
+                
+                // ST段
+                ctx.lineTo(x + 110, startY);
+                
+                // T波
+                ctx.bezierCurveTo(
+                    x + 120, startY + 20,
+                    x + 130, startY + 20,
+                    x + 140, startY
+                );
+                
+                // 基线
+                ctx.lineTo(x + 150, startY);
+            }
+            
+            ctx.stroke();
+            
+            // 添加标签
+            ctx.font = 'bold 20px Arial';
+            ctx.fillStyle = '#1F2937';
+            ctx.textAlign = 'left';
+            ctx.fillText('心电图', 20, 30);
+            
+            // 添加医院水印
+            ctx.font = 'bold 24px Arial';
+            ctx.fillStyle = 'rgba(37, 99, 235, 0.1)';
+            ctx.textAlign = 'center';
+            ctx.fillText('汉唐医生基层版', canvas.width/2, canvas.height/2);
+        }
+        
+        // 下载医生头像
+        function downloadDoctorAvatar() {
+            const canvas = document.getElementById('doctorCanvas');
+            const link = document.createElement('a');
+            link.download = 'doctor-avatar.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+        
+        // 下载心电图
+        function downloadEcg() {
+            const canvas = document.getElementById('ecgCanvas');
+            const link = document.createElement('a');
+            link.download = 'placeholder-ecg.jpg';
+            link.href = canvas.toDataURL('image/jpeg');
+            link.click();
+        }
+        
+        // 绑定事件
+        document.getElementById('generateDoctorBtn').addEventListener('click', drawDoctorAvatar);
+        document.getElementById('downloadDoctorBtn').addEventListener('click', downloadDoctorAvatar);
+        document.getElementById('generateEcgBtn').addEventListener('click', drawEcg);
+        document.getElementById('downloadEcgBtn').addEventListener('click', downloadEcg);
+        
+        // 页面加载时自动生成
+        window.onload = function() {
+            drawDoctorAvatar();
+            drawEcg();
+        };
+    </script>
+</body>
+</html> 
