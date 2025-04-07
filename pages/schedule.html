@@ -90,112 +90,123 @@
         </div>
     </div>
 
-    <!-- 待随访患者列表 -->
-    <div class="bg-white p-4 mt-4 mb-20">
-        <div class="space-y-4">
-            <!-- 患者卡片 -->
-            <div class="border rounded-lg p-4">
-                <div class="flex items-start">
-                    <img src="https://ui-avatars.com/api/?name=张三&background=0D8ABC&color=fff" class="w-16 h-16 rounded-full mr-4">
-                    <div class="flex-1">
-                        <div class="flex items-center justify-between">
-                            <h3 class="font-medium">张三</h3>
-                            <span class="text-red-500 text-sm">今日</span>
-                        </div>
-                        <div class="flex items-center text-sm text-gray-500 mt-1">
-                            <span>男 | 45岁</span>
-                            <span class="mx-2">|</span>
-                            <span>术后随访</span>
-                        </div>
-                        <div class="mt-2">
-                            <div class="flex items-center text-sm">
-                                <i class="fas fa-clipboard-list text-gray-400 mr-2"></i>
-                                <span>腹腔镜胆囊切除术</span>
-                            </div>
-                            <div class="flex items-center text-sm mt-1">
-                                <i class="fas fa-calendar-day text-gray-400 mr-2"></i>
-                                <span>手术日期: 2024-03-11</span>
-                            </div>
-                            <div class="flex items-center text-sm mt-1">
-                                <i class="fas fa-phone text-gray-400 mr-2"></i>
-                                <span>13800138000</span>
-                            </div>
-                        </div>
-                        <div class="mt-3 flex gap-2">
-                            <button class="px-3 py-1 bg-blue-50 text-blue-500 rounded-full text-sm" onclick="showScheduleModal('术后随访')">预约随访</button>
-                            <button class="px-3 py-1 bg-gray-50 text-gray-500 rounded-full text-sm" onclick="window.location.href='patient-detail.html'">查看详情</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- 主要内容区域 -->
+    <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 mt-16 content-wrapper has-bottom-nav">
+        <!-- 筛选器 -->
+        <div class="flex space-x-2 mb-4 overflow-x-auto py-2">
+            <button class="active-filter px-4 py-2 rounded-full text-sm whitespace-nowrap">全部随访</button>
+            <button class="inactive-filter px-4 py-2 rounded-full text-sm whitespace-nowrap">待随访</button>
+            <button class="inactive-filter px-4 py-2 rounded-full text-sm whitespace-nowrap">已完成</button>
+            <button class="inactive-filter px-4 py-2 rounded-full text-sm whitespace-nowrap">已取消</button>
+        </div>
 
-            <!-- 患者卡片 -->
-            <div class="border rounded-lg p-4">
-                <div class="flex items-start">
-                    <img src="https://ui-avatars.com/api/?name=李四&background=8A2BE2&color=fff" class="w-16 h-16 rounded-full mr-4">
-                    <div class="flex-1">
-                        <div class="flex items-center justify-between">
-                            <h3 class="font-medium">李四</h3>
-                            <span class="text-red-500 text-sm">今日</span>
-                        </div>
-                        <div class="flex items-center text-sm text-gray-500 mt-1">
-                            <span>女 | 58岁</span>
-                            <span class="mx-2">|</span>
-                            <span>慢病管理</span>
-                        </div>
-                        <div class="mt-2">
-                            <div class="flex items-center text-sm">
-                                <i class="fas fa-clipboard-list text-gray-400 mr-2"></i>
-                                <span>高血压、2型糖尿病</span>
+        <!-- 待随访患者列表 -->
+        <div class="bg-white p-4 mt-4 mb-20">
+            <div class="space-y-4">
+                <!-- 患者卡片 -->
+                <div class="border rounded-lg p-4">
+                    <div class="flex items-start">
+                        <img src="https://ui-avatars.com/api/?name=张三&background=0D8ABC&color=fff" class="w-16 h-16 rounded-full mr-4">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-medium">张三</h3>
+                                <span class="text-red-500 text-sm">今日</span>
                             </div>
-                            <div class="flex items-center text-sm mt-1">
-                                <i class="fas fa-calendar-day text-gray-400 mr-2"></i>
-                                <span>上次随访: 2024-02-18</span>
+                            <div class="flex items-center text-sm text-gray-500 mt-1">
+                                <span>男 | 45岁</span>
+                                <span class="mx-2">|</span>
+                                <span>术后随访</span>
                             </div>
-                            <div class="flex items-center text-sm mt-1">
-                                <i class="fas fa-phone text-gray-400 mr-2"></i>
-                                <span>13900139000</span>
+                            <div class="mt-2">
+                                <div class="flex items-center text-sm">
+                                    <i class="fas fa-clipboard-list text-gray-400 mr-2"></i>
+                                    <span>腹腔镜胆囊切除术</span>
+                                </div>
+                                <div class="flex items-center text-sm mt-1">
+                                    <i class="fas fa-calendar-day text-gray-400 mr-2"></i>
+                                    <span>手术日期: 2024-03-11</span>
+                                </div>
+                                <div class="flex items-center text-sm mt-1">
+                                    <i class="fas fa-phone text-gray-400 mr-2"></i>
+                                    <span>13800138000</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mt-3 flex gap-2">
-                            <button class="px-3 py-1 bg-blue-50 text-blue-500 rounded-full text-sm" onclick="showScheduleModal('慢病管理')">预约随访</button>
-                            <button class="px-3 py-1 bg-gray-50 text-gray-500 rounded-full text-sm" onclick="window.location.href='patient-detail.html'">查看详情</button>
+                            <div class="mt-3 flex gap-2">
+                                <button class="px-3 py-1 bg-blue-50 text-blue-500 rounded-full text-sm" onclick="showScheduleModal('术后随访')">预约随访</button>
+                                <button class="px-3 py-1 bg-gray-50 text-gray-500 rounded-full text-sm" onclick="window.location.href='patient-detail.html'">查看详情</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- 患者卡片 -->
-            <div class="border rounded-lg p-4">
-                <div class="flex items-start">
-                    <img src="https://ui-avatars.com/api/?name=王五&background=FF7F50&color=fff" class="w-16 h-16 rounded-full mr-4">
-                    <div class="flex-1">
-                        <div class="flex items-center justify-between">
-                            <h3 class="font-medium">王五</h3>
-                            <span class="text-orange-500 text-sm">明日</span>
-                        </div>
-                        <div class="flex items-center text-sm text-gray-500 mt-1">
-                            <span>男 | 62岁</span>
-                            <span class="mx-2">|</span>
-                            <span>复诊提醒</span>
-                        </div>
-                        <div class="mt-2">
-                            <div class="flex items-center text-sm">
-                                <i class="fas fa-clipboard-list text-gray-400 mr-2"></i>
-                                <span>冠心病</span>
+
+                <!-- 患者卡片 -->
+                <div class="border rounded-lg p-4">
+                    <div class="flex items-start">
+                        <img src="https://ui-avatars.com/api/?name=李四&background=8A2BE2&color=fff" class="w-16 h-16 rounded-full mr-4">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-medium">李四</h3>
+                                <span class="text-red-500 text-sm">今日</span>
                             </div>
-                            <div class="flex items-center text-sm mt-1">
-                                <i class="fas fa-calendar-day text-gray-400 mr-2"></i>
-                                <span>上次就诊: 2024-03-04</span>
+                            <div class="flex items-center text-sm text-gray-500 mt-1">
+                                <span>女 | 58岁</span>
+                                <span class="mx-2">|</span>
+                                <span>慢病管理</span>
                             </div>
-                            <div class="flex items-center text-sm mt-1">
-                                <i class="fas fa-phone text-gray-400 mr-2"></i>
-                                <span>13700137000</span>
+                            <div class="mt-2">
+                                <div class="flex items-center text-sm">
+                                    <i class="fas fa-clipboard-list text-gray-400 mr-2"></i>
+                                    <span>高血压、2型糖尿病</span>
+                                </div>
+                                <div class="flex items-center text-sm mt-1">
+                                    <i class="fas fa-calendar-day text-gray-400 mr-2"></i>
+                                    <span>上次随访: 2024-02-18</span>
+                                </div>
+                                <div class="flex items-center text-sm mt-1">
+                                    <i class="fas fa-phone text-gray-400 mr-2"></i>
+                                    <span>13900139000</span>
+                                </div>
+                            </div>
+                            <div class="mt-3 flex gap-2">
+                                <button class="px-3 py-1 bg-blue-50 text-blue-500 rounded-full text-sm" onclick="showScheduleModal('慢病管理')">预约随访</button>
+                                <button class="px-3 py-1 bg-gray-50 text-gray-500 rounded-full text-sm" onclick="window.location.href='patient-detail.html'">查看详情</button>
                             </div>
                         </div>
-                        <div class="mt-3 flex gap-2">
-                            <button class="px-3 py-1 bg-blue-50 text-blue-500 rounded-full text-sm" onclick="showScheduleModal('复诊提醒')">预约随访</button>
-                            <button class="px-3 py-1 bg-gray-50 text-gray-500 rounded-full text-sm" onclick="window.location.href='patient-detail.html'">查看详情</button>
+                    </div>
+                </div>
+                
+                <!-- 患者卡片 -->
+                <div class="border rounded-lg p-4">
+                    <div class="flex items-start">
+                        <img src="https://ui-avatars.com/api/?name=王五&background=FF7F50&color=fff" class="w-16 h-16 rounded-full mr-4">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-medium">王五</h3>
+                                <span class="text-orange-500 text-sm">明日</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500 mt-1">
+                                <span>男 | 62岁</span>
+                                <span class="mx-2">|</span>
+                                <span>复诊提醒</span>
+                            </div>
+                            <div class="mt-2">
+                                <div class="flex items-center text-sm">
+                                    <i class="fas fa-clipboard-list text-gray-400 mr-2"></i>
+                                    <span>冠心病</span>
+                                </div>
+                                <div class="flex items-center text-sm mt-1">
+                                    <i class="fas fa-calendar-day text-gray-400 mr-2"></i>
+                                    <span>上次就诊: 2024-03-04</span>
+                                </div>
+                                <div class="flex items-center text-sm mt-1">
+                                    <i class="fas fa-phone text-gray-400 mr-2"></i>
+                                    <span>13700137000</span>
+                                </div>
+                            </div>
+                            <div class="mt-3 flex gap-2">
+                                <button class="px-3 py-1 bg-blue-50 text-blue-500 rounded-full text-sm" onclick="showScheduleModal('复诊提醒')">预约随访</button>
+                                <button class="px-3 py-1 bg-gray-50 text-gray-500 rounded-full text-sm" onclick="window.location.href='patient-detail.html'">查看详情</button>
+                            </div>
                         </div>
                     </div>
                 </div>
