@@ -3,188 +3,356 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>汉唐医生机构版 - 原型展示</title>
+    <title>汉唐医生机构版</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
     <style>
-        /* iPhone 15尺寸模拟 */
-        .iphone15-frame {
-            width: 390px;
-            height: 844px;
-            border: 12px solid #1a1a1a;
-            border-radius: 50px;
-            margin: 30px auto;
+        /* 现代设计样式 */
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        
+        /* 设备模拟样式 */
+        .device-frame {
+            width: 360px;
+            height: 720px;
+            border-radius: 36px;
+            background: #f3f4f6;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            background: #1a1a1a;
-            transition: transform 0.3s ease;
+            box-shadow: 
+                0 10px 20px rgba(0,0,0,0.08),
+                0 20px 60px rgba(0,0,0,0.1),
+                inset 0 0 0 2px rgba(255,255,255,0.05);
         }
         
-        .iphone15-frame:hover {
-            transform: scale(1.02);
-        }
-        
-        .iphone15-notch {
+        .device-screen {
             position: absolute;
             top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 160px;
-            height: 35px;
-            background-color: #1a1a1a;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
-            z-index: 10;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            border-radius: 32px;
         }
         
-        .iphone15-screen {
-            width: 100%;
-            height: 100%;
-            background-color: #fff;
-            overflow-y: auto;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-            border-radius: 38px;
-        }
-        
-        .iphone15-screen::-webkit-scrollbar {
-            display: none;
-        }
-
-        .gradient-bg {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e6f3ff 100%);
-        }
-
-        .feature-item {
+        .feature-card {
             transition: all 0.3s ease;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            overflow: hidden;
         }
-
-        .feature-item:hover {
-            transform: translateY(-2px);
+        
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 
+                0 12px 20px rgba(0,0,0,0.06),
+                0 4px 8px rgba(0,0,0,0.06);
         }
-
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #0369a1, #0ea5e9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .section-title::before {
+            content: "";
+            display: inline-block;
+            width: 24px;
+            height: 3px;
+            background: linear-gradient(90deg, #0369a1, #0ea5e9);
+            margin-right: 12px;
+            vertical-align: middle;
+            border-radius: 3px;
+        }
+        
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
         }
     </style>
 </head>
-<body class="gradient-bg min-h-screen">
+<body class="bg-gray-50 text-gray-900 min-h-screen">
     <!-- 顶部导航栏 -->
-    <nav class="glass-effect sticky top-0 z-50 border-b border-gray-200/50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <div class="flex-shrink-0 flex items-center">
-                        <img class="h-8 w-8" src="../assets/images/logo.png" alt="汉唐医生机构版">
-                        <span class="ml-2 text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">汉唐医生机构版</span>
-                    </div>
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <img class="h-9 w-auto" src="../assets/images/logo.png" alt="汉唐医生">
+                    <span class="ml-3 text-xl font-semibold text-gray-900">汉唐医生<span class="text-primary-600">机构版</span></span>
+                </div>
+                <div>
+                    <button class="bg-primary-50 hover:bg-primary-100 text-primary-600 px-4 py-2 rounded-full text-sm font-medium transition-colors">
+                        开始体验
+                    </button>
                 </div>
             </div>
         </div>
-    </nav>
+    </header>
     
-    <!-- 内容区域 -->
-    <div class="max-w-7xl mx-auto px-4 py-12">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            <!-- 左侧内容：应用说明 -->
-            <div class="space-y-8">
-                <div class="glass-effect rounded-2xl p-8 shadow-lg">
-                    <h1 class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800 mb-6">汉唐医生机构版</h1>
-                    <p class="text-gray-600 text-lg mb-8 leading-relaxed">本原型展示了"汉唐医生机构版"应用的患者管理功能，其他功能模块可通过应用内的导航栏和底部导航互相跳转访问。</p>
-                    
-                    <div class="space-y-6">
-                        <h2 class="text-2xl font-semibold text-gray-900 mb-4">应用功能</h2>
-                        <div class="space-y-4">
-                            <div class="feature-item p-4 rounded-xl bg-white/50 hover:bg-white/80 shadow-sm">
-                                <h3 class="text-lg font-medium text-blue-700 mb-2">患者管理系统</h3>
-                                <p class="text-gray-600">提供患者档案管理、分类筛选查询和标记管理功能。支持对患者进行分类筛选，实时标记异常指标，记录患者信息。</p>
-                            </div>
-                            <div class="feature-item p-4 rounded-xl bg-white/50 hover:bg-white/80 shadow-sm">
-                                <h3 class="text-lg font-medium text-green-700 mb-2">健康监测平台</h3>
-                                <p class="text-gray-600">实时监测患者生理指标并进行异常预警。支持多项生理指标的实时监测，自动标记异常数据。</p>
-                            </div>
-                            <div class="feature-item p-4 rounded-xl bg-white/50 hover:bg-white/80 shadow-sm">
-                                <h3 class="text-lg font-medium text-purple-700 mb-2">远程会诊系统</h3>
-                                <p class="text-gray-600">提供远程视频会诊和专家协作功能。支持发起远程会诊，与上级医院专家进行视频沟通。</p>
-                            </div>
-                            <div class="feature-item p-4 rounded-xl bg-white/50 hover:bg-white/80 shadow-sm">
-                                <h3 class="text-lg font-medium text-yellow-700 mb-2">智能随访管理</h3>
-                                <p class="text-gray-600">提供随访计划创建、患者分类和随访记录功能。支持多种类型随访计划的管理。</p>
-                            </div>
-                            <div class="feature-item p-4 rounded-xl bg-white/50 hover:bg-white/80 shadow-sm">
-                                <h3 class="text-lg font-medium text-red-700 mb-2">医生工作站</h3>
-                                <p class="text-gray-600">集成医生个人信息管理、专业技能展示和系统设置功能。提供完整的个人工作空间。</p>
-                            </div>
+    <!-- 主要内容区域 -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- 英雄区域 -->
+        <section class="mb-16">
+            <div class="flex flex-col-reverse md:flex-row items-center gap-8 md:gap-12">
+                <div class="w-full md:w-1/2">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+                        医疗机构专用<br><span class="gradient-text">智慧医疗平台</span>
+                    </h1>
+                    <p class="text-gray-600 text-lg mb-8 leading-relaxed">
+                        集成患者管理、健康监测、远程会诊、随访管理和医生工作站五大核心功能模块，助力医疗机构提升诊疗水平、优化医患体验。
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="patients.html" target="_blank" class="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg shadow-sm transition-colors inline-flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            在线体验
+                        </a>
+                        <a href="#features" class="px-6 py-3 bg-white hover:bg-gray-50 text-gray-700 font-medium rounded-lg shadow-sm border border-gray-200 transition-colors inline-flex items-center">
+                            了解功能
+                        </a>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 flex justify-center">
+                    <div class="device-frame shadow-xl">
+                        <div class="device-screen">
+                            <iframe src="patients.html" width="100%" height="100%" frameborder="0"></iframe>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="glass-effect rounded-2xl p-8 shadow-lg">
-                    <h2 class="text-2xl font-semibold text-gray-900 mb-4">使用说明</h2>
-                    <div class="space-y-4">
-                        <div class="p-4 rounded-xl bg-white/50">
-                            <p class="text-gray-700 mb-3">您可以通过以下方式访问所有功能页面：</p>
-                            <ul class="space-y-2 text-gray-600">
-                                <li class="flex items-center">
-                                    <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                    </svg>
-                                    在患者页面中，点击顶部或底部导航进入其他功能模块
+        <!-- 功能模块 -->
+        <section id="features" class="mb-16">
+            <h2 class="section-title text-2xl font-bold mb-8">核心功能模块</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 患者管理 -->
+                <div class="feature-card bg-white p-6">
+                    <div class="rounded-full bg-primary-100 w-12 h-12 flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">患者管理系统</h3>
+                    <p class="text-gray-600 mb-4">提供患者档案管理、分类筛选查询和标记管理功能，提高患者管理效率。</p>
+                    <a href="patients.html" target="_blank" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium">
+                        查看详情
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- 健康监测 -->
+                <div class="feature-card bg-white p-6">
+                    <div class="rounded-full bg-primary-100 w-12 h-12 flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">健康监测平台</h3>
+                    <p class="text-gray-600 mb-4">实时监测患者生理指标并进行异常预警，帮助医生及时发现潜在健康风险。</p>
+                    <a href="monitoring.html" target="_blank" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium">
+                        查看详情
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- 远程会诊 -->
+                <div class="feature-card bg-white p-6">
+                    <div class="rounded-full bg-primary-100 w-12 h-12 flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">远程会诊系统</h3>
+                    <p class="text-gray-600 mb-4">提供远程视频会诊和专家协作功能，协助基层医生解决疑难病例，提高诊疗水平。</p>
+                    <a href="consultation.html" target="_blank" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium">
+                        查看详情
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- 随访管理 -->
+                <div class="feature-card bg-white p-6">
+                    <div class="rounded-full bg-primary-100 w-12 h-12 flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">智能随访管理</h3>
+                    <p class="text-gray-600 mb-4">提供随访计划创建、患者分类和随访记录功能，支持多种随访类型管理，提高随访效率。</p>
+                    <a href="schedule.html" target="_blank" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium">
+                        查看详情
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- 医生工作站 -->
+                <div class="feature-card bg-white p-6">
+                    <div class="rounded-full bg-primary-100 w-12 h-12 flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">医生工作站</h3>
+                    <p class="text-gray-600 mb-4">集成医生个人信息管理、专业技能展示和系统设置功能，帮助医生更好地管理个人工作空间。</p>
+                    <a href="profile.html" target="_blank" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium">
+                        查看详情
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- 功能展示 -->
+                <div class="feature-card bg-primary-50 p-6">
+                    <h3 class="text-xl font-semibold mb-2">更多功能</h3>
+                    <p class="text-gray-600 mb-4">探索我们平台提供的全部功能，体验全新的医疗管理方式。</p>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="patients.html" target="_blank" class="text-sm px-3 py-1 bg-white shadow-sm rounded-full text-primary-700 hover:bg-gray-50">患者管理</a>
+                        <a href="monitoring.html" target="_blank" class="text-sm px-3 py-1 bg-white shadow-sm rounded-full text-primary-700 hover:bg-gray-50">健康监测</a>
+                        <a href="consultation.html" target="_blank" class="text-sm px-3 py-1 bg-white shadow-sm rounded-full text-primary-700 hover:bg-gray-50">远程会诊</a>
+                        <a href="schedule.html" target="_blank" class="text-sm px-3 py-1 bg-white shadow-sm rounded-full text-primary-700 hover:bg-gray-50">随访管理</a>
+                        <a href="profile.html" target="_blank" class="text-sm px-3 py-1 bg-white shadow-sm rounded-full text-primary-700 hover:bg-gray-50">医生工作站</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 应用功能说明 -->
+        <section class="mb-16">
+            <h2 class="section-title text-2xl font-bold mb-8">使用指南</h2>
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+                <div class="p-6 md:p-8">
+                    <div class="prose max-w-none">
+                        <h3 class="text-xl font-semibold mb-4">应用功能介绍</h3>
+                        <p class="text-gray-600 mb-6">汉唐医生机构版是一款专为医疗机构设计的综合性智慧医疗平台，集成了多种功能模块，助力医疗机构提升服务质量。</p>
+                        
+                        <div class="bg-gray-50 rounded-xl p-6 mb-6">
+                            <h4 class="text-lg font-medium mb-3 text-gray-900">主要功能模块</h4>
+                            <ul class="space-y-4">
+                                <li class="flex">
+                                    <div class="flex-shrink-0 flex h-6 items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-500" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <p class="ml-3 text-gray-700"><span class="font-medium text-gray-900">患者管理系统</span> - 提供患者档案管理、分类筛选查询和标记管理功能。支持对患者进行分类筛选，实时标记异常指标，记录患者基本信息、就诊信息和监测信息。</p>
                                 </li>
-                                <li class="flex items-center">
-                                    <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                    </svg>
-                                    点击患者卡片，查看患者详情页面
+                                <li class="flex">
+                                    <div class="flex-shrink-0 flex h-6 items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-500" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <p class="ml-3 text-gray-700"><span class="font-medium text-gray-900">健康监测平台</span> - 实时监测患者生理指标并进行异常预警。支持血压、血糖、心率、体温、血氧等多项生理指标的实时监测，自动标记异常数据。</p>
                                 </li>
-                                <li class="flex items-center">
-                                    <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                    </svg>
-                                    点击各功能模块的按钮，体验不同功能之间的跳转
+                                <li class="flex">
+                                    <div class="flex-shrink-0 flex h-6 items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-500" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <p class="ml-3 text-gray-700"><span class="font-medium text-gray-900">远程会诊系统</span> - 提供远程视频会诊和专家协作功能。支持发起远程会诊，与上级医院专家进行视频沟通，共享患者信息和监测数据。</p>
                                 </li>
                             </ul>
                         </div>
+                        
+                        <h3 class="text-xl font-semibold mb-4">使用说明</h3>
+                        <p class="text-gray-600 mb-4">您可以通过以下方式访问所有功能页面：</p>
+                        <ul class="space-y-2 text-gray-700 mb-6">
+                            <li class="flex items-start">
+                                <span class="inline-flex items-center justify-center h-5 w-5 rounded-full bg-primary-100 text-primary-800 text-xs font-medium mr-2 mt-0.5">1</span>
+                                在主页面中，点击各功能卡片，进入对应的功能模块
+                            </li>
+                            <li class="flex items-start">
+                                <span class="inline-flex items-center justify-center h-5 w-5 rounded-full bg-primary-100 text-primary-800 text-xs font-medium mr-2 mt-0.5">2</span>
+                                在患者页面中，点击顶部或底部导航进入其他功能模块
+                            </li>
+                            <li class="flex items-start">
+                                <span class="inline-flex items-center justify-center h-5 w-5 rounded-full bg-primary-100 text-primary-800 text-xs font-medium mr-2 mt-0.5">3</span>
+                                点击患者卡片，查看患者详情页面
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
-
-            <!-- 右侧内容：APP 展示 -->
-            <div class="lg:sticky lg:top-24">
-                <div class="iphone15-frame">
-                    <div class="iphone15-notch"></div>
-                    <div class="iphone15-screen">
-                        <iframe src="patients.html" width="100%" height="100%" frameborder="0"></iframe>
-                    </div>
-                </div>
-                <div class="text-center mt-6">
-                    <a href="patients.html" target="_blank" 
-                       class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full 
-                              shadow-lg text-white bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 
-                              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300">
-                        <i class="fas fa-external-link-alt mr-2"></i>
-                        在新窗口打开
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
     <!-- 页脚 -->
-    <footer class="glass-effect mt-12 py-8 border-t border-gray-200/50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center">
-                <h2 class="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">汉唐医生机构版</h2>
-                <p class="text-gray-600 mt-4 max-w-3xl mx-auto leading-relaxed">
-                    医疗机构专用智慧医疗平台，集成患者管理、健康监测、远程会诊、随访管理和医生工作站五大核心功能模块，
-                    助力医疗机构提升诊疗水平、优化医患体验、强化慢病管理，打造智慧医疗新模式
-                </p>
+    <footer class="bg-white border-t border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <img class="h-8 w-auto mb-4" src="../assets/images/logo.png" alt="汉唐医生">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">汉唐医生机构版</h2>
+                    <p class="text-gray-600 max-w-md">医疗机构专用智慧医疗平台，集成患者管理、健康监测、远程会诊、随访管理和医生工作站五大核心功能模块。</p>
+                </div>
+                <div>
+                    <h3 class="text-gray-900 font-medium mb-4">核心功能</h3>
+                    <ul class="space-y-3">
+                        <li><a href="patients.html" class="text-gray-600 hover:text-primary-600 transition-colors">患者管理</a></li>
+                        <li><a href="monitoring.html" class="text-gray-600 hover:text-primary-600 transition-colors">健康监测</a></li>
+                        <li><a href="consultation.html" class="text-gray-600 hover:text-primary-600 transition-colors">远程会诊</a></li>
+                        <li><a href="schedule.html" class="text-gray-600 hover:text-primary-600 transition-colors">随访管理</a></li>
+                        <li><a href="profile.html" class="text-gray-600 hover:text-primary-600 transition-colors">医生工作站</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-gray-900 font-medium mb-4">联系我们</h3>
+                    <ul class="space-y-3">
+                        <li class="text-gray-600">邮箱：contact@hantangdoctor.com</li>
+                        <li class="text-gray-600">电话：400-123-4567</li>
+                    </ul>
+                    <div class="mt-6">
+                        <a href="#" class="inline-block px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">申请演示</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-100 mt-12 pt-8 flex flex-col md:flex-row justify-between">
+                <p class="text-gray-500 text-sm">© 2024 汉唐医生机构版. 保留所有权利.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-gray-500">隐私政策</a>
+                    <a href="#" class="text-gray-400 hover:text-gray-500">使用条款</a>
+                </div>
             </div>
         </div>
     </footer>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
 </body>
 </html> 

@@ -3,568 +3,1091 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>随访预约 - 汉唐医生基层版</title>
+    <title>随访管理 - 汉唐医生机构版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        .active-filter {
-            background-color: rgb(219 234 254);
-            color: rgb(59 130 246);
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'card': '0 2px 8px rgba(0, 0, 0, 0.04), 0 4px 24px rgba(0, 0, 0, 0.02)',
+                        'float': '0 8px 30px rgba(0, 0, 0, 0.12)',
+                    },
+                },
+            },
         }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            color: #1f2937;
+            background-color: #f5f7fa;
+        }
+        
+        .active-tab {
+            color: #0284c7;
+            border-color: #0284c7;
+            font-weight: 500;
+        }
+        
+        .active-filter {
+            background-color: #e0f2fe;
+            color: #0284c7;
+            font-weight: 500;
+        }
+        
         .inactive-filter {
-            background-color: rgb(243 244 246);
-            color: rgb(107 114 128);
+            background-color: #f3f4f6;
+            color: #4b5563;
+        }
+        
+        .patient-card {
+            transition: all 0.2s ease;
+            border-radius: 12px;
+        }
+        
+        .patient-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tag {
+            padding: 2px 8px;
+            border-radius: 24px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: inline-block;
+            white-space: nowrap;
+        }
+        
+        .tag-red {
+            background-color: #fee2e2;
+            color: #ef4444;
+        }
+        
+        .tag-orange {
+            background-color: #ffedd5;
+            color: #f59e0b;
+        }
+        
+        .tag-blue {
+            background-color: #e0f2fe;
+            color: #0284c7;
+        }
+        
+        .tag-green {
+            background-color: #d1fae5;
+            color: #10b981;
+        }
+        
+        .modal-content {
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        
+        /* 滚动条样式 */
+        .modal-content::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .modal-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        .modal-content::-webkit-scrollbar-thumb {
+            background: #cfcfcf;
+            border-radius: 4px;
+        }
+        
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        
+        @media (max-width: 640px) {
+            .patient-card .flex-wrap {
+                width: 100%;
+            }
+            
+            .tag {
+                margin-bottom: 0.25rem;
+            }
         }
     </style>
 </head>
 <body class="bg-gray-50">
     <!-- 顶部导航栏 -->
-    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <div class="flex-shrink-0 flex items-center">
-                        <img class="h-8 w-8" src="../assets/images/logo.png" alt="汉唐医生基层版">
-                    </div>
-                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-                        <a href="patients.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+    <header class="bg-white shadow-sm fixed w-full top-0 z-50 border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <img class="h-8 w-auto" src="../assets/images/logo.png" alt="汉唐医生机构版">
+                    <div class="hidden md:flex md:ml-8 space-x-8">
+                        <a href="patients.html" class="text-gray-500 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors">
                             患者
                         </a>
-                        <a href="monitoring.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        <a href="monitoring.html" class="text-gray-500 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors">
                             监测
                         </a>
-                        <a href="consultation.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        <a href="consultation.html" class="text-gray-500 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors">
                             会诊
                         </a>
-                        <a href="schedule.html" class="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        <a href="schedule.html" class="text-primary-600 border-b-2 border-primary-600 px-3 py-2 text-sm font-medium">
                             随访
                         </a>
-                        <a href="profile.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        <a href="profile.html" class="text-gray-500 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors">
                             我的
                         </a>
                     </div>
                 </div>
+                <div class="flex items-center">
+                    <div class="ml-3 relative">
+                        <div class="flex items-center space-x-3">
+                            <button class="bg-gray-100 p-1.5 rounded-full text-gray-500 hover:text-gray-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                                </svg>
+                            </button>
+                            <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                <span class="text-gray-600 font-medium text-sm">医</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
-
-    <!-- 随访周期选择 -->
-    <div class="bg-white p-4 mt-4">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center">
-                <i class="fas fa-calendar-alt text-blue-500 mr-2"></i>
-                <span class="font-medium">随访计划</span>
-            </div>
-            <div class="flex items-center text-gray-500">
-                <span>2024-03-18</span>
-            </div>
-        </div>
-        <div class="flex gap-2 mt-4">
-            <div class="text-center p-2 border rounded-lg bg-blue-50 flex-1 cursor-pointer hover:bg-blue-100 transition-colors" onclick="switchTimeRange('today')">
-                <div class="text-sm text-blue-500 font-medium">今日随访</div>
-                <div class="text-lg font-medium text-blue-500 mt-1">12</div>
-            </div>
-            <div class="text-center p-2 border rounded-lg flex-1 cursor-pointer hover:bg-gray-50 transition-colors" onclick="switchTimeRange('three')">
-                <div class="text-sm text-gray-500">三日内</div>
-                <div class="text-lg font-medium mt-1">24</div>
-            </div>
-            <div class="text-center p-2 border rounded-lg flex-1 cursor-pointer hover:bg-gray-50 transition-colors" onclick="switchTimeRange('seven')">
-                <div class="text-sm text-gray-500">七日内</div>
-                <div class="text-lg font-medium mt-1">36</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 患者类型筛选 -->
-    <div class="bg-white p-4 mt-4">
-        <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-semibold">患者类型</h2>
-            <span class="text-blue-500 text-sm cursor-pointer" onclick="clearFilter()">全部</span>
-        </div>
-        <div class="flex flex-wrap gap-2">
-            <span class="px-3 py-1 rounded-full text-sm cursor-pointer active-filter" onclick="filterPatients('术后随访')">术后随访</span>
-            <span class="px-3 py-1 rounded-full text-sm cursor-pointer inactive-filter" onclick="filterPatients('慢病管理')">慢病管理</span>
-            <span class="px-3 py-1 rounded-full text-sm cursor-pointer inactive-filter" onclick="filterPatients('复诊提醒')">复诊提醒</span>
-            <span class="px-3 py-1 rounded-full text-sm cursor-pointer inactive-filter" onclick="filterPatients('用药指导')">用药指导</span>
-            <span class="px-3 py-1 rounded-full text-sm cursor-pointer inactive-filter" onclick="filterPatients('其他')">其他</span>
-        </div>
-    </div>
+    </header>
 
     <!-- 主要内容区域 -->
-    <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 mt-16 content-wrapper has-bottom-nav">
-        <!-- 筛选器 -->
-        <div class="flex space-x-2 mb-4 overflow-x-auto py-2">
-            <button class="active-filter px-4 py-2 rounded-full text-sm whitespace-nowrap">全部随访</button>
-            <button class="inactive-filter px-4 py-2 rounded-full text-sm whitespace-nowrap">待随访</button>
-            <button class="inactive-filter px-4 py-2 rounded-full text-sm whitespace-nowrap">已完成</button>
-            <button class="inactive-filter px-4 py-2 rounded-full text-sm whitespace-nowrap">已取消</button>
-        </div>
-
-        <!-- 待随访患者列表 -->
-        <div class="bg-white p-4 mt-4 mb-20">
-            <div class="space-y-4">
-                <!-- 患者卡片 -->
-                <div class="border rounded-lg p-4">
-                    <div class="flex items-start">
-                        <img src="https://ui-avatars.com/api/?name=张三&background=0D8ABC&color=fff" class="w-16 h-16 rounded-full mr-4">
-                        <div class="flex-1">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-medium">张三</h3>
-                                <span class="text-red-500 text-sm">今日</span>
-                            </div>
-                            <div class="flex items-center text-sm text-gray-500 mt-1">
-                                <span>男 | 45岁</span>
-                                <span class="mx-2">|</span>
-                                <span>术后随访</span>
-                            </div>
-                            <div class="mt-2">
-                                <div class="flex items-center text-sm">
-                                    <i class="fas fa-clipboard-list text-gray-400 mr-2"></i>
-                                    <span>腹腔镜胆囊切除术</span>
-                                </div>
-                                <div class="flex items-center text-sm mt-1">
-                                    <i class="fas fa-calendar-day text-gray-400 mr-2"></i>
-                                    <span>手术日期: 2024-03-11</span>
-                                </div>
-                                <div class="flex items-center text-sm mt-1">
-                                    <i class="fas fa-phone text-gray-400 mr-2"></i>
-                                    <span>13800138000</span>
-                                </div>
-                            </div>
-                            <div class="mt-3 flex gap-2">
-                                <button class="px-3 py-1 bg-blue-50 text-blue-500 rounded-full text-sm" onclick="showScheduleModal('术后随访')">预约随访</button>
-                                <button class="px-3 py-1 bg-gray-50 text-gray-500 rounded-full text-sm" onclick="window.location.href='patient-detail.html'">查看详情</button>
-                            </div>
-                        </div>
+    <main class="max-w-6xl mx-auto px-3 pt-16 pb-20">
+        <!-- 随访周期选择 -->
+        <section class="bg-white rounded-lg shadow-card p-3 mb-3">
+            <div class="flex flex-wrap items-center justify-between mb-2 gap-1">
+                <div class="flex items-center">
+                    <div class="w-6 h-6 rounded-md bg-primary-50 flex items-center justify-center mr-1.5 flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-primary-600" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <h1 class="text-base font-medium">随访计划</h1>
+                </div>
+                <div class="text-gray-500 flex items-center text-xs">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-2.5 w-2.5 mr-0.5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                        <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                    </svg>
+                    今日：2024-03-18
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <div class="text-center p-2 rounded-md bg-primary-50 border border-primary-100 cursor-pointer hover:bg-primary-100 transition-colors" onclick="switchTimeRange('today')">
+                    <div class="text-primary-700 font-medium text-xs mb-0.5">今日随访</div>
+                    <div class="flex items-center justify-center">
+                        <span class="text-lg font-bold text-primary-700">12</span>
+                        <span class="text-primary-600 text-xs ml-0.5">位患者</span>
                     </div>
                 </div>
-
-                <!-- 患者卡片 -->
-                <div class="border rounded-lg p-4">
-                    <div class="flex items-start">
-                        <img src="https://ui-avatars.com/api/?name=李四&background=8A2BE2&color=fff" class="w-16 h-16 rounded-full mr-4">
-                        <div class="flex-1">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-medium">李四</h3>
-                                <span class="text-red-500 text-sm">今日</span>
-                            </div>
-                            <div class="flex items-center text-sm text-gray-500 mt-1">
-                                <span>女 | 58岁</span>
-                                <span class="mx-2">|</span>
-                                <span>慢病管理</span>
-                            </div>
-                            <div class="mt-2">
-                                <div class="flex items-center text-sm">
-                                    <i class="fas fa-clipboard-list text-gray-400 mr-2"></i>
-                                    <span>高血压、2型糖尿病</span>
-                                </div>
-                                <div class="flex items-center text-sm mt-1">
-                                    <i class="fas fa-calendar-day text-gray-400 mr-2"></i>
-                                    <span>上次随访: 2024-02-18</span>
-                                </div>
-                                <div class="flex items-center text-sm mt-1">
-                                    <i class="fas fa-phone text-gray-400 mr-2"></i>
-                                    <span>13900139000</span>
-                                </div>
-                            </div>
-                            <div class="mt-3 flex gap-2">
-                                <button class="px-3 py-1 bg-blue-50 text-blue-500 rounded-full text-sm" onclick="showScheduleModal('慢病管理')">预约随访</button>
-                                <button class="px-3 py-1 bg-gray-50 text-gray-500 rounded-full text-sm" onclick="window.location.href='patient-detail.html'">查看详情</button>
-                            </div>
-                        </div>
+                <div class="text-center p-2 rounded-md bg-white border border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors" onclick="switchTimeRange('three')">
+                    <div class="text-gray-600 font-medium text-xs mb-0.5">三日内</div>
+                    <div class="flex items-center justify-center">
+                        <span class="text-lg font-bold text-gray-700">24</span>
+                        <span class="text-gray-500 text-xs ml-0.5">位患者</span>
                     </div>
                 </div>
-                
-                <!-- 患者卡片 -->
-                <div class="border rounded-lg p-4">
-                    <div class="flex items-start">
-                        <img src="https://ui-avatars.com/api/?name=王五&background=FF7F50&color=fff" class="w-16 h-16 rounded-full mr-4">
-                        <div class="flex-1">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-medium">王五</h3>
-                                <span class="text-orange-500 text-sm">明日</span>
-                            </div>
-                            <div class="flex items-center text-sm text-gray-500 mt-1">
-                                <span>男 | 62岁</span>
-                                <span class="mx-2">|</span>
-                                <span>复诊提醒</span>
-                            </div>
-                            <div class="mt-2">
-                                <div class="flex items-center text-sm">
-                                    <i class="fas fa-clipboard-list text-gray-400 mr-2"></i>
-                                    <span>冠心病</span>
-                                </div>
-                                <div class="flex items-center text-sm mt-1">
-                                    <i class="fas fa-calendar-day text-gray-400 mr-2"></i>
-                                    <span>上次就诊: 2024-03-04</span>
-                                </div>
-                                <div class="flex items-center text-sm mt-1">
-                                    <i class="fas fa-phone text-gray-400 mr-2"></i>
-                                    <span>13700137000</span>
-                                </div>
-                            </div>
-                            <div class="mt-3 flex gap-2">
-                                <button class="px-3 py-1 bg-blue-50 text-blue-500 rounded-full text-sm" onclick="showScheduleModal('复诊提醒')">预约随访</button>
-                                <button class="px-3 py-1 bg-gray-50 text-gray-500 rounded-full text-sm" onclick="window.location.href='patient-detail.html'">查看详情</button>
-                            </div>
-                        </div>
+                <div class="text-center p-2 rounded-md bg-white border border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors" onclick="switchTimeRange('seven')">
+                    <div class="text-gray-600 font-medium text-xs mb-0.5">七日内</div>
+                    <div class="flex items-center justify-center">
+                        <span class="text-lg font-bold text-gray-700">36</span>
+                        <span class="text-gray-500 text-xs ml-0.5">位患者</span>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- 预约随访弹窗 -->
-    <div id="scheduleModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 w-11/12 max-w-md">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold">预约随访</h3>
-                <button onclick="hideScheduleModal()" class="text-gray-500">
-                    <i class="fas fa-times"></i>
+        <!-- 患者类型筛选 -->
+        <section class="bg-white rounded-lg shadow-card p-4 mb-4">
+            <div class="flex flex-wrap items-center justify-between mb-2 gap-2">
+                <div class="flex items-center">
+                    <h2 class="text-base font-medium">患者类型</h2>
+                    <span id="filterCount" class="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-medium rounded-full bg-primary-100 text-primary-700">0</span>
+                </div>
+                <button class="text-primary-600 text-xs hover:text-primary-700 transition-colors font-medium flex items-center" onclick="clearFilter()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                    </svg>
+                    查看全部
                 </button>
+            </div>
+            <div class="flex flex-wrap gap-2" id="patientTypeFilters">
+                <span class="filter-chip px-3 py-1 rounded-full text-xs font-medium cursor-pointer inactive-filter hover:bg-gray-100 transition-all duration-200 flex items-center" data-type="术后随访" onclick="filterPatients(this)">
+                    术后随访
+                    <svg xmlns="http://www.w3.org/2000/svg" class="filter-check ml-1 h-3 w-3 text-primary-600 hidden" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </span>
+                <span class="filter-chip px-3 py-1 rounded-full text-xs font-medium cursor-pointer inactive-filter hover:bg-gray-100 transition-all duration-200 flex items-center" data-type="慢病管理" onclick="filterPatients(this)">
+                    慢病管理
+                    <svg xmlns="http://www.w3.org/2000/svg" class="filter-check ml-1 h-3 w-3 text-primary-600 hidden" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </span>
+                <span class="filter-chip px-3 py-1 rounded-full text-xs font-medium cursor-pointer inactive-filter hover:bg-gray-100 transition-all duration-200 flex items-center" data-type="复诊提醒" onclick="filterPatients(this)">
+                    复诊提醒
+                    <svg xmlns="http://www.w3.org/2000/svg" class="filter-check ml-1 h-3 w-3 text-primary-600 hidden" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </span>
+                <span class="filter-chip px-3 py-1 rounded-full text-xs font-medium cursor-pointer inactive-filter hover:bg-gray-100 transition-all duration-200 flex items-center" data-type="用药指导" onclick="filterPatients(this)">
+                    用药指导
+                    <svg xmlns="http://www.w3.org/2000/svg" class="filter-check ml-1 h-3 w-3 text-primary-600 hidden" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </span>
+                <span class="filter-chip px-3 py-1 rounded-full text-xs font-medium cursor-pointer inactive-filter hover:bg-gray-100 transition-all duration-200 flex items-center" data-type="其他" onclick="filterPatients(this)">
+                    其他
+                    <svg xmlns="http://www.w3.org/2000/svg" class="filter-check ml-1 h-3 w-3 text-primary-600 hidden" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </span>
+            </div>
+        </section>
+
+        <!-- 筛选器 -->
+        <div class="flex mb-3 overflow-x-auto scrollbar-hide py-1">
+            <div class="flex space-x-2">
+                <button class="status-filter active-filter px-3 py-1 rounded-full text-xs whitespace-nowrap shadow-sm flex items-center" data-status="all" onclick="filterByStatus(this)">
+                    全部随访
+                    <span class="ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full bg-white text-primary-600 text-xs">12</span>
+                </button>
+                <button class="status-filter inactive-filter px-3 py-1 rounded-full text-xs whitespace-nowrap shadow-sm flex items-center" data-status="pending" onclick="filterByStatus(this)">
+                    待随访
+                    <span class="ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full bg-white text-gray-600 text-xs">7</span>
+                </button>
+                <button class="status-filter inactive-filter px-3 py-1 rounded-full text-xs whitespace-nowrap shadow-sm flex items-center" data-status="completed" onclick="filterByStatus(this)">
+                    已完成
+                    <span class="ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full bg-white text-gray-600 text-xs">3</span>
+                </button>
+                <button class="status-filter inactive-filter px-3 py-1 rounded-full text-xs whitespace-nowrap shadow-sm flex items-center" data-status="cancelled" onclick="filterByStatus(this)">
+                    已取消
+                    <span class="ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full bg-white text-gray-600 text-xs">2</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 搜索区域 -->
+        <div class="flex flex-wrap justify-between items-center mb-3 gap-2">
+            <div class="relative w-full sm:w-64">
+                <input type="text" placeholder="搜索患者姓名或手机号" class="w-full pl-8 pr-3 py-1.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-500 transition-all text-sm">
+                <div class="absolute left-2.5 top-2 text-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+            </div>
+            <button class="flex items-center space-x-1 bg-primary-600 hover:bg-primary-700 text-white px-3 py-1.5 rounded-lg font-medium transition-colors shadow-sm text-sm" onclick="newAppointment()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                </svg>
+                <span>新建随访</span>
+            </button>
+        </div>
+
+        <!-- 患者随访列表 -->
+        <div class="grid grid-cols-1 gap-3">
+            <!-- 患者卡片1 -->
+            <div class="patient-card bg-white shadow-card p-0 rounded-lg">
+                <div class="flex flex-col md:flex-row">
+                    <!-- 患者信息区域 -->
+                    <div class="flex-grow p-3 border-b md:border-b-0 md:border-r border-gray-100">
+                        <div class="flex items-start mb-2">
+                            <div class="relative flex-shrink-0">
+                                <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-700 font-medium text-sm">
+                                    张
+                                </div>
+                                <div class="absolute -bottom-1 -right-1 bg-green-500 w-3 h-3 rounded-full border-2 border-white"></div>
+                            </div>
+                            <div class="ml-2 flex-grow min-w-0">
+                                <div class="flex flex-wrap items-center justify-between">
+                                    <div class="flex flex-wrap items-center mb-1 md:mb-0">
+                                        <span class="font-medium text-gray-900 mr-2 text-sm">张文君</span>
+                                        <span class="text-gray-500 text-xs mr-2">女 | 46岁</span>
+                                        <div class="flex flex-wrap mt-0.5 md:mt-0">
+                                            <span class="tag tag-red mr-1 mb-0.5">高血压</span>
+                                            <span class="tag tag-orange mr-1 mb-0.5">糖尿病</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center mt-0.5 md:mt-0">
+                                        <div class="bg-yellow-50 px-1.5 py-0.5 rounded text-xs font-medium text-yellow-600 flex items-center whitespace-nowrap">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-2.5 w-2.5 mr-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                            </svg>
+                                            术后随访
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-0.5 text-xs text-gray-500 truncate">
+                                    手机：138****1234 | 患者ID：10047235
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                            <div class="bg-gray-50 p-2 rounded-md">
+                                <div class="text-gray-500 mb-0.5">随访日期</div>
+                                <div class="text-gray-700 font-medium">2024-03-18 (今天)</div>
+                            </div>
+                            <div class="bg-gray-50 p-2 rounded-md">
+                                <div class="text-gray-500 mb-0.5">随访方式</div>
+                                <div class="text-gray-700 font-medium">视频随访</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 随访状态和操作区域 -->
+                    <div class="flex flex-col justify-between p-3 md:min-w-[180px] md:w-auto w-full">
+                        <div class="text-center mb-2">
+                            <div class="text-sm font-medium mb-0.5 text-green-600">待随访</div>
+                            <div class="text-xs text-gray-500">计划时间 14:30-15:00</div>
+                        </div>
+                        <div class="flex flex-col space-y-1.5">
+                            <button class="w-full bg-primary-600 text-white py-1.5 px-3 rounded-md hover:bg-primary-700 transition-colors shadow-sm font-medium text-xs" onclick="startFollowUp(1)">
+                                开始随访
+                            </button>
+                            <button class="w-full bg-white text-gray-600 py-1.5 px-3 rounded-md border border-gray-300 hover:bg-gray-50 transition-colors font-medium text-xs" onclick="reschedule(1)">
+                                重新安排
+                            </button>
+                            <button class="w-full bg-white text-red-600 py-1.5 px-3 rounded-md border border-red-200 hover:bg-red-50 transition-colors font-medium text-xs" onclick="cancelFollowUp(1)">
+                                取消随访
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <!-- 患者基本信息 -->
-            <div class="mb-4">
-                <div class="flex items-center mb-2">
-                    <img src="https://ui-avatars.com/api/?name=张三&background=0D8ABC&color=fff" class="w-12 h-12 rounded-full mr-3">
-                    <div>
-                        <h4 class="font-medium">张三</h4>
-                        <p class="text-sm text-gray-500">男 | 45岁</p>
+            <!-- 患者卡片2 -->
+            <div class="patient-card bg-white shadow-card p-0 rounded-lg">
+                <div class="flex flex-col md:flex-row">
+                    <!-- 患者信息区域 -->
+                    <div class="flex-grow p-3 border-b md:border-b-0 md:border-r border-gray-100">
+                        <div class="flex items-start mb-2">
+                            <div class="relative flex-shrink-0">
+                                <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-700 font-medium text-sm">
+                                    李
+                                </div>
+                                <div class="absolute -bottom-1 -right-1 bg-green-500 w-3 h-3 rounded-full border-2 border-white"></div>
+                            </div>
+                            <div class="ml-2 flex-grow min-w-0">
+                                <div class="flex flex-wrap items-center justify-between">
+                                    <div class="flex flex-wrap items-center mb-1 md:mb-0">
+                                        <span class="font-medium text-gray-900 mr-2 text-sm">李明</span>
+                                        <span class="text-gray-500 text-xs mr-2">男 | 58岁</span>
+                                        <div class="flex flex-wrap mt-0.5 md:mt-0">
+                                            <span class="tag tag-blue mr-1 mb-0.5">心脏病</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center mt-0.5 md:mt-0">
+                                        <div class="bg-blue-50 px-1.5 py-0.5 rounded text-xs font-medium text-blue-600 flex items-center whitespace-nowrap">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-2.5 w-2.5 mr-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                            </svg>
+                                            慢病管理
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-0.5 text-xs text-gray-500 truncate">
+                                    手机：139****5678 | 患者ID：10062543
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                            <div class="bg-gray-50 p-2 rounded-md">
+                                <div class="text-gray-500 mb-0.5">随访日期</div>
+                                <div class="text-gray-700 font-medium">2024-03-18 (今天)</div>
+                            </div>
+                            <div class="bg-gray-50 p-2 rounded-md">
+                                <div class="text-gray-500 mb-0.5">随访方式</div>
+                                <div class="text-gray-700 font-medium">电话随访</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 随访状态和操作区域 -->
+                    <div class="flex flex-col justify-between p-3 md:min-w-[180px] md:w-auto w-full">
+                        <div class="text-center mb-2">
+                            <div class="text-sm font-medium mb-0.5 text-blue-600">已完成</div>
+                            <div class="text-xs text-gray-500">完成时间 10:15</div>
+                        </div>
+                        <div class="flex flex-col space-y-1.5">
+                            <button class="w-full bg-white text-gray-600 py-1.5 px-3 rounded-md border border-gray-300 hover:bg-gray-50 transition-colors font-medium text-xs" onclick="viewDetail(2)">
+                                查看详情
+                            </button>
+                            <button class="w-full bg-white text-primary-600 py-1.5 px-3 rounded-md border border-primary-200 hover:bg-primary-50 transition-colors font-medium text-xs" onclick="createNextFollowUp(2)">
+                                创建下次随访
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="text-sm text-gray-500">
-                    <span class="inline-block px-2 py-1 bg-blue-50 text-blue-500 rounded-full">术后随访</span>
-                </div>
             </div>
-
-            <!-- 随访类型特定信息 -->
-            <div id="postSurgeryInfo" class="mb-4">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">手术名称</label>
-                    <input type="text" class="w-full p-2 border rounded-lg" value="腹腔镜胆囊切除术" readonly>
+            
+            <!-- 患者卡片3 -->
+            <div class="patient-card bg-white shadow-card p-0 rounded-lg">
+                <div class="flex flex-col md:flex-row">
+                    <!-- 患者信息区域 -->
+                    <div class="flex-grow p-3 border-b md:border-b-0 md:border-r border-gray-100">
+                        <div class="flex items-start mb-2">
+                            <div class="relative flex-shrink-0">
+                                <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-700 font-medium text-sm">
+                                    王
+                                </div>
+                                <div class="absolute -bottom-1 -right-1 bg-gray-500 w-3 h-3 rounded-full border-2 border-white"></div>
+                            </div>
+                            <div class="ml-2 flex-grow min-w-0">
+                                <div class="flex flex-wrap items-center justify-between">
+                                    <div class="flex flex-wrap items-center mb-1 md:mb-0">
+                                        <span class="font-medium text-gray-900 mr-2 text-sm">王梅</span>
+                                        <span class="text-gray-500 text-xs mr-2">女 | 63岁</span>
+                                        <div class="flex flex-wrap mt-0.5 md:mt-0">
+                                            <span class="tag tag-orange mr-1 mb-0.5">糖尿病</span>
+                                            <span class="tag tag-red mr-1 mb-0.5">骨折修复</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center mt-0.5 md:mt-0">
+                                        <div class="bg-red-50 px-1.5 py-0.5 rounded text-xs font-medium text-red-600 flex items-center whitespace-nowrap">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-2.5 w-2.5 mr-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                            </svg>
+                                            复诊提醒
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-0.5 text-xs text-gray-500 truncate">
+                                    手机：135****3690 | 患者ID：10035721
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                            <div class="bg-gray-50 p-2 rounded-md">
+                                <div class="text-gray-500 mb-0.5">随访日期</div>
+                                <div class="text-gray-700 font-medium">2024-03-18 (今天)</div>
+                            </div>
+                            <div class="bg-gray-50 p-2 rounded-md">
+                                <div class="text-gray-500 mb-0.5">随访方式</div>
+                                <div class="text-gray-700 font-medium">消息随访</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 随访状态和操作区域 -->
+                    <div class="flex flex-col justify-between p-3 md:min-w-[180px] md:w-auto w-full">
+                        <div class="text-center mb-2">
+                            <div class="text-sm font-medium mb-0.5 text-red-600">已取消</div>
+                            <div class="text-xs text-gray-500">原计划时间 16:00-16:30</div>
+                        </div>
+                        <div class="flex flex-col space-y-1.5">
+                            <button class="w-full bg-white text-gray-600 py-1.5 px-3 rounded-md border border-gray-300 hover:bg-gray-50 transition-colors font-medium text-xs" onclick="viewDetail(3)">
+                                查看详情
+                            </button>
+                            <button class="w-full bg-primary-600 text-white py-1.5 px-3 rounded-md hover:bg-primary-700 transition-colors shadow-sm font-medium text-xs" onclick="reschedule(3)">
+                                重新安排
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">手术日期</label>
-                    <input type="date" class="w-full p-2 border rounded-lg" value="2024-03-11" readonly>
-                </div>
-            </div>
-
-            <div id="chronicDiseaseInfo" class="mb-4 hidden">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">慢病名称</label>
-                    <input type="text" class="w-full p-2 border rounded-lg" value="高血压、2型糖尿病" readonly>
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">确诊日期</label>
-                    <input type="date" class="w-full p-2 border rounded-lg" value="2023-01-15" readonly>
-                </div>
-            </div>
-
-            <div id="followUpInfo" class="mb-4 hidden">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">上次就诊日期</label>
-                    <input type="date" class="w-full p-2 border rounded-lg" value="2024-03-04" readonly>
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">就诊原因</label>
-                    <input type="text" class="w-full p-2 border rounded-lg" value="冠心病" readonly>
-                </div>
-            </div>
-
-            <!-- 随访预约信息 -->
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">选择随访日期</label>
-                <input type="date" class="w-full p-2 border rounded-lg" min="2024-03-18">
-            </div>
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">选择随访时间</label>
-                <select class="w-full p-2 border rounded-lg">
-                    <option>上午 8:00-12:00</option>
-                    <option>下午 14:00-18:00</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">随访备注</label>
-                <textarea class="w-full p-2 border rounded-lg" rows="3" placeholder="请输入随访备注信息"></textarea>
-            </div>
-            <div class="flex justify-end gap-2">
-                <button onclick="hideScheduleModal()" class="px-4 py-2 text-gray-500 hover:text-gray-700">取消</button>
-                <button onclick="confirmSchedule()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">确认预约</button>
             </div>
         </div>
-    </div>
-
-    <!-- 添加新预约浮动按钮 -->
-    <div class="fixed right-6 bottom-20 z-50">
-        <button onclick="showAddScheduleModal()" class="w-14 h-14 bg-blue-500 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-blue-600 transition-colors">
-            <i class="fas fa-plus text-xl"></i>
-        </button>
-    </div>
-
-    <!-- 添加新随访弹窗 -->
-    <div id="addScheduleModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 w-11/12 max-w-md">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold">添加随访</h3>
-                <button onclick="hideAddScheduleModal()" class="text-gray-500">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-
-            <!-- 搜索患者 -->
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">搜索患者</label>
-                <div class="relative">
-                    <input type="text" class="w-full p-2 pr-10 border rounded-lg" placeholder="输入患者姓名或手机号">
-                    <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
-                </div>
-            </div>
-
-            <!-- 患者类型选择 -->
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">随访类型</label>
-                <select class="w-full p-2 border rounded-lg" onchange="toggleFollowUpFields(this.value)">
-                    <option value="">请选择随访类型</option>
-                    <option value="术后随访">术后随访</option>
-                    <option value="慢病管理">慢病管理</option>
-                    <option value="复诊提醒">复诊提醒</option>
-                    <option value="用药指导">用药指导</option>
-                    <option value="其他">其他</option>
-                </select>
-            </div>
-
-            <!-- 动态表单字段 -->
-            <div id="surgeryFields" class="hidden">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">手术名称</label>
-                    <input type="text" class="w-full p-2 border rounded-lg" placeholder="请输入手术名称">
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">手术日期</label>
-                    <input type="date" class="w-full p-2 border rounded-lg">
-                </div>
-            </div>
-
-            <div id="chronicFields" class="hidden">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">慢病名称</label>
-                    <input type="text" class="w-full p-2 border rounded-lg" placeholder="请输入慢病名称">
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">确诊日期</label>
-                    <input type="date" class="w-full p-2 border rounded-lg">
-                </div>
-            </div>
-
-            <div id="followUpFields" class="hidden">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">就诊原因</label>
-                    <input type="text" class="w-full p-2 border rounded-lg" placeholder="请输入就诊原因">
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">上次就诊日期</label>
-                    <input type="date" class="w-full p-2 border rounded-lg">
-                </div>
-            </div>
-
-            <div id="medicationFields" class="hidden">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">用药名称</label>
-                    <input type="text" class="w-full p-2 border rounded-lg" placeholder="请输入药品名称">
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">用药开始日期</label>
-                    <input type="date" class="w-full p-2 border rounded-lg">
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">用药周期</label>
-                    <input type="text" class="w-full p-2 border rounded-lg" placeholder="请输入用药周期">
-                </div>
-            </div>
-
-            <!-- 随访预约信息 -->
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">预约随访日期</label>
-                <input type="date" class="w-full p-2 border rounded-lg" min="2024-03-18">
-            </div>
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">预约随访时间</label>
-                <select class="w-full p-2 border rounded-lg">
-                    <option>上午 8:00-12:00</option>
-                    <option>下午 14:00-18:00</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">随访备注</label>
-                <textarea class="w-full p-2 border rounded-lg" rows="3" placeholder="请输入随访备注信息"></textarea>
-            </div>
-
-            <div class="flex justify-end gap-2">
-                <button onclick="hideAddScheduleModal()" class="px-4 py-2 text-gray-500 hover:text-gray-700">取消</button>
-                <button onclick="submitNewSchedule()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">确认添加</button>
-            </div>
+        
+        <!-- 分页 -->
+        <div class="flex justify-center mt-5">
+            <nav class="inline-flex flex-wrap rounded-md shadow-sm" aria-label="Pagination">
+                <a href="#" class="relative inline-flex items-center px-1.5 py-1 rounded-l-md border border-gray-300 bg-white text-xs font-medium text-gray-500 hover:bg-gray-50">
+                    <span class="sr-only">上一页</span>
+                    <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <a href="#" aria-current="page" class="relative inline-flex items-center px-3 py-1 border border-primary-500 bg-primary-50 text-xs font-medium text-primary-600 hover:bg-primary-100">
+                    1
+                </a>
+                <a href="#" class="relative inline-flex items-center px-3 py-1 border border-gray-300 bg-white text-xs font-medium text-gray-500 hover:bg-gray-50">
+                    2
+                </a>
+                <a href="#" class="relative hidden sm:inline-flex items-center px-3 py-1 border border-gray-300 bg-white text-xs font-medium text-gray-500 hover:bg-gray-50">
+                    3
+                </a>
+                <span class="relative hidden sm:inline-flex items-center px-3 py-1 border border-gray-300 bg-white text-xs font-medium text-gray-700">
+                    ...
+                </span>
+                <a href="#" class="relative hidden sm:inline-flex items-center px-3 py-1 border border-gray-300 bg-white text-xs font-medium text-gray-500 hover:bg-gray-50">
+                    8
+                </a>
+                <a href="#" class="relative inline-flex items-center px-1.5 py-1 rounded-r-md border border-gray-300 bg-white text-xs font-medium text-gray-500 hover:bg-gray-50">
+                    <span class="sr-only">下一页</span>
+                    <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </nav>
         </div>
-    </div>
+    </main>
 
-    <!-- 底部导航栏 -->
-    <nav class="bg-white shadow-lg fixed bottom-0 w-full z-50 sm:hidden">
-        <div class="flex justify-around">
-            <a href="patients.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+    <!-- 移动端底部导航栏 -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
+        <div class="grid grid-cols-5 h-16">
+            <a href="patients.html" class="flex flex-col items-center justify-center text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
                 <span class="text-xs mt-1">患者</span>
             </a>
-            <a href="monitoring.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            <a href="monitoring.html" class="flex flex-col items-center justify-center text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                 </svg>
                 <span class="text-xs mt-1">监测</span>
             </a>
-            <a href="consultation.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+            <a href="consultation.html" class="flex flex-col items-center justify-center text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                 </svg>
                 <span class="text-xs mt-1">会诊</span>
             </a>
-            <a href="schedule.html" class="flex flex-col items-center p-2 text-blue-500">
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            <a href="schedule.html" class="flex flex-col items-center justify-center text-primary-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 <span class="text-xs mt-1">随访</span>
             </a>
-            <a href="profile.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            <a href="profile.html" class="flex flex-col items-center justify-center text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
                 <span class="text-xs mt-1">我的</span>
             </a>
         </div>
-    </nav>
+    </div>
+
+    <!-- 新建随访模态框 -->
+    <div id="newAppointmentModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-xl shadow-float w-full max-w-lg mx-4 modal-content">
+            <div class="flex justify-between items-center p-5 border-b border-gray-100">
+                <h3 class="text-lg font-semibold text-gray-900">新建随访预约</h3>
+                <button class="text-gray-500 hover:text-gray-700" onclick="closeModal('newAppointmentModal')">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="p-5">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-medium mb-2" for="patientSearch">
+                        选择患者
+                    </label>
+                    <div class="relative">
+                        <input id="patientSearch" type="text" placeholder="搜索患者姓名或手机号" class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-500 transition-all">
+                        <div class="absolute left-3 top-2.5 text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="followupType">
+                            随访类型
+                        </label>
+                        <select id="followupType" class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-500 transition-all">
+                            <option value="术后随访">术后随访</option>
+                            <option value="慢病管理">慢病管理</option>
+                            <option value="复诊提醒">复诊提醒</option>
+                            <option value="用药指导">用药指导</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="followupMethod">
+                            随访方式
+                        </label>
+                        <select id="followupMethod" class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-500 transition-all">
+                            <option value="视频随访">视频随访</option>
+                            <option value="电话随访">电话随访</option>
+                            <option value="消息随访">消息随访</option>
+                            <option value="面诊随访">面诊随访</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="followupDate">
+                            随访日期
+                        </label>
+                        <input type="date" id="followupDate" class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-500 transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="followupTime">
+                            随访时间
+                        </label>
+                        <input type="time" id="followupTime" class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-500 transition-all">
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-medium mb-2" for="followupDescription">
+                        随访说明
+                    </label>
+                    <textarea id="followupDescription" rows="3" placeholder="请输入随访说明或备注内容..." class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-500 transition-all resize-none"></textarea>
+                </div>
+                
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 font-medium transition-colors" onclick="closeModal('newAppointmentModal')">
+                        取消
+                    </button>
+                    <button class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 font-medium transition-colors shadow-sm">
+                        创建随访
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 重新安排随访模态框 -->
+    <div id="rescheduleModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-xl shadow-float w-full max-w-md mx-4 modal-content">
+            <div class="flex justify-between items-center p-5 border-b border-gray-100">
+                <h3 class="text-lg font-semibold text-gray-900">重新安排随访</h3>
+                <button class="text-gray-500 hover:text-gray-700" onclick="closeModal('rescheduleModal')">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="p-5">
+                <div class="mb-4">
+                    <div class="flex items-center bg-blue-50 p-3 rounded-lg mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                        </svg>
+                        <div class="text-blue-800 text-sm">
+                            您正在为<span id="reschedulePatientName" class="font-semibold">张文君</span>重新安排随访
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="newFollowupMethod">
+                            随访方式
+                        </label>
+                        <select id="newFollowupMethod" class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-500 transition-all">
+                            <option value="视频随访">视频随访</option>
+                            <option value="电话随访">电话随访</option>
+                            <option value="消息随访">消息随访</option>
+                            <option value="面诊随访">面诊随访</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="newFollowupDate">
+                            随访日期
+                        </label>
+                        <input type="date" id="newFollowupDate" class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-500 transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="newFollowupTime">
+                            随访时间
+                        </label>
+                        <input type="time" id="newFollowupTime" class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-500 transition-all">
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-medium mb-2" for="rescheduleReason">
+                        变更原因
+                    </label>
+                    <textarea id="rescheduleReason" rows="3" placeholder="请输入变更随访时间的原因..." class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-500 transition-all resize-none"></textarea>
+                </div>
+                
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 font-medium transition-colors" onclick="closeModal('rescheduleModal')">
+                        取消
+                    </button>
+                    <button class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 font-medium transition-colors shadow-sm">
+                        确定更改
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 取消随访确认模态框 -->
+    <div id="cancelConfirmModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-xl shadow-float w-full max-w-md mx-4 modal-content">
+            <div class="flex justify-between items-center p-5 border-b border-gray-100">
+                <h3 class="text-lg font-semibold text-gray-900">取消随访确认</h3>
+                <button class="text-gray-500 hover:text-gray-700" onclick="closeModal('cancelConfirmModal')">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="p-5">
+                <div class="flex items-center bg-red-50 p-3 rounded-lg mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                    </svg>
+                    <div class="text-red-800 text-sm">
+                        您确定要取消<span id="cancelPatientName" class="font-semibold">张文君</span>的随访吗？
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-medium mb-2" for="cancelReason">
+                        取消原因
+                    </label>
+                    <textarea id="cancelReason" rows="3" placeholder="请输入取消随访的原因..." class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-500 transition-all resize-none"></textarea>
+                </div>
+                
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center h-5">
+                        <input id="notifyPatient" type="checkbox" class="h-4 w-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                    </div>
+                    <label for="notifyPatient" class="ml-2 text-sm text-gray-600">
+                        通知患者随访已取消
+                    </label>
+                </div>
+                
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 font-medium transition-colors" onclick="closeModal('cancelConfirmModal')">
+                        返回
+                    </button>
+                    <button class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition-colors shadow-sm">
+                        确认取消
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // 切换时间范围
+        // 日期格式化
+        const formatDate = (date) => {
+            const d = new Date(date);
+            return d.toISOString().split('T')[0];
+        };
+        
+        // 初始化日期选择器默认值
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            if (document.getElementById('followupDate')) {
+                document.getElementById('followupDate').value = formatDate(today);
+            }
+            if (document.getElementById('newFollowupDate')) {
+                document.getElementById('newFollowupDate').value = formatDate(today);
+            }
+            
+            // 初始化筛选计数器
+            updateFilterCount();
+        });
+        
+        // 模态框控制
+        function newAppointment() {
+            document.getElementById('newAppointmentModal').classList.remove('hidden');
+        }
+        
+        function reschedule(patientId) {
+            // 模拟通过ID获取患者姓名
+            const patientNames = {
+                1: '张文君',
+                2: '李明',
+                3: '王梅'
+            };
+            document.getElementById('reschedulePatientName').textContent = patientNames[patientId] || '患者';
+            document.getElementById('rescheduleModal').classList.remove('hidden');
+        }
+        
+        function cancelFollowUp(patientId) {
+            // 模拟通过ID获取患者姓名
+            const patientNames = {
+                1: '张文君',
+                2: '李明',
+                3: '王梅'
+            };
+            document.getElementById('cancelPatientName').textContent = patientNames[patientId] || '患者';
+            document.getElementById('cancelConfirmModal').classList.remove('hidden');
+        }
+        
+        function startFollowUp(patientId) {
+            // 模拟开始随访
+            alert(`开始与患者ID: ${patientId} 的随访`);
+        }
+        
+        function viewDetail(patientId) {
+            // 模拟查看详情
+            alert(`查看患者ID: ${patientId} 的随访详情`);
+        }
+        
+        function createNextFollowUp(patientId) {
+            // 模拟创建下次随访
+            document.getElementById('newAppointmentModal').classList.remove('hidden');
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+        
+        // 时间范围切换
         function switchTimeRange(range) {
-            const timeRanges = document.querySelectorAll('.text-center.p-2');
-            timeRanges.forEach(el => {
-                el.classList.remove('bg-blue-50');
-                el.querySelector('.text-sm').classList.remove('text-blue-500');
-                el.querySelector('.text-lg').classList.remove('text-blue-500');
+            // 移除所有选中状态
+            const ranges = document.querySelectorAll('.grid.grid-cols-3 > div');
+            ranges.forEach(el => {
+                el.classList.remove('bg-primary-50', 'border-primary-100');
+                el.classList.add('bg-white', 'border-gray-200');
+                
+                const timeText = el.querySelector('div:first-child');
+                if (timeText) {
+                    timeText.classList.remove('text-primary-700');
+                    timeText.classList.add('text-gray-600');
+                }
+                
+                const countText = el.querySelector('span:first-child');
+                if (countText) {
+                    countText.classList.remove('text-primary-700');
+                    countText.classList.add('text-primary-700');
+                }
+                
+                const unitText = el.querySelector('span:nth-child(2)');
+                if (unitText) {
+                    unitText.classList.remove('text-primary-600');
+                    unitText.classList.add('text-primary-600');
+                }
             });
             
-            const selectedRange = event.currentTarget;
-            selectedRange.classList.add('bg-blue-50');
-            selectedRange.querySelector('.text-sm').classList.add('text-blue-500');
-            selectedRange.querySelector('.text-lg').classList.add('text-blue-500');
+            // 设置选中项样式
+            let selectedIndex = 0;
+            if (range === 'three') selectedIndex = 1;
+            if (range === 'seven') selectedIndex = 2;
             
-            // TODO: 根据选择的时间范围更新患者列表
+            const selectedRange = ranges[selectedIndex];
+            if (selectedRange) {
+                selectedRange.classList.remove('bg-white', 'border-gray-200');
+                selectedRange.classList.add('bg-primary-50', 'border-primary-100');
+                
+                const timeText = selectedRange.querySelector('div:first-child');
+                if (timeText) {
+                    timeText.classList.remove('text-gray-600');
+                    timeText.classList.add('text-primary-700');
+                }
+                
+                const countText = selectedRange.querySelector('span:first-child');
+                if (countText) {
+                    countText.classList.remove('text-primary-700');
+                    countText.classList.add('text-primary-700');
+                }
+                
+                const unitText = selectedRange.querySelector('span:nth-child(2)');
+                if (unitText) {
+                    unitText.classList.remove('text-primary-600');
+                    unitText.classList.add('text-primary-600');
+                }
+            }
+            
+            // 显示加载动画
+            showLoadingAnimation();
+            
+            // 实际应用中，这里应该调用API获取对应时间范围的数据
+            console.log(`切换到${range}时间范围`);
+            
+            // 模拟数据加载
+            setTimeout(() => {
+                hideLoadingAnimation();
+                // 这里可以更新DOM显示新的数据
+            }, 500);
         }
-
-        // 过滤患者
-        function filterPatients(type) {
-            const filters = document.querySelectorAll('.px-3.py-1.rounded-full');
-            filters.forEach(filter => {
-                filter.classList.remove('active-filter');
-                filter.classList.add('inactive-filter');
-            });
+        
+        // 患者类型筛选增强版
+        function filterPatients(element) {
+            // 切换选中状态
+            element.classList.toggle('active-filter');
+            element.classList.toggle('inactive-filter');
             
-            event.target.classList.remove('inactive-filter');
-            event.target.classList.add('active-filter');
+            // 显示或隐藏勾选图标
+            const checkIcon = element.querySelector('.filter-check');
+            if (checkIcon) {
+                if (element.classList.contains('active-filter')) {
+                    checkIcon.classList.remove('hidden');
+                } else {
+                    checkIcon.classList.add('hidden');
+                }
+            }
             
-            // TODO: 根据选择的类型过滤患者列表
+            // 更新筛选计数
+            updateFilterCount();
+            
+            // 应用筛选效果到患者列表
+            applyFilters();
         }
-
-        // 清除过滤
+        
+        // 更新筛选计数
+        function updateFilterCount() {
+            const activeFilters = document.querySelectorAll('#patientTypeFilters .active-filter');
+            const filterCount = document.getElementById('filterCount');
+            
+            if (filterCount) {
+                filterCount.textContent = activeFilters.length;
+                
+                // 如果有激活的筛选器，显示计数徽章
+                if (activeFilters.length > 0) {
+                    filterCount.classList.remove('bg-primary-100');
+                    filterCount.classList.add('bg-primary-500', 'text-white');
+                } else {
+                    filterCount.classList.remove('bg-primary-500', 'text-white');
+                    filterCount.classList.add('bg-primary-100');
+                }
+            }
+        }
+        
+        // 清除所有筛选
         function clearFilter() {
-            const filters = document.querySelectorAll('.px-3.py-1.rounded-full');
-            filters.forEach(filter => {
-                filter.classList.remove('active-filter');
-                filter.classList.add('inactive-filter');
+            const filters = document.querySelectorAll('#patientTypeFilters .filter-chip');
+            filters.forEach(el => {
+                el.classList.remove('active-filter');
+                el.classList.add('inactive-filter');
+                
+                // 隐藏所有勾选图标
+                const checkIcon = el.querySelector('.filter-check');
+                if (checkIcon) {
+                    checkIcon.classList.add('hidden');
+                }
             });
             
-            // TODO: 显示所有患者
-        }
-
-        // 显示预约弹窗
-        function showScheduleModal(patientType) {
-            // 隐藏所有类型特定的信息
-            document.getElementById('postSurgeryInfo').classList.add('hidden');
-            document.getElementById('chronicDiseaseInfo').classList.add('hidden');
-            document.getElementById('followUpInfo').classList.add('hidden');
-
-            // 根据患者类型显示对应的信息
-            switch(patientType) {
-                case '术后随访':
-                    document.getElementById('postSurgeryInfo').classList.remove('hidden');
-                    break;
-                case '慢病管理':
-                    document.getElementById('chronicDiseaseInfo').classList.remove('hidden');
-                    break;
-                case '复诊提醒':
-                    document.getElementById('followUpInfo').classList.remove('hidden');
-                    break;
-            }
-
-            document.getElementById('scheduleModal').classList.remove('hidden');
-            document.getElementById('scheduleModal').classList.add('flex');
-        }
-
-        // 隐藏预约弹窗
-        function hideScheduleModal() {
-            document.getElementById('scheduleModal').classList.add('hidden');
-            document.getElementById('scheduleModal').classList.remove('flex');
-        }
-
-        // 确认预约
-        function confirmSchedule() {
-            // TODO: 处理预约逻辑
-            hideScheduleModal();
-        }
-
-        // 显示添加随访弹窗
-        function showAddScheduleModal() {
-            document.getElementById('addScheduleModal').classList.remove('hidden');
-            document.getElementById('addScheduleModal').classList.add('flex');
-        }
-
-        // 隐藏添加随访弹窗
-        function hideAddScheduleModal() {
-            document.getElementById('addScheduleModal').classList.add('hidden');
-            document.getElementById('addScheduleModal').classList.remove('flex');
-        }
-
-        // 切换随访类型表单字段
-        function toggleFollowUpFields(type) {
-            // 隐藏所有字段
-            document.getElementById('surgeryFields').classList.add('hidden');
-            document.getElementById('chronicFields').classList.add('hidden');
-            document.getElementById('followUpFields').classList.add('hidden');
-            document.getElementById('medicationFields').classList.add('hidden');
-
-            // 根据类型显示对应字段
-            switch(type) {
-                case '术后随访':
-                    document.getElementById('surgeryFields').classList.remove('hidden');
-                    break;
-                case '慢病管理':
-                    document.getElementById('chronicFields').classList.remove('hidden');
-                    break;
-                case '复诊提醒':
-                    document.getElementById('followUpFields').classList.remove('hidden');
-                    break;
-                case '用药指导':
-                    document.getElementById('medicationFields').classList.remove('hidden');
-                    break;
+            // 更新筛选计数
+            updateFilterCount();
+            
+            // 重新应用筛选效果
+            applyFilters();
+            
+            // 添加清除动画效果
+            const clearButton = document.querySelector('button[onclick="clearFilter()"]');
+            if (clearButton) {
+                clearButton.classList.add('animate-spin');
+                setTimeout(() => {
+                    clearButton.classList.remove('animate-spin');
+                }, 500);
             }
         }
-
-        // 提交新随访
-        function submitNewSchedule() {
-            // TODO: 处理添加随访的逻辑
-            hideAddScheduleModal();
-            // 可以添加成功提示
-            alert('添加随访成功！');
+        
+        // 按状态筛选
+        function filterByStatus(element) {
+            // 移除所有活动状态
+            document.querySelectorAll('.status-filter').forEach(btn => {
+                btn.classList.remove('active-filter');
+                btn.classList.add('inactive-filter');
+                
+                // 更新数字标签颜色
+                const countBadge = btn.querySelector('span');
+                if (countBadge) {
+                    countBadge.classList.remove('text-primary-600');
+                    countBadge.classList.add('text-gray-600');
+                }
+            });
+            
+            // 设置当前为活动状态
+            element.classList.remove('inactive-filter');
+            element.classList.add('active-filter');
+            
+            // 更新数字标签颜色
+            const countBadge = element.querySelector('span');
+            if (countBadge) {
+                countBadge.classList.remove('text-gray-600');
+                countBadge.classList.add('text-primary-600');
+            }
+            
+            const status = element.getAttribute('data-status');
+            
+            // 显示加载动画
+            showLoadingAnimation();
+            
+            // 实际应用中，这里应该调用API获取对应状态的患者
+            console.log(`筛选${status}状态的患者`);
+            
+            // 模拟数据加载
+            setTimeout(() => {
+                hideLoadingAnimation();
+                // 这里可以更新DOM显示新的数据
+            }, 500);
+        }
+        
+        // 应用筛选效果到患者列表
+        function applyFilters() {
+            // 获取所有激活的筛选器类型
+            const activeFilters = Array.from(document.querySelectorAll('#patientTypeFilters .active-filter'))
+                .map(el => el.getAttribute('data-type'));
+            
+            // 显示加载动画
+            showLoadingAnimation();
+            
+            // 这里应该根据筛选条件获取患者数据并更新UI
+            console.log('应用筛选: ', activeFilters);
+            
+            // 模拟数据加载
+            setTimeout(() => {
+                hideLoadingAnimation();
+                // 这里可以更新DOM显示新的数据
+            }, 500);
+        }
+        
+        // 显示加载动画
+        function showLoadingAnimation() {
+            // 检查是否已存在加载动画
+            if (document.getElementById('loadingOverlay')) return;
+            
+            // 创建加载动画覆盖层
+            const overlay = document.createElement('div');
+            overlay.id = 'loadingOverlay';
+            overlay.className = 'fixed inset-0 bg-white bg-opacity-70 z-40 flex items-center justify-center';
+            
+            // 创建加载动画
+            const spinner = document.createElement('div');
+            spinner.className = 'animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary-600';
+            
+            overlay.appendChild(spinner);
+            document.body.appendChild(overlay);
+        }
+        
+        // 隐藏加载动画
+        function hideLoadingAnimation() {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                // 添加淡出效果
+                overlay.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+                
+                // 延迟移除元素
+                setTimeout(() => {
+                    overlay.remove();
+                }, 300);
+            }
         }
     </script>
 </body>

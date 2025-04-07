@@ -1,13 +1,30 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>健康监测 - 汉唐医生基层版</title>
+    <title>健康监测 - 汉唐医生机构版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="../assets/js/monitoring.js"></script>
     <link rel="stylesheet" href="../assets/css/main.css">
+    <style>
+        .patient-tag {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            display: inline-block;
+        }
+        .metric-card {
+            transition: all 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .status-normal { color: #10B981; }
+        .status-warning { color: #F59E0B; }
+        .status-alert { color: #EF4444; }
+    </style>
 </head>
 <body class="bg-gray-100">
     <!-- 顶部导航栏 -->
@@ -16,7 +33,7 @@
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <div class="flex-shrink-0 flex items-center">
-                        <img class="h-8 w-8" src="../assets/images/logo.png" alt="汉唐医生基层版">
+                        <img class="h-8 w-8" src="../assets/images/logo.png" alt="宝鸡高新医院">
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
                         <a href="patients.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
@@ -41,462 +58,837 @@
     </nav>
 
     <!-- 主要内容区域 -->
-    <main class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 mt-16 content-wrapper has-bottom-nav">
-        <!-- 设备连接状态 -->
+    <div class="max-w-7xl mx-auto pt-16">
+        <!-- 顶部患者信息 -->
         <div class="bg-white shadow rounded-lg mb-4">
-            <div class="px-4 py-3 sm:px-6">
+            <div class="px-4 py-3">
                 <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <div class="connection-status flex items-center">
-                            <div class="h-2 w-2 rounded-full bg-red-500 mr-2"></div>
-                            <span class="text-xs text-gray-500">设备未连接</span>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
+                            <span class="text-xl">张</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center space-x-2">
+                                <h2 class="text-lg font-medium">张三</h2>
+                                <span class="patient-tag bg-blue-100 text-blue-800">高血压</span>
+                                <span class="patient-tag bg-yellow-100 text-yellow-800">糖尿病</span>
+                            </div>
+                            <p class="text-sm text-gray-500">男 | 65岁 | 3级随访患者</p>
                         </div>
                     </div>
-                    <button class="connection-button px-3 py-1 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                        连接设备
+                </div>
+                <div class="flex items-center space-x-4 mt-3">
+                    <button onclick="window.location.href='patients.html'" class="flex-1 py-2 text-center text-blue-600 border border-blue-600 rounded-lg text-sm hover:bg-blue-50">
+                        更换患者
+                    </button>
+                    <button onclick="window.location.href='patient-detail.html'" class="flex-1 py-2 text-center bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700">
+                        查看档案
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- 异常指标概览 -->
-        <div class="bg-white shadow rounded-lg mb-4">
-            <div class="px-4 py-3 sm:px-6">
-                <h3 class="text-base font-medium text-gray-900">异常指标概览</h3>
-                <div class="mt-2 flex flex-wrap gap-2">
-                    <div class="flex-1 min-w-[160px] bg-red-50 rounded-lg p-2 cursor-pointer hover:bg-red-100 transition-colors" onclick="window.location.href='abnormal-patients.html?type=blood-pressure'">
-                        <div class="flex items-center justify-between">
-                            <h4 class="text-xs font-medium text-red-800">血压异常</h4>
-                            <span class="text-xs text-red-600">3人</span>
-                        </div>
-                        <div class="mt-1">
-                            <p class="text-xs text-red-700">收缩压 > 140mmHg</p>
-                            <p class="text-xs text-red-700">舒张压 > 90mmHg</p>
-                        </div>
-                    </div>
-                    <div class="flex-1 min-w-[160px] bg-yellow-50 rounded-lg p-2 cursor-pointer hover:bg-yellow-100 transition-colors" onclick="window.location.href='abnormal-patients.html?type=blood-sugar'">
-                        <div class="flex items-center justify-between">
-                            <h4 class="text-xs font-medium text-yellow-800">血糖异常</h4>
-                            <span class="text-xs text-yellow-600">2人</span>
-                        </div>
-                        <div class="mt-1">
-                            <p class="text-xs text-yellow-700">空腹血糖 > 6.1mmol/L</p>
-                            <p class="text-xs text-yellow-700">餐后血糖 > 7.8mmol/L</p>
-                        </div>
-                    </div>
-                    <div class="flex-1 min-w-[160px] bg-orange-50 rounded-lg p-2 cursor-pointer hover:bg-orange-100 transition-colors" onclick="window.location.href='abnormal-patients.html?type=heart-rate'">
-                        <div class="flex items-center justify-between">
-                            <h4 class="text-xs font-medium text-orange-800">心率异常</h4>
-                            <span class="text-xs text-orange-600">1人</span>
-                        </div>
-                        <div class="mt-1">
-                            <p class="text-xs text-orange-700">心率 > 100次/分</p>
-                            <p class="text-xs text-orange-700">或 < 60次/分</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 实时监测数据 -->
-        <div class="bg-white shadow rounded-lg mb-4">
-            <div class="px-4 py-3 sm:px-6">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-base font-medium text-gray-900">实时监测数据</h3>
-                    <div class="flex items-center space-x-2">
-                        <button id="saveDataBtn" class="px-3 py-1 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                            保存数据
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="border-t border-gray-200 px-4 py-4 sm:px-6">
-                <div class="border border-red-500 rounded-lg">
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-0">
-                        <!-- 血压监测 -->
-                        <div class="bg-gray-50 p-4 border-b md:border-r border-gray-200">
-                            <div class="flex flex-col">
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="text-sm font-medium text-gray-900">血压</span>
-                                    <span class="text-xs text-gray-500">mmHg</span>
-                                </div>
-                                <div class="text-xl font-bold text-gray-900 blood-pressure-value h-8 flex items-center">--/--</div>
-                            </div>
-                        </div>
-
-                        <!-- 血糖监测 -->
-                        <div class="bg-gray-50 p-4 border-b md:border-r border-gray-200">
-                            <div class="flex flex-col">
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="text-sm font-medium text-gray-900">血糖</span>
-                                    <span class="text-xs text-gray-500">mmol/L</span>
-                                </div>
-                                <div class="text-xl font-bold text-gray-900 blood-sugar-value h-8 flex items-center">--</div>
-                            </div>
-                        </div>
-
-                        <!-- 心率监测 -->
-                        <div class="bg-gray-50 p-4 border-b border-gray-200">
-                            <div class="flex flex-col">
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="text-sm font-medium text-gray-900">心率</span>
-                                    <span class="text-xs text-gray-500">次/分</span>
-                                </div>
-                                <div class="text-xl font-bold text-gray-900 heart-rate-value h-8 flex items-center">--</div>
-                            </div>
-                        </div>
-
-                        <!-- 体温监测 -->
-                        <div class="bg-gray-50 p-4 md:border-r border-gray-200">
-                            <div class="flex flex-col">
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="text-sm font-medium text-gray-900">体温</span>
-                                    <span class="text-xs text-gray-500">°C</span>
-                                </div>
-                                <div class="text-xl font-bold text-gray-900 temperature-value h-8 flex items-center">--</div>
-                            </div>
-                        </div>
-
-                        <!-- 血氧监测 -->
-                        <div class="bg-gray-50 p-4 md:border-r border-gray-200">
-                            <div class="flex flex-col">
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="text-sm font-medium text-gray-900">血氧</span>
-                                    <span class="text-xs text-gray-500">%</span>
-                                </div>
-                                <div class="text-xl font-bold text-gray-900 oxygen-value h-8 flex items-center">--</div>
-                            </div>
-                        </div>
-
-                        <!-- 呼吸率监测 -->
-                        <div class="bg-gray-50 p-4 border-gray-200">
-                            <div class="flex flex-col">
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="text-sm font-medium text-gray-900">呼吸率</span>
-                                    <span class="text-xs text-gray-500">次/分</span>
-                                </div>
-                                <div class="text-xl font-bold text-gray-900 respiration-value h-8 flex items-center">--</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 历史记录 -->
-        <div class="bg-white shadow rounded-lg mb-20">
-            <div class="px-4 py-3 sm:px-6">
-                <h3 class="text-base font-medium text-gray-900">历史记录</h3>
-            </div>
-            <div class="border-t border-gray-200">
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">时间</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">患者</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">血压</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">血糖</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">心率</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">体温</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">血氧</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">呼吸率</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">状态</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            <tr>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-500">2024-03-26 14:30</td>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">张三</td>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-red-600">145/95</td>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">5.6</td>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">75</td>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">36.5</td>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">98</td>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">16</td>
-                                <td class="px-3 py-2 whitespace-nowrap">
-                                    <span class="px-1.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                        异常
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-500">2024-03-26 14:25</td>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">李四</td>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">120/80</td>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-yellow-600">7.2</td>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">82</td>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">36.8</td>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">97</td>
-                                <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-900">18</td>
-                                <td class="px-3 py-2 whitespace-nowrap">
-                                    <span class="px-1.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                        异常
-                                    </span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- 底部导航栏 -->
-    <nav class="bottom-nav">
-        <a href="patients.html" class="bottom-nav-item">
-            <svg class="bottom-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-            </svg>
-            <span class="bottom-nav-text">患者</span>
-        </a>
-        <a href="monitoring.html" class="bottom-nav-item active">
-            <svg class="bottom-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-            </svg>
-            <span class="bottom-nav-text">监测</span>
-        </a>
-        <a href="consultation.html" class="bottom-nav-item">
-            <svg class="bottom-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-            </svg>
-            <span class="bottom-nav-text">会诊</span>
-        </a>
-        <a href="schedule.html" class="bottom-nav-item">
-            <svg class="bottom-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-            </svg>
-            <span class="bottom-nav-text">随访</span>
-        </a>
-        <a href="profile.html" class="bottom-nav-item">
-            <svg class="bottom-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-            </svg>
-            <span class="bottom-nav-text">我的</span>
-        </a>
-    </nav>
-
-    <!-- 异常患者列表弹窗 -->
-    <div id="abnormalPatientsModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden z-50">
-        <div class="bg-white rounded-lg max-w-lg w-full mx-4">
-            <div class="px-4 py-3 border-b border-gray-200">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-base font-medium text-gray-900" id="abnormalModalTitle">异常患者列表</h3>
-                    <button class="text-gray-400 hover:text-gray-500" onclick="closeAbnormalModal()">
-                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        <!-- 关键指标 -->
+        <div class="px-4 py-3">
+            <div class="flex items-center justify-between mb-2">
+                <h3 class="text-base font-medium">关键指标</h3>
+                <div class="flex items-center space-x-2">
+                    <span class="text-sm text-gray-500">今日更新</span>
+                    <button onclick="showConfigModal()" class="text-sm text-blue-600 hover:text-blue-800">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
                     </button>
                 </div>
             </div>
-            <div class="px-4 py-3 max-h-96 overflow-y-auto">
-                <ul class="divide-y divide-gray-200" id="abnormalPatientsList">
-                    <!-- 动态填充异常患者列表 -->
-                </ul>
+            <div id="keyMetrics" class="grid grid-cols-2 gap-3">
+                <div class="metric-card bg-white p-3 rounded-xl border">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-sm text-gray-500">血压</span>
+                            <div class="text-xl font-medium mt-1">138/85</div>
+                        </div>
+                        <span class="status-warning">偏高</span>
+                    </div>
+                    <div class="text-xs text-gray-500 mt-2">较上次 ↑2/3 mmHg</div>
+                </div>
+                <div class="metric-card bg-white p-3 rounded-xl border">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-sm text-gray-500">血糖</span>
+                            <div class="text-xl font-medium mt-1">7.2</div>
+                        </div>
+                        <span class="status-alert">异常</span>
+                    </div>
+                    <div class="text-xs text-gray-500 mt-2">较上次 ↑0.5 mmol/L</div>
+                </div>
             </div>
-            <div class="px-4 py-3 bg-gray-50 text-right">
-                <button class="px-3 py-1 bg-gray-500 text-white text-sm rounded-lg hover:bg-gray-600" onclick="closeAbnormalModal()">
-                    关闭
+        </div>
+
+        <!-- 监测模块 -->
+        <div class="px-4 py-3">
+            <div class="flex items-center justify-between mb-2">
+                <h3 class="text-base font-medium">监测模块</h3>
+                <button onclick="showEditModulesModal()" class="text-sm text-blue-600 hover:text-blue-800">编辑常用</button>
+            </div>
+            <div id="monitoringModules" class="grid grid-cols-4 gap-3">
+                <button onclick="showModule('nibp')" class="metric-card flex flex-col items-center p-3 bg-blue-50 rounded-xl hover:bg-blue-100">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                    </svg>
+                    <span class="text-sm mt-1">血压</span>
                 </button>
+                <button onclick="showModule('bs')" class="metric-card flex flex-col items-center p-3 bg-blue-50 rounded-xl hover:bg-blue-100">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    <span class="text-sm mt-1">血糖</span>
+                </button>
+                <button onclick="showModule('ecg')" class="metric-card flex flex-col items-center p-3 bg-gray-50 rounded-xl hover:bg-gray-100">
+                    <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                    </svg>
+                    <span class="text-sm mt-1">心率</span>
+                </button>
+                <button onclick="showAllModulesModal()" class="metric-card flex flex-col items-center p-3 bg-gray-50 rounded-xl hover:bg-gray-100">
+                    <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="text-sm mt-1">更多</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 监测数据详情 -->
+        <div class="px-4 py-3">
+            <div class="bg-white rounded-lg shadow">
+                <!-- 模块标题栏 -->
+                <div class="border-b px-4 py-3">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-medium" id="currentModuleTitle">NIBP 血压监测</h3>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm text-gray-500">最近更新: 2024-03-21 14:30</span>
+                            <button class="text-blue-600 hover:text-blue-800">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ECG 心电数据 -->
+                <div id="ecgData" class="p-4 hidden">
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <div class="text-sm text-gray-500">心率</div>
+                            <div class="text-xl font-medium mt-1">75 <span class="text-sm">bpm</span></div>
+                            <div class="text-xs text-green-600 mt-1">正常范围</div>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <div class="text-sm text-gray-500">P-P间期</div>
+                            <div class="text-xl font-medium mt-1">800 <span class="text-sm">ms</span></div>
+                            <div class="text-xs text-green-600 mt-1">正常范围</div>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <div class="text-sm text-gray-500">PR间期</div>
+                            <div class="text-xl font-medium mt-1">160 <span class="text-sm">ms</span></div>
+                            <div class="text-xs text-green-600 mt-1">正常范围</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <h4 class="text-sm font-medium mb-2">心电图波形</h4>
+                        <div class="bg-white border rounded-lg p-4">
+                            <canvas id="ecgChart" height="200"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <h4 class="text-sm font-medium mb-2">诊断结论</h4>
+                        <div class="bg-white border rounded-lg p-4">
+                            <p class="text-sm text-gray-700">窦性心律，心率75次/分，电轴正常，各波时限正常。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NIBP 血压数据 -->
+                <div id="nibpData" class="p-4">
+                    <div class="grid grid-cols-2 gap-6">
+                        <!-- 左臂血压 -->
+                        <div>
+                            <h4 class="text-sm font-medium mb-3">左臂血压</h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-3 bg-gray-50 rounded-lg">
+                                    <div class="text-sm text-gray-500">收缩压</div>
+                                    <div class="text-xl font-medium mt-1">138 <span class="text-sm">mmHg</span></div>
+                                    <div class="text-xs text-yellow-600 mt-1">偏高</div>
+                                </div>
+                                <div class="p-3 bg-gray-50 rounded-lg">
+                                    <div class="text-sm text-gray-500">舒张压</div>
+                                    <div class="text-xl font-medium mt-1">85 <span class="text-sm">mmHg</span></div>
+                                    <div class="text-xs text-green-600 mt-1">正常</div>
+                                </div>
+                                <div class="p-3 bg-gray-50 rounded-lg">
+                                    <div class="text-sm text-gray-500">平均压</div>
+                                    <div class="text-xl font-medium mt-1">103 <span class="text-sm">mmHg</span></div>
+                                    <div class="text-xs text-green-600 mt-1">正常</div>
+                                </div>
+                                <div class="p-3 bg-gray-50 rounded-lg">
+                                    <div class="text-sm text-gray-500">脉率</div>
+                                    <div class="text-xl font-medium mt-1">75 <span class="text-sm">bpm</span></div>
+                                    <div class="text-xs text-green-600 mt-1">正常</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 右臂血压 -->
+                        <div>
+                            <h4 class="text-sm font-medium mb-3">右臂血压</h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-3 bg-gray-50 rounded-lg">
+                                    <div class="text-sm text-gray-500">收缩压</div>
+                                    <div class="text-xl font-medium mt-1">140 <span class="text-sm">mmHg</span></div>
+                                    <div class="text-xs text-yellow-600 mt-1">偏高</div>
+                                </div>
+                                <div class="p-3 bg-gray-50 rounded-lg">
+                                    <div class="text-sm text-gray-500">舒张压</div>
+                                    <div class="text-xl font-medium mt-1">86 <span class="text-sm">mmHg</span></div>
+                                    <div class="text-xs text-green-600 mt-1">正常</div>
+                                </div>
+                                <div class="p-3 bg-gray-50 rounded-lg">
+                                    <div class="text-sm text-gray-500">平均压</div>
+                                    <div class="text-xl font-medium mt-1">104 <span class="text-sm">mmHg</span></div>
+                                    <div class="text-xs text-green-600 mt-1">正常</div>
+                                </div>
+                                <div class="p-3 bg-gray-50 rounded-lg">
+                                    <div class="text-sm text-gray-500">脉率</div>
+                                    <div class="text-xl font-medium mt-1">76 <span class="text-sm">bpm</span></div>
+                                    <div class="text-xs text-green-600 mt-1">正常</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 血糖数据 -->
+                <div id="bsData" class="p-4 hidden">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <div class="text-sm text-gray-500">血糖测量值</div>
+                            <div class="text-xl font-medium mt-1">7.2 <span class="text-sm">mmol/L</span></div>
+                            <div class="text-xs text-red-600 mt-1">异常</div>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <div class="text-sm text-gray-500">血糖类型</div>
+                            <div class="text-xl font-medium mt-1">空腹</div>
+                            <div class="text-xs text-gray-500 mt-1">餐前8小时</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <h4 class="text-sm font-medium mb-2">血糖记录</h4>
+                        <div class="bg-white border rounded-lg p-4">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b">
+                                        <th class="text-left py-2">时间</th>
+                                        <th class="text-left py-2">类型</th>
+                                        <th class="text-left py-2">测量值</th>
+                                        <th class="text-left py-2">状态</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b">
+                                        <td class="py-2">2024-03-21 08:00</td>
+                                        <td>空腹</td>
+                                        <td>7.2 mmol/L</td>
+                                        <td class="text-red-600">异常</td>
+                                    </tr>
+                                    <tr class="border-b">
+                                        <td class="py-2">2024-03-20 08:00</td>
+                                        <td>空腹</td>
+                                        <td>6.8 mmol/L</td>
+                                        <td class="text-yellow-600">偏高</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2">2024-03-19 08:00</td>
+                                        <td>空腹</td>
+                                        <td>6.5 mmol/L</td>
+                                        <td class="text-yellow-600">偏高</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <h4 class="text-sm font-medium mb-2">建议</h4>
+                        <div class="bg-white border rounded-lg p-4">
+                            <p class="text-sm text-gray-700">空腹血糖偏高，建议控制碳水化合物摄入，增加运动量，监测血糖变化。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SPO2 血氧数据 -->
+                <div id="spo2Data" class="p-4 hidden">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <div class="text-sm text-gray-500">血氧饱和度</div>
+                            <div class="text-xl font-medium mt-1">98 <span class="text-sm">%</span></div>
+                            <div class="text-xs text-green-600 mt-1">正常范围</div>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <div class="text-sm text-gray-500">脉率</div>
+                            <div class="text-xl font-medium mt-1">75 <span class="text-sm">bpm</span></div>
+                            <div class="text-xs text-green-600 mt-1">正常范围</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <h4 class="text-sm font-medium mb-2">血氧波形</h4>
+                        <div class="bg-white border rounded-lg p-4">
+                            <canvas id="spo2Chart" height="150"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <h4 class="text-sm font-medium mb-2">参考信息</h4>
+                        <div class="bg-white border rounded-lg p-4">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                <span class="text-sm">95-100%: 正常范围</span>
+                            </div>
+                            <div class="flex items-center space-x-2 mb-2">
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <span class="text-sm">90-94%: 轻度缺氧</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <span class="text-sm">&lt;90%: 严重缺氧</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 快速操作按钮 -->
+        <div class="fixed bottom-20 right-4 flex flex-col space-y-3">
+            <button class="w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <nav class="bg-white shadow-lg fixed bottom-0 w-full z-50 sm:hidden">
+        <div class="flex justify-around">
+            <a href="patients.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+                <span class="text-xs mt-1">患者</span>
+            </a>
+            <a href="monitoring.html" class="flex flex-col items-center p-2 text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                <span class="text-xs mt-1">监测</span>
+            </a>
+            <a href="consultation.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                </svg>
+                <span class="text-xs mt-1">会诊</span>
+            </a>
+            <a href="schedule.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <span class="text-xs mt-1">随访</span>
+            </a>
+            <a href="profile.html" class="flex flex-col items-center p-2 text-gray-500 hover:text-blue-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                <span class="text-xs mt-1">我的</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- 关键指标配置弹窗 -->
+    <div id="configModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg max-w-2xl w-full">
+                <div class="px-4 py-3 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-medium">配置关键指标</h3>
+                        <button onclick="hideConfigModal()" class="text-gray-400 hover:text-gray-500">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="px-4 py-4 max-h-[70vh] overflow-y-auto">
+                    <div class="space-y-6">
+                        <!-- ECG 心电模块 -->
+                        <div class="border-b pb-4">
+                            <h4 class="font-medium mb-3">ECG 心电模块</h4>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="ecg_hr" class="h-4 w-4 text-blue-600">
+                                    <label for="ecg_hr" class="ml-2 text-sm text-gray-700">心率</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="ecg_pp" class="h-4 w-4 text-blue-600">
+                                    <label for="ecg_pp" class="ml-2 text-sm text-gray-700">P-P间期</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="ecg_pr" class="h-4 w-4 text-blue-600">
+                                    <label for="ecg_pr" class="ml-2 text-sm text-gray-700">PR间期</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="ecg_prs" class="h-4 w-4 text-blue-600">
+                                    <label for="ecg_prs" class="ml-2 text-sm text-gray-700">PRS间期</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="ecg_qt" class="h-4 w-4 text-blue-600">
+                                    <label for="ecg_qt" class="ml-2 text-sm text-gray-700">QT间期</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="ecg_qtc" class="h-4 w-4 text-blue-600">
+                                    <label for="ecg_qtc" class="ml-2 text-sm text-gray-700">QTc间期</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- NIBP 血压模块 -->
+                        <div class="border-b pb-4">
+                            <h4 class="font-medium mb-3">NIBP 血压模块</h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <p class="text-sm text-gray-500 mb-2">左臂</p>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="nibp_sys" class="h-4 w-4 text-blue-600">
+                                            <label for="nibp_sys" class="ml-2 text-sm text-gray-700">收缩压</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="nibp_dia" class="h-4 w-4 text-blue-600">
+                                            <label for="nibp_dia" class="ml-2 text-sm text-gray-700">舒张压</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="nibp_map" class="h-4 w-4 text-blue-600">
+                                            <label for="nibp_map" class="ml-2 text-sm text-gray-700">平均压</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="nibp_pr" class="h-4 w-4 text-blue-600">
+                                            <label for="nibp_pr" class="ml-2 text-sm text-gray-700">脉率</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500 mb-2">右臂</p>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="nibp_rsys" class="h-4 w-4 text-blue-600">
+                                            <label for="nibp_rsys" class="ml-2 text-sm text-gray-700">收缩压</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="nibp_rdia" class="h-4 w-4 text-blue-600">
+                                            <label for="nibp_rdia" class="ml-2 text-sm text-gray-700">舒张压</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="nibp_rmap" class="h-4 w-4 text-blue-600">
+                                            <label for="nibp_rmap" class="ml-2 text-sm text-gray-700">平均压</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="nibp_rpr" class="h-4 w-4 text-blue-600">
+                                            <label for="nibp_rpr" class="ml-2 text-sm text-gray-700">脉率</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 其他模块 -->
+                        <div class="border-b pb-4">
+                            <h4 class="font-medium mb-3">其他监测指标</h4>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="spo2" class="h-4 w-4 text-blue-600">
+                                    <label for="spo2" class="ml-2 text-sm text-gray-700">血氧饱和度</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="temp" class="h-4 w-4 text-blue-600">
+                                    <label for="temp" class="ml-2 text-sm text-gray-700">体温</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="bs" class="h-4 w-4 text-blue-600">
+                                    <label for="bs" class="ml-2 text-sm text-gray-700">血糖</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="fetal" class="h-4 w-4 text-blue-600">
+                                    <label for="fetal" class="ml-2 text-sm text-gray-700">胎心</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="weight" class="h-4 w-4 text-blue-600">
+                                    <label for="weight" class="ml-2 text-sm text-gray-700">体重</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="bmi" class="h-4 w-4 text-blue-600">
+                                    <label for="bmi" class="ml-2 text-sm text-gray-700">BMI</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-4 py-3 bg-gray-50 flex justify-end space-x-2 rounded-b-lg">
+                    <button onclick="hideConfigModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                        取消
+                    </button>
+                    <button onclick="saveConfig()" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700">
+                        确定
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- 选择患者弹窗 -->
-    <div id="selectPatientModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden z-50">
-        <div class="bg-white rounded-lg max-w-lg w-full mx-4">
-            <div class="px-4 py-3 border-b border-gray-200">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-base font-medium text-gray-900">选择患者</h3>
-                    <button class="text-gray-400 hover:text-gray-500" onclick="closeSelectPatientModal()">
-                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+    <!-- 编辑常用模块弹窗 -->
+    <div id="editModulesModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg max-w-lg w-full">
+                <div class="px-4 py-3 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-medium">编辑常用监测模块</h3>
+                        <button onclick="hideEditModulesModal()" class="text-gray-400 hover:text-gray-500">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="px-4 py-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="module_bp" class="h-4 w-4 text-blue-600" checked>
+                            <label for="module_bp" class="ml-2 text-sm text-gray-700">血压</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="module_bs" class="h-4 w-4 text-blue-600" checked>
+                            <label for="module_bs" class="ml-2 text-sm text-gray-700">血糖</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="module_hr" class="h-4 w-4 text-blue-600" checked>
+                            <label for="module_hr" class="ml-2 text-sm text-gray-700">心率</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="module_temp" class="h-4 w-4 text-blue-600">
+                            <label for="module_temp" class="ml-2 text-sm text-gray-700">体温</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="module_weight" class="h-4 w-4 text-blue-600">
+                            <label for="module_weight" class="ml-2 text-sm text-gray-700">体重</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="module_spo2" class="h-4 w-4 text-blue-600">
+                            <label for="module_spo2" class="ml-2 text-sm text-gray-700">血氧</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-4 py-3 bg-gray-50 flex justify-end space-x-2 rounded-b-lg">
+                    <button onclick="hideEditModulesModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                        取消
+                    </button>
+                    <button onclick="saveModules()" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700">
+                        确定
                     </button>
                 </div>
             </div>
-            <div class="px-4 py-3">
-                <div class="mb-3">
-                    <div class="relative">
-                        <input type="text" id="patientSearchInput" placeholder="输入姓名或身份证号搜索" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                        <svg class="h-5 w-5 absolute right-3 top-2.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
+        </div>
+    </div>
+
+    <!-- 全部监测模块弹窗 -->
+    <div id="allModulesModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg max-w-4xl w-full">
+                <div class="px-4 py-3 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-medium">全部监测模块</h3>
+                        <button onclick="hideAllModulesModal()" class="text-gray-400 hover:text-gray-500">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
                     </div>
                 </div>
-                <div class="max-h-72 overflow-y-auto">
-                    <ul class="divide-y divide-gray-200" id="patientSearchResults">
-                        <!-- 动态填充患者搜索结果 -->
-                        <li class="py-2 px-1 hover:bg-gray-50 cursor-pointer" onclick="selectPatient('张三', '110101199001011234')">
-                            <div class="flex items-center">
-                                <div class="ml-3">
-                                    <p class="text-sm font-medium text-gray-900">张三</p>
-                                    <p class="text-xs text-gray-500">身份证: 1101**********1234</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="py-2 px-1 hover:bg-gray-50 cursor-pointer" onclick="selectPatient('李四', '110101199201024321')">
-                            <div class="flex items-center">
-                                <div class="ml-3">
-                                    <p class="text-sm font-medium text-gray-900">李四</p>
-                                    <p class="text-xs text-gray-500">身份证: 1101**********4321</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="py-2 px-1 hover:bg-gray-50 cursor-pointer" onclick="selectPatient('王五', '110101199505055678')">
-                            <div class="flex items-center">
-                                <div class="ml-3">
-                                    <p class="text-sm font-medium text-gray-900">王五</p>
-                                    <p class="text-xs text-gray-500">身份证: 1101**********5678</p>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                <div class="px-4 py-4">
+                    <div class="grid grid-cols-3 gap-4">
+                        <!-- ECG 心电模块 -->
+                        <button class="metric-card flex flex-col items-center p-4 bg-blue-50 rounded-xl hover:bg-blue-100">
+                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5"></path>
+                            </svg>
+                            <span class="text-sm font-medium mt-2">ECG 心电</span>
+                            <span class="text-xs text-gray-500 mt-1">心率、间期等13项指标</span>
+                        </button>
+
+                        <!-- NIBP 血压模块 -->
+                        <button class="metric-card flex flex-col items-center p-4 bg-blue-50 rounded-xl hover:bg-blue-100">
+                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                            </svg>
+                            <span class="text-sm font-medium mt-2">NIBP 血压</span>
+                            <span class="text-xs text-gray-500 mt-1">双臂血压8项指标</span>
+                        </button>
+
+                        <!-- SPO2 血氧模块 -->
+                        <button class="metric-card flex flex-col items-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100">
+                            <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            </svg>
+                            <span class="text-sm font-medium mt-2">SPO2 血氧</span>
+                            <span class="text-xs text-gray-500 mt-1">血氧饱和度、脉率</span>
+                        </button>
+
+                        <!-- Temperature 体温模块 -->
+                        <button class="metric-card flex flex-col items-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100">
+                            <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span class="text-sm font-medium mt-2">体温</span>
+                            <span class="text-xs text-gray-500 mt-1">体温及结论</span>
+                        </button>
+
+                        <!-- BloodSugar 血糖模块 -->
+                        <button class="metric-card flex flex-col items-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100">
+                            <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            <span class="text-sm font-medium mt-2">血糖</span>
+                            <span class="text-xs text-gray-500 mt-1">血糖值及类型</span>
+                        </button>
+
+                        <!-- Urine 尿液模块 -->
+                        <button class="metric-card flex flex-col items-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100">
+                            <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                            </svg>
+                            <span class="text-sm font-medium mt-2">尿液</span>
+                            <span class="text-xs text-gray-500 mt-1">12项尿液指标</span>
+                        </button>
+
+                        <!-- Fetal 胎心模块 -->
+                        <button class="metric-card flex flex-col items-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100">
+                            <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                            <span class="text-sm font-medium mt-2">胎心</span>
+                            <span class="text-xs text-gray-500 mt-1">胎心监测值</span>
+                        </button>
+
+                        <!-- BloodLipids 血脂模块 -->
+                        <button class="metric-card flex flex-col items-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100">
+                            <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                            </svg>
+                            <span class="text-sm font-medium mt-2">血脂</span>
+                            <span class="text-xs text-gray-500 mt-1">7项血脂指标</span>
+                        </button>
+
+                        <!-- Weight 体重模块 -->
+                        <button class="metric-card flex flex-col items-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100">
+                            <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l-3-1m3 1l3 9a5.002 5.002 0 01-6.001 0M6 7l6-2m6 2l6 2"></path>
+                            </svg>
+                            <span class="text-sm font-medium mt-2">体重</span>
+                            <span class="text-xs text-gray-500 mt-1">9项体重相关指标</span>
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div class="px-4 py-3 bg-gray-50 text-right">
-                <button class="px-3 py-1 bg-gray-500 text-white text-sm rounded-lg hover:bg-gray-600 mr-2" onclick="closeSelectPatientModal()">
-                    取消
-                </button>
-                <button id="confirmPatientBtn" class="px-3 py-1 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 disabled:bg-gray-400" disabled>
-                    确认
-                </button>
             </div>
         </div>
     </div>
 
     <script>
-        // 添加到现有的monitoring.js文件或直接在页面中添加
-        document.addEventListener('DOMContentLoaded', function() {
-            // 异常患者列表弹窗
-            window.showAbnormalPatients = function(type) {
-                const modal = document.getElementById('abnormalPatientsModal');
-                const title = document.getElementById('abnormalModalTitle');
-                const list = document.getElementById('abnormalPatientsList');
-                
-                // 根据类型设置标题
-                switch(type) {
-                    case 'blood-pressure':
-                        title.textContent = '血压异常患者';
-                        break;
-                    case 'blood-sugar':
-                        title.textContent = '血糖异常患者';
-                        break;
-                    case 'heart-rate':
-                        title.textContent = '心率异常患者';
-                        break;
-                }
-                
-                // 清空列表
-                list.innerHTML = '';
-                
-                // 填充示例数据
-                let patients = [];
-                if (type === 'blood-pressure') {
-                    patients = [
-                        { name: '张三', id: '110101199001011234', value: '145/95 mmHg', date: '2024-03-26 14:30' },
-                        { name: '刘备', id: '110101196202023456', value: '150/92 mmHg', date: '2024-03-26 10:15' },
-                        { name: '关羽', id: '110101196805057890', value: '148/96 mmHg', date: '2024-03-25 16:45' }
-                    ];
-                } else if (type === 'blood-sugar') {
-                    patients = [
-                        { name: '李四', id: '110101199201024321', value: '7.2 mmol/L', date: '2024-03-26 14:25' },
-                        { name: '诸葛亮', id: '110101198107079012', value: '7.5 mmol/L', date: '2024-03-26 09:30' }
-                    ];
-                } else if (type === 'heart-rate') {
-                    patients = [
-                        { name: '周瑜', id: '110101198505053344', value: '110 次/分', date: '2024-03-25 11:20' }
-                    ];
-                }
-                
-                // 生成列表项
-                patients.forEach(patient => {
-                    const li = document.createElement('li');
-                    li.className = 'py-2 hover:bg-gray-50 cursor-pointer';
-                    li.onclick = function() { window.location.href = `patients-detail.html?id=${patient.id}`; };
-                    
-                    li.innerHTML = `
-                        <div class="flex justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-900">${patient.name}</p>
-                                <p class="text-xs text-gray-500">身份证: ${patient.id.substring(0, 4)}**********${patient.id.substring(14)}</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-sm font-medium text-red-600">${patient.value}</p>
-                                <p class="text-xs text-gray-500">${patient.date}</p>
-                            </div>
-                        </div>
-                    `;
-                    
-                    list.appendChild(li);
-                });
-                
-                // 显示弹窗
-                modal.classList.remove('hidden');
-            };
-            
-            window.closeAbnormalModal = function() {
-                document.getElementById('abnormalPatientsModal').classList.add('hidden');
-            };
-            
-            // 保存数据弹窗
-            document.getElementById('saveDataBtn').addEventListener('click', function() {
-                document.getElementById('selectPatientModal').classList.remove('hidden');
-            });
-            
-            window.closeSelectPatientModal = function() {
-                document.getElementById('selectPatientModal').classList.add('hidden');
-            };
-            
-            // 搜索患者
-            document.getElementById('patientSearchInput').addEventListener('input', function(e) {
-                const searchTerm = e.target.value.toLowerCase();
-                const results = document.getElementById('patientSearchResults');
-                const items = results.getElementsByTagName('li');
-                
-                for (let i = 0; i < items.length; i++) {
-                    const name = items[i].querySelector('.text-gray-900').textContent.toLowerCase();
-                    const id = items[i].querySelector('.text-gray-500').textContent.toLowerCase();
-                    
-                    if (name.includes(searchTerm) || id.includes(searchTerm)) {
-                        items[i].style.display = '';
-                    } else {
-                        items[i].style.display = 'none';
+    // 关键指标配置
+    function showConfigModal() {
+        document.getElementById('configModal').classList.remove('hidden');
+    }
+
+    function hideConfigModal() {
+        document.getElementById('configModal').classList.add('hidden');
+    }
+
+    function saveConfig() {
+        // 保存配置逻辑
+        hideConfigModal();
+    }
+
+    // 编辑常用模块
+    function showEditModulesModal() {
+        document.getElementById('editModulesModal').classList.remove('hidden');
+    }
+
+    function hideEditModulesModal() {
+        document.getElementById('editModulesModal').classList.add('hidden');
+    }
+
+    function saveModules() {
+        // 保存模块配置逻辑
+        hideEditModulesModal();
+    }
+
+    // 全部监测模块
+    function showAllModulesModal() {
+        document.getElementById('allModulesModal').classList.remove('hidden');
+    }
+
+    function hideAllModulesModal() {
+        document.getElementById('allModulesModal').classList.add('hidden');
+    }
+
+    // 初始化心电图
+    function initECGChart() {
+        const ctx = document.getElementById('ecgChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Array.from({length: 100}, (_, i) => i),
+                datasets: [{
+                    label: 'ECG',
+                    data: generateECGData(),
+                    borderColor: 'rgb(59, 130, 246)',
+                    borderWidth: 1.5,
+                    pointRadius: 0,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        display: false
+                    },
+                    y: {
+                        display: true,
+                        min: -2,
+                        max: 2
                     }
                 }
-            });
-            
-            // 选择患者
-            window.selectPatient = function(name, id) {
-                const confirmBtn = document.getElementById('confirmPatientBtn');
-                confirmBtn.dataset.name = name;
-                confirmBtn.dataset.id = id;
-                confirmBtn.disabled = false;
-                
-                // 高亮选中的患者
-                const items = document.getElementById('patientSearchResults').getElementsByTagName('li');
-                for (let i = 0; i < items.length; i++) {
-                    const itemName = items[i].querySelector('.text-gray-900').textContent;
-                    if (itemName === name) {
-                        items[i].classList.add('bg-blue-50');
-                    } else {
-                        items[i].classList.remove('bg-blue-50');
-                    }
-                }
-            };
-            
-            // 确认保存患者数据
-            document.getElementById('confirmPatientBtn').addEventListener('click', function() {
-                const name = this.dataset.name;
-                const id = this.dataset.id;
-                
-                // 这里添加保存数据的逻辑
-                alert(`已保存 ${name} 的监测数据`);
-                
-                // 关闭弹窗
-                closeSelectPatientModal();
-            });
+            }
         });
+    }
+
+    // 生成模拟心电图数据
+    function generateECGData() {
+        const data = [];
+        for (let i = 0; i < 100; i++) {
+            if (i % 25 === 0) {
+                data.push(1.5); // R波
+            } else if (i % 25 === 1) {
+                data.push(-0.5); // S波
+            } else if (i % 25 === 5) {
+                data.push(0.3); // T波
+            } else {
+                data.push(0);
+            }
+        }
+        return data;
+    }
+
+    // 初始化血氧图表
+    function initSPO2Chart() {
+        const ctx = document.getElementById('spo2Chart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Array.from({length: 50}, (_, i) => i),
+                datasets: [{
+                    label: 'SPO2',
+                    data: generateSPO2Data(),
+                    borderColor: 'rgb(16, 185, 129)',
+                    borderWidth: 1.5,
+                    pointRadius: 0,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        display: false
+                    },
+                    y: {
+                        display: true,
+                        min: 90,
+                        max: 100
+                    }
+                }
+            }
+        });
+    }
+
+    // 生成模拟血氧数据
+    function generateSPO2Data() {
+        const data = [];
+        for (let i = 0; i < 50; i++) {
+            data.push(97 + Math.random() * 2 - 0.5);
+        }
+        return data;
+    }
+
+    // 页面加载完成后初始化图表
+    document.addEventListener('DOMContentLoaded', function() {
+        initECGChart();
+        initSPO2Chart();
+        // 默认显示血压模块
+        showModule('nibp');
+    });
+
+    // 切换监测模块显示
+    function showModule(moduleId) {
+        // 隐藏所有模块
+        document.querySelectorAll('[id$="Data"]').forEach(el => el.classList.add('hidden'));
+        // 显示选中的模块
+        document.getElementById(moduleId + 'Data').classList.remove('hidden');
+        // 更新标题
+        document.getElementById('currentModuleTitle').textContent = getModuleTitle(moduleId);
+    }
+
+    // 获取模块标题
+    function getModuleTitle(moduleId) {
+        const titles = {
+            'ecg': 'ECG 心电监测',
+            'nibp': 'NIBP 血压监测',
+            'spo2': 'SPO2 血氧监测',
+            'temp': '体温监测',
+            'bs': '血糖监测',
+            'urine': '尿液监测',
+            'fetal': '胎心监测',
+            'lipids': '血脂监测',
+            'weight': '体重监测'
+        };
+        return titles[moduleId] || '监测数据';
+    }
     </script>
 </body>
 </html> 
