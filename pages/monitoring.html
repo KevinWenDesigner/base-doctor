@@ -165,7 +165,7 @@
             <div class="bg-white rounded-lg shadow">
                 <!-- 模块标题栏 -->
                 <div class="border-b px-4 py-3">
-                    <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-between">
                         <h3 class="text-lg font-medium" id="currentModuleTitle">NIBP 血压监测</h3>
                         <div class="flex items-center space-x-2">
                             <span class="text-sm text-gray-500">最近更新: 2024-03-21 14:30</span>
@@ -202,8 +202,8 @@
                         <h4 class="text-sm font-medium mb-2">心电图波形</h4>
                         <div class="bg-white border rounded-lg p-4">
                             <canvas id="ecgChart" height="200"></canvas>
-                        </div>
-                    </div>
+            </div>
+        </div>
 
                     <div class="mt-4">
                         <h4 class="text-sm font-medium mb-2">诊断结论</h4>
@@ -234,7 +234,7 @@
                                     <div class="text-sm text-gray-500">平均压</div>
                                     <div class="text-xl font-medium mt-1">103 <span class="text-sm">mmHg</span></div>
                                     <div class="text-xs text-green-600 mt-1">正常</div>
-                                </div>
+            </div>
                                 <div class="p-3 bg-gray-50 rounded-lg">
                                     <div class="text-sm text-gray-500">脉率</div>
                                     <div class="text-xl font-medium mt-1">75 <span class="text-sm">bpm</span></div>
@@ -256,12 +256,12 @@
                                     <div class="text-sm text-gray-500">舒张压</div>
                                     <div class="text-xl font-medium mt-1">86 <span class="text-sm">mmHg</span></div>
                                     <div class="text-xs text-green-600 mt-1">正常</div>
-                                </div>
+                            </div>
                                 <div class="p-3 bg-gray-50 rounded-lg">
                                     <div class="text-sm text-gray-500">平均压</div>
                                     <div class="text-xl font-medium mt-1">104 <span class="text-sm">mmHg</span></div>
                                     <div class="text-xs text-green-600 mt-1">正常</div>
-                                </div>
+                        </div>
                                 <div class="p-3 bg-gray-50 rounded-lg">
                                     <div class="text-sm text-gray-500">脉率</div>
                                     <div class="text-xl font-medium mt-1">76 <span class="text-sm">bpm</span></div>
@@ -284,8 +284,8 @@
                             <div class="text-sm text-gray-500">血糖类型</div>
                             <div class="text-xl font-medium mt-1">空腹</div>
                             <div class="text-xs text-gray-500 mt-1">餐前8小时</div>
+                            </div>
                         </div>
-                    </div>
 
                     <div class="mt-4">
                         <h4 class="text-sm font-medium mb-2">血糖记录</h4>
@@ -320,7 +320,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                                </div>
                     </div>
 
                     <div class="mt-4">
@@ -328,8 +328,8 @@
                         <div class="bg-white border rounded-lg p-4">
                             <p class="text-sm text-gray-700">空腹血糖偏高，建议控制碳水化合物摄入，增加运动量，监测血糖变化。</p>
                         </div>
-                    </div>
-                </div>
+                            </div>
+                        </div>
 
                 <!-- SPO2 血氧数据 -->
                 <div id="spo2Data" class="p-4 hidden">
@@ -343,15 +343,15 @@
                             <div class="text-sm text-gray-500">脉率</div>
                             <div class="text-xl font-medium mt-1">75 <span class="text-sm">bpm</span></div>
                             <div class="text-xs text-green-600 mt-1">正常范围</div>
-                        </div>
+                                </div>
                     </div>
 
                     <div class="mt-4">
                         <h4 class="text-sm font-medium mb-2">血氧波形</h4>
                         <div class="bg-white border rounded-lg p-4">
                             <canvas id="spo2Chart" height="150"></canvas>
+                            </div>
                         </div>
-                    </div>
 
                     <div class="mt-4">
                         <h4 class="text-sm font-medium mb-2">参考信息</h4>
@@ -363,7 +363,7 @@
                             <div class="flex items-center space-x-2 mb-2">
                                 <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
                                 <span class="text-sm">90-94%: 轻度缺氧</span>
-                            </div>
+                                </div>
                             <div class="flex items-center space-x-2">
                                 <div class="w-3 h-3 rounded-full bg-red-500"></div>
                                 <span class="text-sm">&lt;90%: 严重缺氧</span>
@@ -424,16 +424,16 @@
     <div id="configModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 hidden z-50">
         <div class="flex items-center justify-center min-h-screen p-4">
             <div class="bg-white rounded-lg max-w-2xl w-full">
-                <div class="px-4 py-3 border-b border-gray-200">
-                    <div class="flex items-center justify-between">
+            <div class="px-4 py-3 border-b border-gray-200">
+                <div class="flex items-center justify-between">
                         <h3 class="text-lg font-medium">配置关键指标</h3>
                         <button onclick="hideConfigModal()" class="text-gray-400 hover:text-gray-500">
                             <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </button>
-                    </div>
+                        </svg>
+                    </button>
                 </div>
+            </div>
                 <div class="px-4 py-4 max-h-[70vh] overflow-y-auto">
                     <div class="space-y-6">
                         <!-- ECG 心电模块 -->
@@ -459,13 +459,13 @@
                                 <div class="flex items-center">
                                     <input type="checkbox" id="ecg_qt" class="h-4 w-4 text-blue-600">
                                     <label for="ecg_qt" class="ml-2 text-sm text-gray-700">QT间期</label>
-                                </div>
+            </div>
                                 <div class="flex items-center">
                                     <input type="checkbox" id="ecg_qtc" class="h-4 w-4 text-blue-600">
                                     <label for="ecg_qtc" class="ml-2 text-sm text-gray-700">QTc间期</label>
-                                </div>
-                            </div>
-                        </div>
+            </div>
+        </div>
+    </div>
 
                         <!-- NIBP 血压模块 -->
                         <div class="border-b pb-4">
@@ -490,8 +490,8 @@
                                             <input type="checkbox" id="nibp_pr" class="h-4 w-4 text-blue-600">
                                             <label for="nibp_pr" class="ml-2 text-sm text-gray-700">脉率</label>
                                         </div>
-                                    </div>
-                                </div>
+                </div>
+            </div>
                                 <div>
                                     <p class="text-sm text-gray-500 mb-2">右臂</p>
                                     <div class="space-y-2">
@@ -510,8 +510,8 @@
                                         <div class="flex items-center">
                                             <input type="checkbox" id="nibp_rpr" class="h-4 w-4 text-blue-600">
                                             <label for="nibp_rpr" class="ml-2 text-sm text-gray-700">脉率</label>
-                                        </div>
-                                    </div>
+                    </div>
+                </div>
                                 </div>
                             </div>
                         </div>
@@ -532,15 +532,15 @@
                                     <input type="checkbox" id="bs" class="h-4 w-4 text-blue-600">
                                     <label for="bs" class="ml-2 text-sm text-gray-700">血糖</label>
                                 </div>
-                                <div class="flex items-center">
+                            <div class="flex items-center">
                                     <input type="checkbox" id="fetal" class="h-4 w-4 text-blue-600">
                                     <label for="fetal" class="ml-2 text-sm text-gray-700">胎心</label>
                                 </div>
                                 <div class="flex items-center">
                                     <input type="checkbox" id="weight" class="h-4 w-4 text-blue-600">
                                     <label for="weight" class="ml-2 text-sm text-gray-700">体重</label>
-                                </div>
-                                <div class="flex items-center">
+                            </div>
+                            <div class="flex items-center">
                                     <input type="checkbox" id="bmi" class="h-4 w-4 text-blue-600">
                                     <label for="bmi" class="ml-2 text-sm text-gray-700">BMI</label>
                                 </div>
@@ -604,8 +604,8 @@
                 </div>
                 <div class="px-4 py-3 bg-gray-50 flex justify-end space-x-2 rounded-b-lg">
                     <button onclick="hideEditModulesModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
-                        取消
-                    </button>
+                    取消
+                </button>
                     <button onclick="saveModules()" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700">
                         确定
                     </button>
@@ -709,7 +709,7 @@
                             </svg>
                             <span class="text-sm font-medium mt-2">体重</span>
                             <span class="text-xs text-gray-500 mt-1">9项体重相关指标</span>
-                        </button>
+                </button>
                     </div>
                 </div>
             </div>
@@ -787,9 +787,9 @@
                         min: -2,
                         max: 2
                     }
+                    }
                 }
-            }
-        });
+            });
     }
 
     // 生成模拟心电图数据
